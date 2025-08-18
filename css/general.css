@@ -1,68 +1,6 @@
-/*
---- 01 TYPOGRAPHY SYSTEM
-
-- Font sizes (px)
-10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
-
-- Font weights
-Default: 400
-Bold: 700
-
-- Line heights
-Default: 1
-
-- Letter spacing
-default: 1
-
-
---- 02 WHITESPACE
-
-- Spacing system (px)
-2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
-
-
---- 03 BORDER-RADIUS
-
-Default: 6px
-small: 4px
-
-
---- 04 COLORS (List is not complete)
-
-- Primary: 
-#343a40 
-
-- Shades "Darker": 
-#2f343a (10%)
-#2a2e33 (20%)
-#1f2326 (40%)
-#15171a (60%)
-#0a0c0d (80%)
-
-- Tints "Lighter": 
-#484e53 (10%)
-#5d6166 (20%)
-#85898c (40%)
-#aeb0b3 (60%)
-#d6d8d9 (80%)
-
-- Accents: 
-#228be6 
-#3c56da
-#2a309c
-
-
-- Greys:
-#f1f3f5 
-#e7f5ff 
-#adb5bd 
-#555555 
-
-*/
-
-/***********/
-/* DEFAULT */
-/***********/
+/************/
+/*   預設   */
+/************/
 
 :root {
   --def-fs: 62.5%;
@@ -71,8 +9,7 @@ small: 4px
   --color-primary-darker: #333;
   --color-primary-lighter: #555;
 
-  /* -------- DEFAULT KEYBOARD THEME | RETRO -------- */
-  /* - INSPIRED BY KBParadise VX80 Olivette Neo TKL - */
+  /* -------- 復古 KBParadise VX80 Olivette Neo TKL配色 -------- */
   --key-border-radius: 0.6rem;
 
   --box-shadow-keycaps-value: inset 0 -0.2rem 0 0.3rem;
@@ -108,8 +45,7 @@ small: 4px
   --color-keycaps-bg-pressed: #a4a9b0;
   --color-keycaps-shadow-pressed: #7f8489;
 
-  /* styling background of elements */
-
+  /* 背景 */
   --color-bg: linear-gradient(
     45deg,
     #e9ecef,
@@ -119,6 +55,7 @@ small: 4px
     #c1c3d5
   );
 
+  /* 字體顏色 */
   --color-bg-title: linear-gradient(
     45deg,
     #14181c,
@@ -140,23 +77,21 @@ small: 4px
 }
 
 html {
-  /* Percentage of user's browser font-size setting */
+  /* 使用者瀏覽器字體大小設定的百分比 */
   font-size: var(--def-fs);
   overflow-x: hidden;
 }
 
 body {
-  /* Segoe UI is the official Font used in Microsoft products
-     including Windows and Surface lineup */
   font-family: var(--ff);
   line-height: 1;
   font-weight: 400;
   color: var(--color-primary);
 }
 
-/******************************/
-/* GENRAL REUSABLE COMPONENTS */
-/******************************/
+/*********************/
+/* 通用可重複使用組件 */
+/*********************/
 
 .heading-primary {
   font-weight: 700;
@@ -187,9 +122,9 @@ body {
   color: var(--color-primary-lighter);
 }
 
-/***************************/
-/* HELPER/SETTINGS CLASSES */
-/***************************/
+/**********/
+/* 設定類 */
+/**********/
 
 .center-text {
   text-align: center;

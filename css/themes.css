@@ -1,6 +1,5 @@
 .theme--retro {
-  /* -------- DEFAULT KEYBOARD THEME | RETRO -------- */
-  /* - INSPIRED BY KBParadise VX80 Olivette Neo TKL - */
+  /* -------- 復古 KBParadise VX80 Olivette Neo TKL配色 -------- */
 
   --key-border-radius: 0.6rem;
 
@@ -38,8 +37,7 @@
 }
 
 .theme--navy-blue {
-  /* -------- OPTIONAL KEYBOARD THEME | NAVY BLUE -------- */
-  /* ------- INSPIRED BY Keychron Q3 QMK NAVY BLUE ------- */
+  /* -------- Keychron Q3 QMK 海軍藍配色 -------- */
 
   --key-border-radius: 1.2rem;
 
@@ -79,6 +77,106 @@
   --color-keycaps-shadow-pressed: #adb5bd;
 }
 
-/* *** You can define more themes here... *** */
-/* Be sure to also write the essential codes for 
-added themes in both index.html & style.css */
+.theme--cyberpunk {
+  /* -------- 賽博龐克風格主題 -------- */
+
+  --key-border-radius: 0.4rem;
+  --box-shadow-keycaps-value: inset 0 -0.2rem 0 0.2rem;
+  --box-shadow-keycaps-hover-value: inset 0 -0.1rem 0 0.1rem;
+  
+  --color-keyboard: #0d0c1d;
+  --color-keyboard-border: #05040e;
+  
+  --color-keycaps-legends: #00ffff;
+  --color-keycaps-bg: #220330;
+  --color-keycaps-shadow: #7f00ff;
+
+  --color-keycaps-legends-accent: #ff00ff;
+  --color-keycaps-bg-accent: #330349;
+  --color-keycaps-shadow-accent: #ff7700;
+  
+  --color-keycaps-legends-pressing: #e2ff00;
+  
+  --color-keycaps-legends-pressed: #000;
+  --color-keycaps-bg-pressed: #00ffff;
+  --color-keycaps-shadow-pressed: #008080;
+}
+
+.theme--cyberpunk2077 {
+  /* -------- 電馭叛客風格主題 -------- */
+
+  --key-border-radius: 0.4rem;
+
+  --box-shadow-keycaps-value: inset 0 -0.2rem 0 0.2rem;
+  --box-shadow-keycaps-hover-value: inset 0 -0.1rem 0 0.1rem;
+
+  --box-shadow-keycaps: var(--box-shadow-keycaps-value)
+    var(--color-keycaps-shadow);
+  --box-shadow-keycaps-hover: var(--box-shadow-keycaps-hover-value)
+    var(--color-keycaps-shadow);
+
+  --box-shadow-keycaps-accent: var(--box-shadow-keycaps-value)
+    var(--color-keycaps-shadow-accent);
+  --box-shadow-keycaps-accent-hover: var(--box-shadow-keycaps-hover-value)
+    var(--color-keycaps-shadow-accent);
+
+  --box-shadow-keycaps-pressed: var(--box-shadow-keycaps-value)
+    var(--color-keycaps-shadow-pressed);
+  --box-shadow-keycaps-pressed-hover: var(--box-shadow-keycaps-hover-value)
+    var(--color-keycaps-shadow-pressed);
+
+  --color-keyboard: #121212; /* 深黑色鍵盤主體 */
+  --color-keyboard-border: #212121;
+
+  --color-keycaps-legends: #faff00; /* 鮮豔黃色文字 */
+  --color-keycaps-bg: #282828; /* 深灰色按鍵背景 */
+  --color-keycaps-shadow: #404040;
+
+  --color-keycaps-legends-accent: #00f2ea; /* 青色或藍綠色重點文字 */
+  --color-keycaps-bg-accent: #303030; /* 更深的灰色重點按鍵背景 */
+  --color-keycaps-shadow-accent: #505050;
+
+  --color-keycaps-legends-pressing: #ff69b4; /* 粉紅色按下文字 */
+
+  --color-keycaps-legends-pressed: #000;
+  --color-keycaps-bg-pressed: #faff00; /* 黃色按下背景 */
+  --color-keycaps-shadow-pressed: #b8b000;
+}
+
+.theme--eva-01 {
+  /* -------- EVA 初號機風格主題 -------- */
+  
+  --key-border-radius: 0.6rem;
+
+  --box-shadow-keycaps: var(--box-shadow-keycaps-value)
+    var(--color-keycaps-shadow);
+  --box-shadow-keycaps-hover: var(--box-shadow-keycaps-hover-value)
+    var(--color-keycaps-shadow);
+
+  --box-shadow-keycaps-accent: var(--box-shadow-keycaps-value)
+    var(--color-keycaps-shadow-accent);
+  --box-shadow-keycaps-accent-hover: var(--box-shadow-keycaps-hover-value)
+    var(--color-keycaps-shadow-accent);
+
+  --box-shadow-keycaps-pressed: var(--box-shadow-keycaps-value)
+    var(--color-keycaps-shadow-pressed);
+  --box-shadow-keycaps-pressed-hover: var(--box-shadow-keycaps-hover-value)
+    var(--color-keycaps-shadow-pressed);
+
+  --color-keyboard: #2c0e35; /* 深紫色鍵盤底座 */
+  --color-keyboard-border: #1a0a20;
+
+  --color-keycaps-legends: #e2e2e2; /* 淺灰色文字 */
+  --color-keycaps-bg: #4b1a5a; /* 主體紫色按鍵 */
+  --color-keycaps-shadow: #2e1035;
+
+  --color-keycaps-legends-accent: #02f893; /* 螢光綠色重點文字 */
+  --color-keycaps-bg-accent: #1f3f37; /* 墨綠色重點按鍵 */
+  --color-keycaps-shadow-accent: #111a18;
+
+  --color-keycaps-legends-pressing: #ff851b; /* 橘色按下文字 */
+
+  --color-keycaps-legends-pressed: #000000;
+  --color-keycaps-bg-pressed: #02f893; /* 螢光綠色按下背景 */
+  --color-keycaps-shadow-pressed: #00d47e;
+}

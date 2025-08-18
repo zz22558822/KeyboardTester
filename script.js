@@ -1,10 +1,13 @@
 'use strict';
 
-// --------------------- THEME MANIPULATION ---------------------
-
+// --------------------- 主題切換 ---------------------
+// 若不顯示的主題要註解掉否則會Error
 const themes = {
-  retro: document.querySelector('.retro'),
-  navyBlue: document.querySelector('.navy-blue'),
+  retro: document.querySelector('.retro'), //預設 復古風
+  // navyBlue: document.querySelector('.navy-blue'), //海軍藍
+  // cyberpunk: document.querySelector('.cyberpunk'), //賽博龐克
+  cyberpunk2077: document.querySelector('.cyberpunk2077'), //電馭叛客
+  eva01: document.querySelector('.eva-01'), // EVA 初號機
 };
 
 for (const theme in themes) {
@@ -19,8 +22,7 @@ const initializeTheme = () => {
 };
 
 const changeTheme = function (themeName) {
-  // naming needs to be changed so we can access
-  // themes that exist in themes.css
+  // 動態產生class 需要改名才能讀取 themes.css 的主題
   const themeCSS = 'theme--' + themeName;
 
   document.body.classList.remove(
@@ -39,11 +41,10 @@ const handleKeyPress = function (e) {
 
   e.preventDefault();
 
-  // Edge case mentioned in https://github.com/Mostafa-Abbasi/KeyboardTester/issues/4
-  // Detect AltGr key press (Alt + Control pressed simultaneously)
+  // 偵測 AltGr 按鍵被按下 (同時按下 Alt + Control)
   const isAltGr = e.key === 'AltGraph';
 
-  // Ignore the left Control key if AltGr is pressed
+  // 如果按下 AltGr(右邊Alt)，忽略左 Control 鍵
   if (isAltGr) {
     document
       .querySelector('.' + 'controlleft')
@@ -66,7 +67,7 @@ const handleKeyPress = function (e) {
     keyElement.classList.add('key--pressed');
   }
 
-  // Handle special Meta/OS key case
+  // 處理特殊的 Meta/OS 按鈕
   if (e.key === 'Meta' || e.key === 'OS') {
     keyElement.classList.remove('key-pressing-simulation');
   }
@@ -75,7 +76,7 @@ const handleKeyPress = function (e) {
 document.addEventListener('keydown', handleKeyPress);
 document.addEventListener('keyup', handleKeyPress);
 
-// --------------------- CHANGING LAYOUT ---------------------
+// --------------------- 更改佈局 ---------------------
 
 const slider = document.getElementById('layoutSlider');
 const output = document.querySelector('.slider-value');
@@ -85,9 +86,9 @@ const TKLLayout = document.querySelector('.tkl-layout');
 
 const themeAndLayout = document.querySelector('.theme-and-layout');
 const keyboard = document.querySelector('.keyboard');
-// related to tkl
+// TKL 鍵盤佈局設定相關
 const numpad = document.querySelector('.numpad');
-// related to 75% layout configuration
+// 75% 鍵盤佈局設定相關
 const regions = document.querySelectorAll('.region');
 const functionRegion = document.querySelector('.function');
 const controlRegion = document.querySelector('.system-control');
@@ -95,26 +96,26 @@ const navigationRegion = document.querySelector('.navigation');
 const fourthRow = document.querySelector('.fourth-row');
 const fifthRow = document.querySelector('.fifth-row');
 
-// deleted keys in 75%
+// 75% 需要刪除相關按鈕
 const btnScrollLock = document.querySelector('.scrolllock');
 const btnInsert = document.querySelector('.insert');
 const btnContextMenu = document.querySelector('.contextmenu');
 
-// remapped keys in 75%
+// 75% 重新配置位置
 const btnDelete = document.querySelector('.delete');
 const btnHome = document.querySelector('.home');
 const btnEnd = document.querySelector('.end');
 const btnPgUp = document.querySelector('.pageup');
 const btnPgDn = document.querySelector('.pagedown');
 
-// Function to update the layout based on slider value
+// 根據滑桿更新佈局
 function updateLayout() {
   const sliderValue = parseInt(slider.value);
 
-  // Update output text based on slider position
+  // 滑桿輸出文字
   switch (sliderValue) {
     case 1:
-      output.textContent = 'Full';
+      output.textContent = '全尺寸';
       changeToFullSize();
       break;
     case 2:
@@ -149,7 +150,7 @@ const changeToTKL = function () {
 
     numpad.classList.add('hidden--step1');
     themeAndLayout.style.maxWidth = '98rem';
-    // timeout added for smooth transition between applying --step1 & --step2
+    // 增加時間在 --step1 和 --step2 之間過渡
     setTimeout(function () {
       keyboard.classList.remove('full-size');
 
@@ -215,13 +216,34 @@ const undo75 = () => {
 };
 
 const changeTo75 = async () => {
-  await changeToTKL(); // Wait for the transition in changeToTKL() to complete
+  await changeToTKL(); // 等待 changeToTKL() 中的轉換完成
   themeAndLayout.style.maxWidth = '85rem';
   updateStylesFor75(true);
 };
 
-// Event listener for slider change
-slider.addEventListener('input', updateLayout);
+// 禁用滑鼠右鍵選單
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+});
 
-// Initial layout update based on default slider value
+// 防抖函數，確保在使用者停止動作後才觸發 防止縮減不完全的BUG
+function debounce(func, delay) {
+  let timeoutId;
+  return function (...args) {
+    // 清除上一次的計時器
+    clearTimeout(timeoutId);
+
+    // 設定一個新的計時器
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+}
+
+// 監聽滑桿
+// slider.addEventListener('input', updateLayout); // 原本的容易觸發縮減不完全的BUG
+const debouncedUpdateLayout = debounce(updateLayout, 150);
+slider.addEventListener('input', debouncedUpdateLayout);
+
+// 初始化
 updateLayout();

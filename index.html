@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Online Keyboard Tester | Test Your Keyboard</title>
+    <title>鍵盤測試器</title>
     <meta
       name="description"
-      content="Test your keyboard and troubleshoot issues with this interactive tool. Explore keyboard layouts and functionality."
+      content="此工具用於測試鍵盤供排除問題，可自由改動布局樣式"
     />
     <link rel="icon" href="img/favicon.png" />
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
@@ -14,19 +14,11 @@
     <!-- Open Graph (Facebook) Metadata -->
     <meta
       property="og:title"
-      content="Online Keyboard Tester | Test Your Keyboard"
+      content="鍵盤測試器"
     />
     <meta
       property="og:description"
-      content="Test your keyboard and troubleshoot issues with this interactive tool. Explore keyboard layouts and functionality."
-    />
-    <meta
-      property="og:url"
-      content="https://mostafa-abbasi.github.io/KeyboardTester/"
-    />
-    <meta
-      property="og:image"
-      content="https://mostafa-abbasi.github.io/KeyboardTester/img/favicon.png"
+      content="此工具用於測試鍵盤供排除問題，可自由改動布局樣式"
     />
     <meta property="og:type" content="website" />
 
@@ -34,21 +26,14 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Online Keyboard Tester | Test Your Keyboard"
+      content="鍵盤測試器"
     />
     <meta
       name="twitter:description"
-      content="Test your keyboard and troubleshoot issues with this interactive tool. Explore keyboard layouts and functionality."
-    />
-    <meta
-      name="twitter:image"
-      content="https://mostafa-abbasi.github.io/KeyboardTester/img/favicon.png"
+      content="此工具用於測試鍵盤供排除問題，可自由改動布局樣式"
     />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/segoe-fonts@1.0.1/segoe-fonts.min.css"
-    />
+    <link rel="stylesheet" href="css/segoe-fonts.min.css" />
     <link rel="stylesheet" href="css/general.css" />
     <link rel="stylesheet" href="css/themes.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -59,12 +44,11 @@
     <header>
       <section class="intro">
         <h1 class="heading-primary title center-text">
-          <span>Test Your Keyboard</span>
+          <span>鍵盤測試器</span>
         </h1>
         <p class="paragraph description center-text">
-          This interactive tool is designed to help users identify and
-          troubleshoot any issues with their physical keyboard or simply explore
-          its layout
+          此工具用於測試鍵盤供排除問題
+          可自由改動布局樣式
         </p>
       </section>
     </header>
@@ -73,7 +57,7 @@
       <div class="theme-and-layout">
         <div></div>
         <div class="slider-container">
-          <output class="slider-value">Full</output>
+          <output class="slider-value">全尺寸</output>
           <input
             type="range"
             min="1"
@@ -85,13 +69,40 @@
         </div>
 
         <section class="theme-section">
-          <div class="retro" aria-label="retro theme option">
+          <!-- 復古主題 -->
+          <div class="retro" aria-label="retro theme option" title="復古預設">
             <div class="theme-color"></div>
             <div class="theme-color"></div>
             <div class="theme-color"></div>
             <div class="theme-color"></div>
           </div>
-          <div class="navy-blue" aria-label="navy-blue theme option">
+
+          <!-- 海軍藍主題 -->
+          <!-- <div class="navy-blue" aria-label="navy-blue theme option" title="海軍藍">
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+          </div> -->
+
+          <!-- Cyberpunk主題 -->
+          <!-- <div class="cyberpunk" aria-label="cyberpunk theme option" title="賽博龐克"">
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+          </div> -->
+
+          <!-- 電馭叛客主題 -->
+          <div class="cyberpunk2077" aria-label="cyberpunk theme option" title="電馭叛客">
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+            <div class="theme-color"></div>
+          </div>
+          
+          <!-- EVA 初號機主題 -->
+          <div class="eva-01" aria-label="eva-01 theme option" title="EVA 初號機">
             <div class="theme-color"></div>
             <div class="theme-color"></div>
             <div class="theme-color"></div>
@@ -101,7 +112,7 @@
       </div>
 
       <div class="keyboard full-size">
-        <!-- contains "ESC" & Function (F1-F12) -->
+        <!-- ESC 和 F區 -->
         <section class="function region">
           <div class="key escape">ESC</div>
           <div class="empty-space-between-keys" aria-hidden="true"></div>
@@ -121,16 +132,16 @@
           <div class="key f12">F12</div>
         </section>
 
-        <!-- contains Top-Located Control (Prt Sc|Scr lck|Pause) keys -->
+        <!-- 上方截圖控制區 -->
         <section class="system-control region">
           <div class="key printscreen key--accent-color">Prt Sc</div>
           <div class="key scrolllock key--accent-color">Scr Lk</div>
           <div class="key pause key--accent-color">Pause</div>
         </section>
 
-        <!-- contains Modifier/Control (Ctrl|Alt|etc.) & Alpha (A-Z) keys -->
+        <!-- 快捷鍵 和 打字區 -->
         <section class="typewriter region">
-          <!-- number row (`, 1, 2, etc.) -->
+          <!-- 數字行 -->
           <div class="first-row">
             <div class="key backquote key--sublegend key--accent-color">
               <span>~</span> <span>`</span>
@@ -154,7 +165,7 @@
             <div class="key backspace key--accent-color">Backspace</div>
           </div>
 
-          <!-- qwerty row (tab, \, q, w, etc.) -->
+          <!-- qwerty行 -->
           <div class="second-row">
             <div class="key tab key--accent-color">Tab</div>
             <div class="key keyq">Q</div>
@@ -178,7 +189,7 @@
             </div>
           </div>
 
-          <!-- asdfg row (caps, enter, a, s, etc.) -->
+          <!-- asdfg行 -->
           <div class="third-row">
             <div class="key capslock key--accent-color">Caps</div>
             <div class="key keya">A</div>
@@ -201,7 +212,7 @@
             </div>
           </div>
 
-          <!-- zxcvb row (left and right shift, <, >, ?, etc.) -->
+          <!-- zxcvb行 -->
           <div class="fourth-row">
             <div class="key shiftleft key--accent-color">Shift</div>
             <div class="key keyz">Z</div>
@@ -223,10 +234,10 @@
             <div class="key shiftright key--accent-color">Shift</div>
           </div>
 
-          <!-- bottom row (ctrl, fn, win, alt, space, etc.) -->
+          <!-- 底部功能鍵 -->
           <div class="fifth-row">
             <div class="key controlleft key--accent-color">Ctrl</div>
-            <!-- Added OSLeft for firefox support -->
+            <!-- 增加 OSLeft 用於支援 Firefox -->
             <div
               class="key metaleft osleft key--accent-color"
               aria-label="Left Windows key"
@@ -246,7 +257,7 @@
               <span>&UnderBar;&UnderBar;&UnderBar;&UnderBar;</span>
             </div>
             <div class="key altright key--accent-color">Alt</div>
-            <!-- Added OSRight for firefox support -->
+            <!-- 增加 OSLeft 用於支援 Firefox -->
             <div
               class="key metaright osright key--accent-color"
               aria-label="Right Windows key"
@@ -312,7 +323,7 @@
           </div>
         </section>
 
-        <!-- contains Navigation (PgUp|PgDn|etc.) & Arrow keys -->
+        <!-- 方向鍵上方六格功能 -->
         <section class="navigation region">
           <div class="key insert key--accent-color">Insert</div>
           <div class="key home key--accent-color">Home</div>
@@ -370,7 +381,7 @@
           </div>
         </section>
 
-        <!-- contains Numpad Keys -->
+        <!-- 數字區 -->
         <section class="numpad region">
           <div class="key numlock">NumLk</div>
           <div class="key numpaddivide">/</div>
@@ -394,12 +405,12 @@
     </main>
     <footer class="footer">
       <p class="footer-text">
-        Copyright &copy; 2023 | Contact:
+        Copyright &copy; 2025 | 聯絡我們:
         <a
           class="link"
-          href="mailto:mostafaabbac@gmail.com"
-          aria-label="email address"
-          >mostafaabbac@gmail.com</a
+          href="mailto:chek.vmware@gmail.com"
+          aria-label="電子郵件"
+          >chek.vmware@gmail.com</a
         >
         |
         <svg
@@ -417,11 +428,11 @@
         </svg>
         <a
           class="link"
-          href="https://github.com/Mostafa-Abbasi/KeyboardTester"
+          href="https://github.com/zz22558822"
           target="_blank"
-          aria-label="github repository link"
+          aria-label="github 連結"
         >
-          <span>Repository</span>
+          <span>Github</span>
         </a>
       </p>
     </footer>

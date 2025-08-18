@@ -1,18 +1,24 @@
 :root {
-  /* example of a standard key: "W" Key on the KB */
-  --standard-key-size: 5rem; /* width & height */
+  /* 鍵盤上的寬高 */
+  --standard-key-size: 5rem;
 }
 
-/* ------------------ BACKGROUND ------------------ */
+/* ------------------ 背景 ------------------ */
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   background-image: var(--color-bg);
+
+  /* 禁用反白 */
+  user-select: none;
+  -webkit-user-select: none; /* 針對 Safari */
+  -moz-user-select: none;    /* 針對 Firefox */
+  -ms-user-select: none;     /* 針對 Internet Explorer/Edge */
 }
 
-/* ------------------ HEADER ------------------ */
+/* ------------------ 標題 ------------------ */
 
 .intro {
   max-width: 130rem;
@@ -23,8 +29,8 @@ body {
 .title span {
   background-image: var(--color-bg-title);
 
-  /* Use the text as a mask for the background. */
-  /* This will show the gradient as a text color rather than element bg. */
+  /* 使用文字作為背景的遮罩 */
+  /* 這將會讓漸層效果顯示在文字上，而不是在元素的背景上 */
   background-clip: text;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -51,7 +57,7 @@ body {
   cursor: pointer;
 }
 
-/* slider styling */
+/* 滑桿樣式 */
 
 .slider-container {
   width: 80%;
@@ -64,28 +70,28 @@ body {
   transform: translateY(1.8rem);
 }
 
-/* Styling the track */
+/* 軌道樣式 */
 input[type='range']::-webkit-slider-runnable-track {
   height: 8px;
   border-radius: 4px;
   background: linear-gradient(to right, #555555, #f1f3f5);
 }
 
-/* Styling the thumb */
+/* 滑塊樣式 */
 input[type='range']::-webkit-slider-thumb {
   height: 24px;
   width: 24px;
   border-radius: 50%;
-  background: #555; /* Thumb color */
+  background: #555; /* 滑塊顏色 */
   cursor: pointer;
   -webkit-appearance: none;
-  transition: all 0.3s ease; /* Smooth transition */
+  transition: all 0.3s ease;
   transform: translateY(-0.4rem);
 }
 
-/* Highlighting the thumb on hover */
+/* 滑塊 hover 時的效果 */
 input[type='range']::-webkit-slider-thumb:hover {
-  box-shadow: 0 0 10px rgb(84, 84, 84, 0.4); /* Add a subtle box-shadow on hover */
+  box-shadow: 0 0 10px rgb(84, 84, 84, 0.4);
   transform: translateY(-0.4rem) scale(1.2);
 }
 
@@ -93,9 +99,9 @@ input[type='range']::-webkit-slider-thumb:hover {
   font-size: 2.4em;
   padding: 4px 8px;
   border-radius: 4px;
-  color: #555; /* Match the thumb color */
-  background: #fff; /* Background color for the value */
-  box-shadow: 0 0 10px rgb(84, 84, 84, 0.1); /* Add a subtle box-shadow to the value */
+  color: #555; /* 尺寸提示的字體顏色 */
+  background: #fff; /* 尺寸提示的背景 */
+  box-shadow: 0 0 10px rgb(84, 84, 84, 0.1);
 }
 
 .theme-section {
@@ -114,11 +120,37 @@ input[type='range']::-webkit-slider-thumb:hover {
   cursor: pointer;
 }
 
+/* 添加 hover 圖片使用 */
+.theme-section div {
+  position: relative;
+  overflow: hidden; /* 隱藏超出邊界的內容 */
+}
+
+.theme-section div::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0; /* 預設為隱藏 */
+  transition: opacity 0.3s ease-in-out; /* 平滑過渡效果 */
+  z-index: 10; /* 確保圖層在顏色條紋之上 */
+}
+
+/* hover 時顯示圖片 */
+.theme-section div:hover::after {
+  opacity: 1;
+}
+
 .theme-color {
   width: 25%;
 }
 
-/* retro theme */
+/* 主題區域按鈕 */
+/* retro 復古 */
 .retro div:nth-child(1) {
   background-color: #3c3e4a;
 }
@@ -135,8 +167,12 @@ input[type='range']::-webkit-slider-thumb:hover {
   background-color: #2f3674;
 }
 
-/* navy-blue */
-.navy-blue div:nth-child(1) {
+.retro::after {
+  background-image: url('retro.jpg');
+}
+
+/* navy-blue 海軍藍 */
+/* .navy-blue div:nth-child(1) {
   background-color: #2a309c;
 }
 
@@ -150,9 +186,65 @@ input[type='range']::-webkit-slider-thumb:hover {
 
 .navy-blue div:nth-child(4) {
   background-color: #2f3674;
+} */
+
+/* Cyberpunk 賽博龐克 */
+.cyberpunk div:nth-child(1) {
+  background-color: #00ffff;
 }
 
-/* ------------------ KEYBOARD SECTION ------------------ */
+.cyberpunk div:nth-child(2) {
+  background-color: #ff00ff;
+}
+
+.cyberpunk div:nth-child(3) {
+  background-color: #f72585;
+}
+
+.cyberpunk div:nth-child(4) {
+  background-color: #3a0ca3;
+}
+
+/* Cyberpunk2077 電馭叛客 */
+.cyberpunk2077 div:nth-child(1) {
+  background-color: #faff00;
+}
+
+.cyberpunk2077 div:nth-child(2) {
+  background-color: #00f2ea;
+}
+
+.cyberpunk2077 div:nth-child(3) {
+  background-color: #ff69b4;
+}
+
+.cyberpunk2077 div:nth-child(4) {
+  background-color: #121212;
+}
+
+.cyberpunk2077::after {
+  background-image: url('../img/Cyberpunk2077.png'); /* 電馭叛客圖片 */
+}
+
+/* EVA 初號機 */
+.eva-01 div:nth-child(1) {
+  background-color: #4b1a5a; /* 紫色 */
+}
+.eva-01 div:nth-child(2) {
+  background-color: #1f3f37; /* 深綠色 */
+}
+.eva-01 div:nth-child(3) {
+  background-color: #02f893; /* 螢光綠 */
+}
+.eva-01 div:nth-child(4) {
+  background-color: #ff851b; /* 亮橘色 */
+}
+
+.eva-01::after {
+  background-image: url('../img/EVA01.png'); /* EVA 初號機圖片 */
+}
+
+/* ------------------ 鍵盤部分 ------------------ */
 
 .keyboard {
   display: grid;
@@ -163,25 +255,26 @@ input[type='range']::-webkit-slider-thumb:hover {
   box-shadow: 0 0.4rem 0 0.6rem var(--color-keyboard-border),
     0 1.2rem 3.2rem rgba(0, 0, 0, 0.1);
 
-  /* force GPU acceleration to reduce
-   potential subrendering issues */
+  /* 強制使用 GPU 加速 排除子渲染問題 */
   transform: translateZ(0);
 
   transition: all 0.2s;
 }
 
+
+/* 全尺寸布局 */
 .full-size {
   grid-template-columns: 215fr 2fr 45fr 1fr 60fr;
   max-width: 122rem;
 }
 
+/* TKL布局 */
 .tkl {
-  /* whitespace in the tkl layout increased 
-  to 7fr for better region seperation */
   grid-template-columns: 215fr 7fr 45fr;
   max-width: 100rem;
 }
 
+/* 75%布局 */
 .seventy-five-percent {
   grid-template-columns: 79rem 0 16.5rem;
   max-width: 86rem;
@@ -212,14 +305,14 @@ input[type='range']::-webkit-slider-thumb:hover {
   box-shadow: var(--box-shadow-keycaps-accent);
 }
 
-/* making specificity higher by adding .key */
+/* 透過新增 .key 類別來提高樣式的優先級 */
 .key.key--pressed {
   color: var(--color-keycaps-legends-pressed);
   background-color: var(--color-keycaps-bg-pressed);
   box-shadow: var(--box-shadow-keycaps-pressed);
 }
 
-/* key pressing simulation class is for using in js */
+/* key pressing simulation 這個類別是用來在 JavaScript 中使用的 */
 .key:hover,
 .key--accent-color:hover,
 .key--pressed:hover,
@@ -243,7 +336,7 @@ input[type='range']::-webkit-slider-thumb:hover {
 
 /* __________________________________
    ||||||||||||||||||||||||||||||||||
-   |||| GENERAL KB LAYOUT STYLES ||||
+   ||||       鍵盤布局的樣式      ||||
    ||||||||||||||||||||||||||||||||||
 */
 
@@ -252,7 +345,7 @@ input[type='range']::-webkit-slider-thumb:hover {
   gap: 0.25rem;
 }
 
-/* contains "ESC" & Function (F1-F12) */
+/* ESC 和 F區 */
 .function {
   display: grid;
   grid-template-columns: 2fr 2fr repeat(4, 2fr) 1fr repeat(4, 2fr) 1fr repeat(
@@ -261,14 +354,14 @@ input[type='range']::-webkit-slider-thumb:hover {
     );
 }
 
-/* contains Top-Located Control (Prt Sc|Scr lck|Pause) keys  */
+/* 上方截圖控制區 (Prt Sc|Scr lck|Pause) */
 .system-control {
   grid-column: 3;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* contains Modifiers/Control (Ctrl|Alt|etc.) & Alpha (A-Z) keys */
+/* 快捷鍵 和 打字區 (Ctrl|Alt|etc.) & (A-Z) */
 .typewriter {
   grid-row: 2;
   display: grid;
@@ -304,7 +397,7 @@ input[type='range']::-webkit-slider-thumb:hover {
   grid-template-columns: repeat(3, 1.29fr) 6.36fr repeat(4, 1.29fr);
 }
 
-/* contains Navigation (PgUp|PgDn|etc.) & Arrow keys */
+/* 方向鍵上方六格功能 (PgUp|PgDn|etc.) & 方向鍵 */
 .navigation {
   grid-column: 3;
 
@@ -313,7 +406,7 @@ input[type='range']::-webkit-slider-thumb:hover {
   grid-template-rows: repeat(5, 1fr);
 }
 
-/* contains Numpad Keys */
+/* 數字區 */
 .numpad {
   grid-column: 5;
 
@@ -324,15 +417,15 @@ input[type='range']::-webkit-slider-thumb:hover {
 
 /* _______________________________
    |||||||||||||||||||||||||||||||
-   |||| KEY SPECIFIC STYLES ||||||
+   ||||     特定按鍵風格     ||||||
    |||||||||||||||||||||||||||||||
 */
 
 /**************************/
-/* TYPEWRITER REGION KEYS */
+/*         打字區         */
 /**************************/
 
-/* styling keys with sublegends */
+/* 使用子圖案來設定鍵的樣式 */
 .key--sublegend {
   display: grid;
   grid-template-rows: 1fr auto auto 1fr;
@@ -351,13 +444,13 @@ input[type='range']::-webkit-slider-thumb:hover {
   grid-row: 2;
 }
 
-/* styling enter key as return sign  */
+/* 將Entel鍵設定為返回符號  */
 .enter span {
   transform: translateY(-0.25rem);
   font-size: 2.8rem;
 }
 
-/* windows and context menu icons */
+/* 視窗和上下文選單圖示 */
 .metaleft svg {
   width: 1.8rem;
   height: 1.8rem;
@@ -413,13 +506,13 @@ input[type='range']::-webkit-slider-thumb:hover {
   stroke: var(--color-keycaps-legends-pressing);
 }
 
-/* spacebar legend */
+/* 空白鍵圖案 */
 .space span {
   transform: translateY(-1.6rem);
   font-size: 1.6rem;
 }
 
-/* side keys text aligning */
+/* 側鍵文字對齊 */
 .backquote,
 .tab,
 .capslock,
@@ -438,7 +531,7 @@ input[type='range']::-webkit-slider-thumb:hover {
 }
 
 /**************************/
-/* NAVIGATION REGION KEYS */
+/*    方向鍵上方六格功能    */
 /**************************/
 
 .arrowup {
@@ -476,7 +569,7 @@ input[type='range']::-webkit-slider-thumb:hover {
 }
 
 /**********************/
-/* NUMPAD REGION KEYS */
+/* 數字鍵盤區域鍵 */
 /**********************/
 
 .numpadadd {
@@ -496,7 +589,7 @@ input[type='range']::-webkit-slider-thumb:hover {
 
 /* _____________________________________
    |||||||||||||||||||||||||||||||||||||
-   |||| Changing Layout Animation ||||||
+   ||||      改變布局時的動畫      ||||||
    |||||||||||||||||||||||||||||||||||||
 */
 
@@ -504,16 +597,13 @@ input[type='range']::-webkit-slider-thumb:hover {
   transition: all 0.15s;
 }
 
-/* simply using display:none; doesn't work because 
-then we can't use transitions anymore
-
-STEPS FOR REMOVING NUMPAD FROM FULL-SIZE KEYBOARD: */
+/* 從全尺寸鍵盤移除數字鍵盤的步驟 */
 .hidden--step1 {
-  /* 1) Hide it visually */
+  /* 1) 隱藏顯示 */
   opacity: 0;
-  /* 2) Make it inaccessible to mouse and keyboard */
+  /* 2) 讓滑鼠鍵盤無法操作 */
   pointer-events: none;
-  /* 3) Hide it from screen readers */
+  /* 3) 在螢幕上隱藏 */
   visibility: hidden;
 
   transition: all 0.15;
@@ -524,15 +614,15 @@ STEPS FOR REMOVING NUMPAD FROM FULL-SIZE KEYBOARD: */
   padding: 0;
 }
 
-/* ------------------ FOOTER ------------------ */
+/* ------------------ 頁尾 ------------------ */
 
 .footer {
-  flex-grow: 1; /* Allow the footer to grow and fill the remaining space */
+  flex-grow: 1; /* 填滿剩餘空間 */
 
   display: flex;
   justify-content: center;
   align-items: end;
-  padding: 3.2rem 0 2.4rem; /* Add padding for spacing */
+  padding: 3.2rem 0 2.4rem;
 }
 
 .footer-text {

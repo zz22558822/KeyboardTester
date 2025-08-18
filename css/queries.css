@@ -1,8 +1,7 @@
-/* rem and em do NOT depend on html font-size 
-in media queries! Instead, 1rem = 1em = 16px */
+/* rem 和 em 在媒體查詢中不依賴 html 字體大小 1rem = 1em = 16px */
 
 /***********************************/
-/* BELOW 1392px (Smaller desktops) */
+/* 小於 1392px (較小的桌上型電腦) */
 /***********************************/
 @media (max-width: 87em) {
   html {
@@ -11,7 +10,7 @@ in media queries! Instead, 1rem = 1em = 16px */
 }
 
 /******************************************************/
-/* BELOW 1264px (Larger laptops and smaller desktops) */
+/* 小於 1264px (較大的筆記型電腦和較小的桌上型電腦) */
 /******************************************************/
 @media (max-width: 79em) {
   html {
@@ -20,7 +19,7 @@ in media queries! Instead, 1rem = 1em = 16px */
 }
 
 /************************************************************/
-/* BELOW 1056px (Medium-sized laptops and smaller desktops) */
+/* 小於 1056px (中型筆記型電腦和小型桌上型電腦) */
 /************************************************************/
 @media (max-width: 66em) {
   html {
@@ -29,7 +28,7 @@ in media queries! Instead, 1rem = 1em = 16px */
 }
 
 /******************************************************/
-/* BELOW 928px (Smaller laptops and smaller desktops) */
+/* 小於 928px (較小的筆記型電腦和較小的桌上型電腦) */
 /******************************************************/
 @media (max-width: 58em) {
   html {
@@ -38,7 +37,7 @@ in media queries! Instead, 1rem = 1em = 16px */
 }
 
 /*************************/
-/* BELOW 784px (Tablets) */
+/* 小於 784px (平板電腦) */
 /*************************/
 @media (max-width: 49em) {
   html {
@@ -47,7 +46,7 @@ in media queries! Instead, 1rem = 1em = 16px */
 }
 
 /*******************************/
-/* BELOW 640px (Small tablets) */
+/* 小於 640px (小型平板電腦) */
 /*******************************/
 @media (max-width: 40em) {
   html {
@@ -56,7 +55,7 @@ in media queries! Instead, 1rem = 1em = 16px */
 }
 
 /********************************/
-/* BELOW 512px (Mobile devices) */
+/* 小於 512px (手機) */
 /********************************/
 @media (max-width: 32em) {
   html {
@@ -65,7 +64,7 @@ in media queries! Instead, 1rem = 1em = 16px */
 }
 
 /**************************************/
-/* BELOW 384px (Small mobile devices) */
+/* 小於 384px (較小的手機) */
 /**************************************/
 @media (max-width: 24em) {
   html {
