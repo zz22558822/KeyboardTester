@@ -108,6 +108,14 @@ const btnEnd = document.querySelector('.end');
 const btnPgUp = document.querySelector('.pageup');
 const btnPgDn = document.querySelector('.pagedown');
 
+// 65% 鍵盤佈局設定相關
+const btnPageUp = document.querySelector('.pageup');
+const btnPageDown = document.querySelector('.pagedown');
+const btnPrintScreen = document.querySelector('.printscreen');
+const btnPause = document.querySelector('.pause');
+const btnMetaRight = document.querySelector('.metaright');
+const btnControlRight = document.querySelector('.controlright');
+
 // 根據滑桿更新佈局
 function updateLayout() {
   const sliderValue = parseInt(slider.value);
@@ -126,6 +134,10 @@ function updateLayout() {
       output.textContent = '75%';
       changeTo75();
       break;
+    case 4:
+      output.textContent = '65%';
+      changeTo65();
+      break;
     default:
       break;
   }
@@ -134,6 +146,7 @@ function updateLayout() {
 const changeToFullSize = function () {
   undo75();
   undoTKL();
+  undo65();
   themeAndLayout.style.maxWidth = '120rem';
   keyboard.classList.add('full-size');
 };
@@ -147,6 +160,7 @@ const undoTKL = function () {
 const changeToTKL = function () {
   return new Promise(resolve => {
     undo75();
+    undo65();
 
     numpad.classList.add('hidden--step1');
     themeAndLayout.style.maxWidth = '98rem';
@@ -217,8 +231,73 @@ const undo75 = () => {
 
 const changeTo75 = async () => {
   await changeToTKL(); // 等待 changeToTKL() 中的轉換完成
+  undo65();
   themeAndLayout.style.maxWidth = '85rem';
   updateStylesFor75(true);
+};
+
+// 65% 因為依賴 75% 導致切換時會多一個放大再縮小的動畫 此處有BUG
+const changeTo65 = async () => {
+  // 基於 75% 佈局來實作
+  await changeToTKL();
+  undo75();
+
+  // 設定 65% 佈局的鍵盤最大寬度
+  themeAndLayout.style.maxWidth = '75rem';
+
+  // 讓 75% 佈局的樣式生效
+  updateStylesFor75(true);
+
+  // 隱藏 F 鍵區
+  functionRegion.style.display = 'none';
+  keyboard.classList.add('sixty-five-percent');
+
+  // 隱藏 65% 佈局下不需要的按鍵
+  btnPrintScreen.style.display = 'none';
+  btnPause.style.display = 'none';
+  btnMetaRight.style.display = 'none';
+  btnHome.style.display = 'none'; //隱藏 Home 鍵
+  // 有些布局按鈕會不相同 可以依照需求調整
+  // btnEnd.style.display = 'none'; //隱藏 End 鍵
+  // btnPgUp.style.display = 'none'; //隱藏 PgUp 鍵
+  // btnPgDn.style.display = 'none'; //隱藏 PgDn 鍵
+
+  // 調整佈局 右邊的 Alt 和 Ctrl
+  // const fifthRowColumns = 'repeat(3, 1.29fr) 6.36fr 1fr 1fr 1fr 1.29fr';
+  const fifthRowColumns = 'repeat(3, 1.29fr) 6.36fr 1.29fr 1.29fr 1.29fr 1.29fr';
+  btnControlRight.style.paddingRight = '2.3rem';
+
+  fifthRow.style.gridTemplateColumns = fifthRowColumns;
+
+  // 調整 Delete 鍵的位置
+  btnDelete.style.gridColumn = '3';
+  btnDelete.style.gridRow = '1';
+  btnDelete.style.transform = 'translateY(0)';
+};
+
+const undo65 = () => {
+  // 恢復被 65% 佈局隱藏的區域
+  functionRegion.style.display = 'grid';
+  keyboard.classList.remove('sixty-five-percent');
+
+  // 恢復 65% 佈局下隱藏的按鍵
+  btnPrintScreen.style.display = 'grid';
+  btnPause.style.display = 'grid';
+  btnMetaRight.style.display = 'grid';
+  btnHome.style.display = 'grid';
+  // btnEnd.style.display = 'grid';
+  // btnPgUp.style.display = 'grid';
+  // btnPgDn.style.display = 'grid';
+
+  // 恢復 Delete 鍵的樣式
+  btnDelete.style.gridColumn = '';
+  btnDelete.style.gridRow = '';
+  btnDelete.style.transform = '';
+
+  btnControlRight.style.paddingRight = '';
+
+  // 恢復第五行的佈局設定
+  fifthRow.style.gridTemplateColumns = '';
 };
 
 // 禁用滑鼠右鍵選單
@@ -241,7 +320,6 @@ function debounce(func, delay) {
 }
 
 // 監聽滑桿
-// slider.addEventListener('input', updateLayout); // 原本的容易觸發縮減不完全的BUG
 const debouncedUpdateLayout = debounce(updateLayout, 150);
 slider.addEventListener('input', debouncedUpdateLayout);
 
