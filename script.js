@@ -34,7 +34,16 @@ const changeTheme = function (themeName) {
 
 initializeTheme();
 
-// ------------------- HANDLING KEY PRESS -------------------
+// ------------------- 按鍵觸發相關 -------------------
+
+// 新增變數來追蹤按鍵時長
+let keyHistory = {};
+
+// 取得新增的顯示元素
+const keyDisplay = document.getElementById('keyDisplay');
+const keyCodeDisplay = document.getElementById('keyCodeDisplay');
+const codeDisplay = document.getElementById('codeDisplay');
+const durationDisplay = document.getElementById('durationDisplay');
 
 const handleKeyPress = function (e) {
   console.log(e);
@@ -58,8 +67,46 @@ const handleKeyPress = function (e) {
   const keyElement = document.querySelector('.' + e.code.toLowerCase());
 
   if (e.type === 'keydown') {
+    // 檢查按鍵是否已經按下，避免重複計時
+    if (!keyHistory[e.code]) {
+      keyHistory[e.code] = {
+        startTime: Date.now(),
+        timerId: null
+      };
+      
+      // 更新顯示框內容
+      // 判斷按下的鍵是否為單個字母，若是則轉為大寫
+      const key = e.key;
+      if (key.length === 1 && key.match(/[a-z]/i)) {
+        keyDisplay.textContent = key.toUpperCase();
+      } else {
+        // 如果不是單個字母，例如：'Space'、'ArrowUp'、'Shift' 等
+        // 檢查是否為 Space 鍵
+        keyDisplay.textContent = key === ' ' ? 'Space' : key;
+      }
+      
+      keyCodeDisplay.textContent = e.keyCode;
+      codeDisplay.textContent = e.code;
+      
+      // 開始每 10 毫秒更新一次時長
+      keyHistory[e.code].timerId = setInterval(() => {
+        const duration = Date.now() - keyHistory[e.code].startTime;
+        durationDisplay.textContent = duration;
+      }, 10);
+    }
+
     keyElement.classList.add('key-pressing-simulation');
   } else if (e.type === 'keyup') {
+    // 檢查按鍵是否已被計時
+    if (keyHistory[e.code]) {
+      // 停止計時器並顯示最終時長
+      clearInterval(keyHistory[e.code].timerId);
+      const duration = Date.now() - keyHistory[e.code].startTime;
+      durationDisplay.textContent = duration;
+
+      // 清除歷史紀錄
+      delete keyHistory[e.code];
+    }
     keyElement.classList.remove('key-pressing-simulation');
   }
 
@@ -230,16 +277,22 @@ const undo75 = () => {
 };
 
 const changeTo75 = async () => {
-  await changeToTKL(); // 等待 changeToTKL() 中的轉換完成
+  // changeToTKL() 核心隱藏去除動畫防止縮小放大問題
+  numpad.classList.add('hidden--step1');
+  keyboard.classList.remove('full-size');
+  keyboard.classList.add('tkl');
+  numpad.classList.add('hidden--step2');
   undo65();
   themeAndLayout.style.maxWidth = '85rem';
   updateStylesFor75(true);
 };
 
-// 65% 因為依賴 75% 導致切換時會多一個放大再縮小的動畫 此處有BUG
 const changeTo65 = async () => {
-  // 基於 75% 佈局來實作
-  await changeToTKL();
+  // changeToTKL() 核心隱藏去除動畫防止縮小放大問題
+  numpad.classList.add('hidden--step1');
+  keyboard.classList.remove('full-size');
+  keyboard.classList.add('tkl');
+  numpad.classList.add('hidden--step2');
   undo75();
 
   // 設定 65% 佈局的鍵盤最大寬度

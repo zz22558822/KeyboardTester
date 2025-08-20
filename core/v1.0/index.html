@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>鍵盤觸發測試</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>鍵盤觸發測試</h1>
+        <p>請在下方區域內按下任何一個鍵...</p>
+        <div class="key-info">
+            <div class="info-box">
+                <span class="label">按下的鍵：</span>
+                <span id="keyDisplay" class="value"></span>
+            </div>
+            <div class="info-box">
+                <span class="label">鍵碼 (keyCode)：</span>
+                <span id="keyCodeDisplay" class="value"></span>
+            </div>
+            <div class="info-box">
+                <span class="label">鍵值 (code)：</span>
+                <span id="keyValDisplay" class="value"></span>
+            </div>
+            <div class="info-box" id="duration-box">
+                <span class="label">按鍵時長：</span>
+                <span id="durationDisplay" class="value"></span>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

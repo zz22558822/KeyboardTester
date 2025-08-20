@@ -280,6 +280,12 @@ input[type='range']::-webkit-slider-thumb:hover {
   max-width: 86rem;
 }
 
+/* 65%布局 */
+.sixty-five-percent {
+  grid-template-columns: 79rem 0 16.5rem;
+  max-width: 86rem;
+}
+
 .key {
   width: 100%;
   height: var(--standard-key-size);
@@ -612,6 +618,60 @@ input[type='range']::-webkit-slider-thumb:hover {
 .hidden--step2 {
   width: 0;
   padding: 0;
+}
+
+
+/* ------------------ 資訊顯示區域樣式 ------------------ */
+.key-info {
+  max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 2.4rem 2.4rem 2.4rem;
+  background-color: var(--color-background-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 0.8rem;
+  box-shadow: var(--shadow-small), var(--shadow-medium);
+  text-align: left;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-segoe-ui);
+}
+
+.key-info .info-box {
+  display: grid;
+  /* 確保最小寬度，且內容增加時可以延伸 */
+  grid-template-columns: repeat(4, minmax(10rem, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.key-info p {
+  font-size: 1.6rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.key-info span {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  transition: color 0.2s ease-in-out;
+}
+
+/* 核心樣式：使用定位來放置數字和單位 */
+.value-and-unit-container {
+  position: relative; /* 讓 .unit 可以相對它定位 */
+}
+
+.key-info .unit {
+  position: absolute;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  padding-top: 10px;
+  margin-left: 0.5rem; /* 數字與單位的間距 */
 }
 
 /* ------------------ 頁尾 ------------------ */
