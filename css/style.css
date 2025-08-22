@@ -638,7 +638,7 @@ input[type='range']::-webkit-slider-thumb:hover {
 .key-info .info-box {
   display: grid;
   /* 確保最小寬度，且內容增加時可以延伸 */
-  grid-template-columns: repeat(4, minmax(10rem, 1fr));
+  grid-template-columns: repeat(4, 12rem);
   gap: 2rem;
   justify-items: center;
 }

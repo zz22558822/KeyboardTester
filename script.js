@@ -123,6 +123,29 @@ const handleKeyPress = function (e) {
 document.addEventListener('keydown', handleKeyPress);
 document.addEventListener('keyup', handleKeyPress);
 
+
+// --------------------- 頁面失去焦點時處理 ---------------------
+// 當視窗失去焦點時（例如彈出視窗、切換分頁），停止所有計時器
+window.addEventListener('blur', () => {
+  // 遍歷所有正在計時的按鍵
+  for (const keyCode in keyHistory) {
+    // 停止對應的計時器
+    clearInterval(keyHistory[keyCode].timerId);
+  }
+  // 清空計時歷史記錄
+  keyHistory = {};
+  // 清除鍵盤上所有正在按下的模擬樣式
+  document.querySelectorAll('.key-pressing-simulation').forEach(el => {
+    el.classList.remove('key-pressing-simulation');
+  });
+  // 重置顯示框內容
+  keyDisplay.textContent = '-';
+  keyCodeDisplay.textContent = '-';
+  codeDisplay.textContent = '-';
+  durationDisplay.textContent = '-';
+});
+
+
 // --------------------- 更改佈局 ---------------------
 
 const slider = document.getElementById('layoutSlider');
