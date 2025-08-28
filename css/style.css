@@ -96,9 +96,10 @@ body {
   width: 4.8rem;
   height: 2.6rem;
   background-color: #ccc;
-  border-radius: 1.3rem;
+  border-radius: 5rem;
   margin-right: 1.2rem;
   transition: background-color 0.3s ease-in-out;
+  border: 2px solid #888;
 }
 /* 撥桿本身 */
 .checkbox-container label::after {
@@ -110,6 +111,7 @@ body {
   background-color: #fff;
   border-radius: 50%;
   transition: transform 0.3s ease-in-out;
+  border: 2px solid #CCC;
 }
 /* 勾選後樣式 */
 .checkbox-container input[type="checkbox"]:checked + label::before {
@@ -762,12 +764,10 @@ input[type='range']::-webkit-slider-thumb:hover {
 
 /* 滑鼠區 */
 #mouse-container{
-  background-color: #fff;
   text-align:center;
   margin: auto;
   width: 100%;
   position: relative;
-  border: dotted 5px #ccc;
   user-select: none;
   max-width: 122rem;
   border-radius: 30px;

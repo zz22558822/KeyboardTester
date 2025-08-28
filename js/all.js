@@ -7,6 +7,9 @@ const clearOnSwitchCheckbox = document.getElementById('clearOnSwitchCheckbox'); 
 // 新增一個變數來追蹤目前的模式
 let isMouseModeActive = false;
 // --------------------- 模式切換 ---------------------
+const btnKeyboard = document.querySelector('.btn-keyboard-mode')
+const btnMouse = document.querySelector('.btn-mouse-mode')
+
 // 滑鼠模式
 function showMouseMode() {
   isMouseModeActive = true;
@@ -16,6 +19,9 @@ function showMouseMode() {
   clearKeyboardDisplay();
   // 清除觸發紀錄
   clearAllDisplays()
+  // 按鈕顏色改變
+  btnMouse.style.color = "var(--color-keycaps-legends)"
+  btnKeyboard.style.color = "var(--color-keycaps-legends-accent)"
 }
 // 鍵盤模式
 function showKeyboardMode() {
@@ -26,6 +32,9 @@ function showKeyboardMode() {
   clearKeyboardDisplay();
   // 清除觸發紀錄
   clearAllDisplays()
+  // 按鈕顏色改變
+  btnKeyboard.style.color = "var(--color-keycaps-legends)"
+  btnMouse.style.color = "var(--color-keycaps-legends-accent)"
 }
 
 // --------------------- 主題切換 ---------------------
