@@ -1,6 +1,9 @@
 :root {
   /* 鍵盤上的寬高 */
   --standard-key-size: 5rem;
+
+  /* 滑鼠觸發顏色 */
+  --primary-color: #e6304a;
 }
 
 /* ------------------ 背景 ------------------ */
@@ -18,12 +21,17 @@ body {
   -ms-user-select: none;     /* 針對 Internet Explorer/Edge */
 }
 
+#keyboard-mode {
+  display: flex;
+  flex-direction: column;
+}
+
 /* ------------------ 標題 ------------------ */
 
 .intro {
   max-width: 130rem;
   margin: 0 auto;
-  padding: 4.8rem 3.2rem 0rem;
+  padding: 3.2rem 3.2rem 0rem;
 }
 
 .title span {
@@ -36,6 +44,80 @@ body {
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
+}
+
+/* 切換模式按鈕 */
+.mode-switcher {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.mode-switcher button {
+  padding: 1rem 2rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--color-keycaps-bg-accent);
+  color: var(--color-keycaps-legends-accent);
+  transition: all 0.2s;
+  box-shadow: var(--box-shadow-keycaps-accent);
+}
+.mode-switcher button:hover {
+  transform: translateY(-0.2rem);
+  box-shadow: var(--box-shadow-keycaps-accent-hover);
+  color: var(--color-keycaps-legends);
+}
+
+/* 清除開關選擇 */
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+.checkbox-container label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+/* 隱藏瀏覽器預設的勾選框 */
+.checkbox-container input[type="checkbox"] {
+  display: none;
+}
+/* 撥桿開關的基座 */
+.checkbox-container label::before {
+  content: "";
+  width: 4.8rem;
+  height: 2.6rem;
+  background-color: #ccc;
+  border-radius: 1.3rem;
+  margin-right: 1.2rem;
+  transition: background-color 0.3s ease-in-out;
+}
+/* 撥桿本身 */
+.checkbox-container label::after {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out;
+}
+/* 勾選後樣式 */
+.checkbox-container input[type="checkbox"]:checked + label::before {
+  background-color: var(--color-keycaps-bg-accent);
+}
+/* 勾選後撥桿移動 */
+.checkbox-container input[type="checkbox"]:checked + label::after {
+  transform: translateX(2.2rem);
 }
 
 .theme-and-layout {
@@ -165,10 +247,6 @@ input[type='range']::-webkit-slider-thumb:hover {
 
 .retro div:nth-child(4) {
   background-color: #2f3674;
-}
-
-.retro::after {
-  background-image: url('retro.jpg');
 }
 
 /* navy-blue 海軍藍 */
@@ -673,6 +751,65 @@ input[type='range']::-webkit-slider-thumb:hover {
   padding-top: 10px;
   margin-left: 0.5rem; /* 數字與單位的間距 */
 }
+
+
+/* ------------------ 滑鼠模式使用 ------------------ */
+
+/* 內容區 flex 對齊 */
+.content {
+  flex: 1 0 auto;
+}
+
+/* 滑鼠區 */
+#mouse-container{
+  background-color: #fff;
+  text-align:center;
+  margin: auto;
+  width: 100%;
+  position: relative;
+  border: dotted 5px #ccc;
+  user-select: none;
+  max-width: 122rem;
+  border-radius: 30px;
+}
+/* 滑鼠圖片 */
+#mouse {
+  width: 100%;
+  max-width:450px;
+}
+
+/* 按下時 */
+.active{
+  opacity:0.7;
+}
+/* 按下後 */
+.visited{
+  opacity:0.3;
+}
+/* 無按下初始隱藏 */
+.non-active{
+  opacity:0.0;
+}
+
+/* 滾輪往前 */
+.st1, .st3{
+  fill: var(--primary-color);
+  /* 雷蛇綠 */
+  /* fill:#32CD32; */
+}
+.st2{
+  fill:none;
+  stroke:#e6304a;
+  stroke-miterlimit:10;
+}
+@media (max-width:1367px){
+  #mouse {
+    max-width:350px;
+  }
+}
+
+
+
 
 /* ------------------ 頁尾 ------------------ */
 

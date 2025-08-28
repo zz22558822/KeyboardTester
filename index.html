@@ -3,34 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>鍵盤測試器</title>
+    <title>鍵鼠測試器</title>
     <meta
       name="description"
-      content="此工具用於測試鍵盤供排除問題，可自由改動布局樣式"
+      content="此工具用於測試鍵盤、滑鼠供排除問題，可自由改動佈局樣式與主題風格"
     />
     <link rel="icon" href="img/favicon.png" />
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <!-- Open Graph (Facebook) Metadata -->
     <meta
       property="og:title"
-      content="鍵盤測試器"
+      content="鍵鼠測試器"
     />
     <meta
       property="og:description"
-      content="此工具用於測試鍵盤供排除問題，可自由改動布局樣式"
+      content="此工具用於測試鍵盤、滑鼠供排除問題，可自由改動佈局樣式與主題風格"
     />
     <meta property="og:type" content="website" />
 
-    <!-- Twitter Card Metadata -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="鍵盤測試器"
+      content="鍵鼠測試器"
     />
     <meta
       name="twitter:description"
-      content="此工具用於測試鍵盤供排除問題，可自由改動布局樣式"
+      content="此工具用於測試鍵盤、滑鼠供排除問題，可自由改動佈局樣式與主題風格"
     />
 
     <link rel="stylesheet" href="css/segoe-fonts.min.css" />
@@ -41,379 +39,944 @@
     <script defer src="./js/all.js"></script>
   </head>
   <body>
+
     <header>
       <section class="intro">
         <h1 class="heading-primary title center-text">
-          <span>鍵盤測試器</span>
+          <span>鍵鼠測試器</span>
         </h1>
         <p class="paragraph description center-text">
-          此工具用於測試鍵盤供排除問題
-          可自由改動布局樣式
+          此工具用於測試鍵盤、滑鼠供排除問題，可自由改動佈局與主題
         </p>
+        <div class="mode-switcher">
+          <button onclick="showKeyboardMode()">鍵盤模式</button>
+          <button onclick="showMouseMode()">滑鼠模式</button>
+        </div>
+        <div class="checkbox-container">
+          <input type="checkbox" id="clearOnSwitchCheckbox" checked />
+          <label for="clearOnSwitchCheckbox">切換模式時清除記錄</label>
+        </div>
       </section>
     </header>
 
-    <section class="key-info">
-      <div class="info-box">
-        <p>按鍵<span id="keyDisplay">-</span></p>
-        <p>鍵碼<span id="keyCodeDisplay">-</span></p>
-        <p>鍵值<span id="codeDisplay">-</span></p>
-        <p>時長<span class="info-value-group">
-            <span id="durationDisplay">-</span>
-            <span class="unit">ms</span></span></p>
-      </div>
-    </section>
+    <!-- 鍵盤模式 -->
+    <div id="keyboard-mode">
+      <section class="key-info">
+        <div class="info-box">
+          <p>按鍵<span id="keyDisplay">-</span></p>
+          <p>鍵碼<span id="keyCodeDisplay">-</span></p>
+          <p>鍵值<span id="codeDisplay">-</span></p>
+          <p>時長<span class="info-value-group">
+              <span id="durationDisplay">-</span>
+              <span class="unit">ms</span></span></p>
+        </div>
+      </section>
 
-    <main>
-      <div class="theme-and-layout">
-        <div></div>
-        <div class="slider-container">
-          <output class="slider-value">全尺寸</output>
-          <input
-            type="range"
-            min="1"
-            max="4"
-            value="1"
-            class="slider"
-            id="layoutSlider"
-          />
+      <main>
+        <div class="theme-and-layout">
+          <div></div>
+          <div class="slider-container">
+            <output class="slider-value">全尺寸</output>
+            <input
+              type="range"
+              min="1"
+              max="4"
+              value="1"
+              class="slider"
+              id="layoutSlider"
+            />
+          </div>
+
+          <section class="theme-section">
+            <div class="retro" aria-label="retro theme option" title="復古預設">
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+            </div>
+
+            <div class="cyberpunk2077" aria-label="cyberpunk theme option" title="電馭叛客">
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+            </div>
+            
+            <div class="eva-01" aria-label="eva-01 theme option" title="EVA 初號機">
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+              <div class="theme-color"></div>
+            </div>
+          </section>
         </div>
 
-        <section class="theme-section">
-          <!-- 復古主題 -->
-          <div class="retro" aria-label="retro theme option" title="復古預設">
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-          </div>
+        <div class="keyboard full-size">
+          <section class="function region">
+            <div class="key escape">ESC</div>
+            <div class="empty-space-between-keys" aria-hidden="true"></div>
+            <div class="key f1">F1</div>
+            <div class="key f2">F2</div>
+            <div class="key f3">F3</div>
+            <div class="key f4">F4</div>
+            <div class="empty-space-between-keys" aria-hidden="true"></div>
+            <div class="key f5">F5</div>
+            <div class="key f6">F6</div>
+            <div class="key f7">F7</div>
+            <div class="key f8">F8</div>
+            <div class="empty-space-between-keys" aria-hidden="true"></div>
+            <div class="key f9">F9</div>
+            <div class="key f10">F10</div>
+            <div class="key f11">F11</div>
+            <div class="key f12">F12</div>
+          </section>
 
-          <!-- 海軍藍主題 -->
-          <!-- <div class="navy-blue" aria-label="navy-blue theme option" title="海軍藍">
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-          </div> -->
+          <section class="system-control region">
+            <div class="key printscreen key--accent-color">Prt Sc</div>
+            <div class="key scrolllock key--accent-color">Scr Lk</div>
+            <div class="key pause key--accent-color">Pause</div>
+          </section>
 
-          <!-- Cyberpunk主題 -->
-          <!-- <div class="cyberpunk" aria-label="cyberpunk theme option" title="賽博龐克"">
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-          </div> -->
+          <section class="typewriter region">
+            <div class="first-row">
+              <div class="key backquote key--sublegend key--accent-color">
+                <span>~</span> <span>`</span>
+              </div>
+              <div class="key digit1">1</div>
+              <div class="key digit2">2</div>
+              <div class="key digit3">3</div>
+              <div class="key digit4">4</div>
+              <div class="key digit5">5</div>
+              <div class="key digit6">6</div>
+              <div class="key digit7">7</div>
+              <div class="key digit8">8</div>
+              <div class="key digit9">9</div>
+              <div class="key digit0">0</div>
+              <div class="key minus key--sublegend">
+                <span>&minus;</span> <span>&dash;</span>
+              </div>
+              <div class="key equal key--sublegend">
+                <span>&plus;</span><span>&equals;</span>
+              </div>
+              <div class="key backspace key--accent-color">Backspace</div>
+            </div>
 
-          <!-- 電馭叛客主題 -->
-          <div class="cyberpunk2077" aria-label="cyberpunk theme option" title="電馭叛客">
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-          </div>
-          
-          <!-- EVA 初號機主題 -->
-          <div class="eva-01" aria-label="eva-01 theme option" title="EVA 初號機">
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-            <div class="theme-color"></div>
-          </div>
-        </section>
-      </div>
+            <div class="second-row">
+              <div class="key tab key--accent-color">Tab</div>
+              <div class="key keyq">Q</div>
+              <div class="key keyw">W</div>
+              <div class="key keye">E</div>
+              <div class="key keyr">R</div>
+              <div class="key keyt">T</div>
+              <div class="key keyy">Y</div>
+              <div class="key keyu">U</div>
+              <div class="key keyi">I</div>
+              <div class="key keyo">O</div>
+              <div class="key keyp">P</div>
+              <div class="key bracketleft key--sublegend">
+                <span>&lbrace;</span> <span>&lbrack;</span>
+              </div>
+              <div class="key bracketright key--sublegend">
+                <span>&rbrace;</span> <span>&rbrack;</span>
+              </div>
+              <div class="key backslash key--sublegend key--accent-color">
+                <span>&vert;</span><span>&Backslash;</span>
+              </div>
+            </div>
 
-      <div class="keyboard full-size">
-        <!-- ESC 和 F區 -->
-        <section class="function region">
-          <div class="key escape">ESC</div>
-          <div class="empty-space-between-keys" aria-hidden="true"></div>
-          <div class="key f1">F1</div>
-          <div class="key f2">F2</div>
-          <div class="key f3">F3</div>
-          <div class="key f4">F4</div>
-          <div class="empty-space-between-keys" aria-hidden="true"></div>
-          <div class="key f5">F5</div>
-          <div class="key f6">F6</div>
-          <div class="key f7">F7</div>
-          <div class="key f8">F8</div>
-          <div class="empty-space-between-keys" aria-hidden="true"></div>
-          <div class="key f9">F9</div>
-          <div class="key f10">F10</div>
-          <div class="key f11">F11</div>
-          <div class="key f12">F12</div>
-        </section>
+            <div class="third-row">
+              <div class="key capslock key--accent-color">Caps</div>
+              <div class="key keya">A</div>
+              <div class="key keys">S</div>
+              <div class="key keyd">D</div>
+              <div class="key keyf">F</div>
+              <div class="key keyg">G</div>
+              <div class="key keyh">H</div>
+              <div class="key keyj">J</div>
+              <div class="key keyk">K</div>
+              <div class="key keyl">L</div>
+              <div class="key semicolon key--sublegend">
+                <span>&colon;</span> <span>&semi;</span>
+              </div>
+              <div class="key quote key--sublegend">
+                <span>&quot;</span> <span>&apos;</span>
+              </div>
+              <div class="key enter key--accent-color">
+                <span>&LongLeftArrow;</span>
+              </div>
+            </div>
 
-        <!-- 上方截圖控制區 -->
-        <section class="system-control region">
-          <div class="key printscreen key--accent-color">Prt Sc</div>
-          <div class="key scrolllock key--accent-color">Scr Lk</div>
-          <div class="key pause key--accent-color">Pause</div>
-        </section>
+            <div class="fourth-row">
+              <div class="key shiftleft key--accent-color">Shift</div>
+              <div class="key keyz">Z</div>
+              <div class="key keyx">X</div>
+              <div class="key keyc">C</div>
+              <div class="key keyv">V</div>
+              <div class="key keyb">B</div>
+              <div class="key keyn">N</div>
+              <div class="key keym">M</div>
+              <div class="key comma key--sublegend">
+                <span>&lt;</span> <span>&comma;</span>
+              </div>
+              <div class="key period key--sublegend">
+                <span>&gt;</span> <span>&period;</span>
+              </div>
+              <div class="key slash key--sublegend">
+                <span>&quest;</span> <span>&sol;</span>
+              </div>
+              <div class="key shiftright key--accent-color">Shift</div>
+            </div>
 
-        <!-- 快捷鍵 和 打字區 -->
-        <section class="typewriter region">
-          <!-- 數字行 -->
-          <div class="first-row">
-            <div class="key backquote key--sublegend key--accent-color">
-              <span>~</span> <span>`</span>
+            <div class="fifth-row">
+              <div class="key controlleft key--accent-color">Ctrl</div>
+              <div
+                class="key metaleft osleft key--accent-color"
+                aria-label="Left Windows key"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 4875 4875"
+                  aria-label="Left Windows key icon"
+                >
+                  <path
+                    d="M0 0h2311v2310H0zm2564 0h2311v2310H2564zM0 2564h2311v2311H0zm2564 0h2311v2311H2564"
+                  />
+                </svg>
+              </div>
+              <div class="key altleft key--accent-color">Alt</div>
+              <div class="key space key--accent-color" aria-label="Space">
+                <span>&UnderBar;&UnderBar;&UnderBar;&UnderBar;</span>
+              </div>
+              <div class="key altright key--accent-color">Alt</div>
+              <div
+                class="key metaright osright key--accent-color hide-in-65-layout"
+                aria-label="Right Windows key"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 4875 4875"
+                  aria-label="Right Windows key icon"
+                >
+                  <path
+                    d="M0 0h2311v2310H0zm2564 0h2311v2310H2564zM0 2564h2311v2311H0zm2564 0h2311v2311H2564"
+                  />
+                </svg>
+              </div>
+              <div
+                class="key contextmenu key--accent-color"
+                aria-label="Context Menu key"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 100 100"
+                  aria-label="Context Menu key icon"
+                >
+                  <rect
+                    x="10"
+                    y="10"
+                    width="80"
+                    height="80"
+                    rx="2"
+                    ry="2"
+                    stroke-width="7"
+                  />
+                  <rect
+                    x="25"
+                    y="30"
+                    width="50"
+                    height="4.5"
+                    rx="2"
+                    ry="2"
+                    stroke-width="4.5"
+                  />
+                  <rect
+                    x="25"
+                    y="47.5"
+                    width="50"
+                    height="4.5"
+                    rx="2"
+                    ry="2"
+                    stroke-width="4.5"
+                  />
+                  <rect
+                    x="25"
+                    y="65"
+                    width="50"
+                    height="4.5"
+                    rx="2"
+                    ry="2"
+                    stroke-width="4.5"
+                  />
+                </svg>
+              </div>
+              <div class="key controlright key--accent-color">Ctrl</div>
             </div>
-            <div class="key digit1">1</div>
-            <div class="key digit2">2</div>
-            <div class="key digit3">3</div>
-            <div class="key digit4">4</div>
-            <div class="key digit5">5</div>
-            <div class="key digit6">6</div>
-            <div class="key digit7">7</div>
-            <div class="key digit8">8</div>
-            <div class="key digit9">9</div>
-            <div class="key digit0">0</div>
-            <div class="key minus key--sublegend">
-              <span>&minus;</span> <span>&dash;</span>
-            </div>
-            <div class="key equal key--sublegend">
-              <span>&plus;</span><span>&equals;</span>
-            </div>
-            <div class="key backspace key--accent-color">Backspace</div>
-          </div>
+          </section>
 
-          <!-- qwerty行 -->
-          <div class="second-row">
-            <div class="key tab key--accent-color">Tab</div>
-            <div class="key keyq">Q</div>
-            <div class="key keyw">W</div>
-            <div class="key keye">E</div>
-            <div class="key keyr">R</div>
-            <div class="key keyt">T</div>
-            <div class="key keyy">Y</div>
-            <div class="key keyu">U</div>
-            <div class="key keyi">I</div>
-            <div class="key keyo">O</div>
-            <div class="key keyp">P</div>
-            <div class="key bracketleft key--sublegend">
-              <span>&lbrace;</span> <span>&lbrack;</span>
-            </div>
-            <div class="key bracketright key--sublegend">
-              <span>&rbrace;</span> <span>&rbrack;</span>
-            </div>
-            <div class="key backslash key--sublegend key--accent-color">
-              <span>&vert;</span><span>&Backslash;</span>
-            </div>
-          </div>
-
-          <!-- asdfg行 -->
-          <div class="third-row">
-            <div class="key capslock key--accent-color">Caps</div>
-            <div class="key keya">A</div>
-            <div class="key keys">S</div>
-            <div class="key keyd">D</div>
-            <div class="key keyf">F</div>
-            <div class="key keyg">G</div>
-            <div class="key keyh">H</div>
-            <div class="key keyj">J</div>
-            <div class="key keyk">K</div>
-            <div class="key keyl">L</div>
-            <div class="key semicolon key--sublegend">
-              <span>&colon;</span> <span>&semi;</span>
-            </div>
-            <div class="key quote key--sublegend">
-              <span>&quot;</span> <span>&apos;</span>
-            </div>
-            <div class="key enter key--accent-color">
-              <span>&LongLeftArrow;</span>
-            </div>
-          </div>
-
-          <!-- zxcvb行 -->
-          <div class="fourth-row">
-            <div class="key shiftleft key--accent-color">Shift</div>
-            <div class="key keyz">Z</div>
-            <div class="key keyx">X</div>
-            <div class="key keyc">C</div>
-            <div class="key keyv">V</div>
-            <div class="key keyb">B</div>
-            <div class="key keyn">N</div>
-            <div class="key keym">M</div>
-            <div class="key comma key--sublegend">
-              <span>&lt;</span> <span>&comma;</span>
-            </div>
-            <div class="key period key--sublegend">
-              <span>&gt;</span> <span>&period;</span>
-            </div>
-            <div class="key slash key--sublegend">
-              <span>&quest;</span> <span>&sol;</span>
-            </div>
-            <div class="key shiftright key--accent-color">Shift</div>
-          </div>
-
-          <!-- 底部功能鍵 -->
-          <div class="fifth-row">
-            <div class="key controlleft key--accent-color">Ctrl</div>
-            <!-- 增加 OSLeft 用於支援 Firefox -->
-            <div
-              class="key metaleft osleft key--accent-color"
-              aria-label="Left Windows key"
-            >
+          <section class="navigation region">
+            <div class="key insert key--accent-color">Insert</div>
+            <div class="key home key--accent-color">Home</div>
+            <div class="key pageup key--accent-color">Pg Up</div>
+            <div class="key delete key--accent-color">Delete</div>
+            <div class="key end key--accent-color">End</div>
+            <div class="key pagedown key--accent-color">Pg Dn</div>
+            <div class="key arrowup" aria-label="Up Arrow key">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 4875 4875"
-                aria-label="Left Windows key icon"
+                enable-background="new 0 0 32 32"
+                viewBox="0 0 32 32"
+                aria-label="Up Arrow"
               >
                 <path
-                  d="M0 0h2311v2310H0zm2564 0h2311v2310H2564zM0 2564h2311v2311H0zm2564 0h2311v2311H2564"
+                  d="M18.221,7.206l9.585,9.585c0.879,0.879,0.879,2.317,0,3.195l-0.8,0.801c-0.877,0.878-2.316,0.878-3.194,0  l-7.315-7.315l-7.315,7.315c-0.878,0.878-2.317,0.878-3.194,0l-0.8-0.801c-0.879-0.878-0.879-2.316,0-3.195l9.587-9.585  c0.471-0.472,1.103-0.682,1.723-0.647C17.115,6.524,17.748,6.734,18.221,7.206z"
                 />
               </svg>
             </div>
-            <div class="key altleft key--accent-color">Alt</div>
-            <div class="key space key--accent-color" aria-label="Space">
-              <span>&UnderBar;&UnderBar;&UnderBar;&UnderBar;</span>
-            </div>
-            <div class="key altright key--accent-color">Alt</div>
-            <!-- 增加 OSLeft 用於支援 Firefox -->
-            <div
-              class="key metaright osright key--accent-color hide-in-65-layout"
-              aria-label="Right Windows key"
-            >
+            <div class="key arrowleft" aria-label="Left Arrow key">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 4875 4875"
-                aria-label="Right Windows key icon"
+                enable-background="new 0 0 32 32"
+                viewBox="0 0 32 32"
+                aria-label="Left Arrow"
               >
                 <path
-                  d="M0 0h2311v2310H0zm2564 0h2311v2310H2564zM0 2564h2311v2311H0zm2564 0h2311v2311H2564"
+                  d="M7.701,14.276l9.586-9.585c0.879-0.878,2.317-0.878,3.195,0l0.801,0.8c0.878,0.877,0.878,2.316,0,3.194  L13.968,16l7.315,7.315c0.878,0.878,0.878,2.317,0,3.194l-0.801,0.8c-0.878,0.879-2.316,0.879-3.195,0l-9.586-9.587  C7.229,17.252,7.02,16.62,7.054,16C7.02,15.38,7.229,14.748,7.701,14.276z"
                 />
               </svg>
             </div>
-            <div
-              class="key contextmenu key--accent-color"
-              aria-label="Context Menu key"
-            >
+            <div class="key arrowdown" aria-label="Down Arrow key">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 100 100"
-                aria-label="Context Menu key icon"
+                enable-background="new 0 0 32 32"
+                viewBox="0 0 32 32"
+                aria-label="Down Arrow"
               >
-                <rect
-                  x="10"
-                  y="10"
-                  width="80"
-                  height="80"
-                  rx="2"
-                  ry="2"
-                  stroke-width="7"
-                />
-                <rect
-                  x="25"
-                  y="30"
-                  width="50"
-                  height="4.5"
-                  rx="2"
-                  ry="2"
-                  stroke-width="4.5"
-                />
-                <rect
-                  x="25"
-                  y="47.5"
-                  width="50"
-                  height="4.5"
-                  rx="2"
-                  ry="2"
-                  stroke-width="4.5"
-                />
-                <rect
-                  x="25"
-                  y="65"
-                  width="50"
-                  height="4.5"
-                  rx="2"
-                  ry="2"
-                  stroke-width="4.5"
+                <path
+                  d="M14.77,23.795L5.185,14.21c-0.879-0.879-0.879-2.317,0-3.195l0.8-0.801c0.877-0.878,2.316-0.878,3.194,0  l7.315,7.315l7.316-7.315c0.878-0.878,2.317-0.878,3.194,0l0.8,0.801c0.879,0.878,0.879,2.316,0,3.195l-9.587,9.585  c-0.471,0.472-1.104,0.682-1.723,0.647C15.875,24.477,15.243,24.267,14.77,23.795z"
                 />
               </svg>
             </div>
-            <div class="key controlright key--accent-color">Ctrl</div>
-          </div>
-        </section>
+            <div class="key arrowright" aria-label="Right Arrow key">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                enable-background="new 0 0 32 32"
+                viewBox="0 0 32 32"
+                aria-label="Right Arrow"
+              >
+                <path
+                  d="M24.291,14.276L14.705,4.69c-0.878-0.878-2.317-0.878-3.195,0l-0.8,0.8c-0.878,0.877-0.878,2.316,0,3.194  L18.024,16l-7.315,7.315c-0.878,0.878-0.878,2.317,0,3.194l0.8,0.8c0.878,0.879,2.317,0.879,3.195,0l9.586-9.587  c0.472-0.471,0.682-1.103,0.647-1.723C24.973,15.38,24.763,14.748,24.291,14.276z"
+                />
+              </svg>
+            </div>
+          </section>
 
-        <!-- 方向鍵上方六格功能 -->
-        <section class="navigation region">
-          <div class="key insert key--accent-color">Insert</div>
-          <div class="key home key--accent-color">Home</div>
-          <div class="key pageup key--accent-color">Pg Up</div>
-          <div class="key delete key--accent-color">Delete</div>
-          <div class="key end key--accent-color">End</div>
-          <div class="key pagedown key--accent-color">Pg Dn</div>
-          <div class="key arrowup" aria-label="Up Arrow key">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              enable-background="new 0 0 32 32"
-              viewBox="0 0 32 32"
-              aria-label="Up Arrow"
-            >
-              <path
-                d="M18.221,7.206l9.585,9.585c0.879,0.879,0.879,2.317,0,3.195l-0.8,0.801c-0.877,0.878-2.316,0.878-3.194,0  l-7.315-7.315l-7.315,7.315c-0.878,0.878-2.317,0.878-3.194,0l-0.8-0.801c-0.879-0.878-0.879-2.316,0-3.195l9.587-9.585  c0.471-0.472,1.103-0.682,1.723-0.647C17.115,6.524,17.748,6.734,18.221,7.206z"
-              />
-            </svg>
-          </div>
-          <div class="key arrowleft" aria-label="Left Arrow key">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              enable-background="new 0 0 32 32"
-              viewBox="0 0 32 32"
-              aria-label="Left Arrow"
-            >
-              <path
-                d="M7.701,14.276l9.586-9.585c0.879-0.878,2.317-0.878,3.195,0l0.801,0.8c0.878,0.877,0.878,2.316,0,3.194  L13.968,16l7.315,7.315c0.878,0.878,0.878,2.317,0,3.194l-0.801,0.8c-0.878,0.879-2.316,0.879-3.195,0l-9.586-9.587  C7.229,17.252,7.02,16.62,7.054,16C7.02,15.38,7.229,14.748,7.701,14.276z"
-              />
-            </svg>
-          </div>
-          <div class="key arrowdown" aria-label="Down Arrow key">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              enable-background="new 0 0 32 32"
-              viewBox="0 0 32 32"
-              aria-label="Down Arrow"
-            >
-              <path
-                d="M14.77,23.795L5.185,14.21c-0.879-0.879-0.879-2.317,0-3.195l0.8-0.801c0.877-0.878,2.316-0.878,3.194,0  l7.315,7.315l7.316-7.315c0.878-0.878,2.317-0.878,3.194,0l0.8,0.801c0.879,0.878,0.879,2.316,0,3.195l-9.587,9.585  c-0.471,0.472-1.104,0.682-1.723,0.647C15.875,24.477,15.243,24.267,14.77,23.795z"
-              />
-            </svg>
-          </div>
-          <div class="key arrowright" aria-label="Right Arrow key">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              enable-background="new 0 0 32 32"
-              viewBox="0 0 32 32"
-              aria-label="Right Arrow"
-            >
-              <path
-                d="M24.291,14.276L14.705,4.69c-0.878-0.878-2.317-0.878-3.195,0l-0.8,0.8c-0.878,0.877-0.878,2.316,0,3.194  L18.024,16l-7.315,7.315c-0.878,0.878-0.878,2.317,0,3.194l0.8,0.8c0.878,0.879,2.317,0.879,3.195,0l9.586-9.587  c0.472-0.471,0.682-1.103,0.647-1.723C24.973,15.38,24.763,14.748,24.291,14.276z"
-              />
-            </svg>
-          </div>
-        </section>
+          <section class="numpad region">
+            <div class="key numlock">NumLk</div>
+            <div class="key numpaddivide">/</div>
+            <div class="key numpadmultiply">&times;</div>
+            <div class="key numpadsubtract">&minus;</div>
+            <div class="key numpad7">7</div>
+            <div class="key numpad8">8</div>
+            <div class="key numpad9">9</div>
+            <div class="key numpadadd">&plus;</div>
+            <div class="key numpad4">4</div>
+            <div class="key numpad5">5</div>
+            <div class="key numpad6">6</div>
+            <div class="key numpad1">1</div>
+            <div class="key numpad2">2</div>
+            <div class="key numpad3">3</div>
+            <div class="key numpadenter">Enter</div>
+            <div class="key numpad0">0</div>
+            <div class="key numpaddecimal">&middot;</div>
+          </section>
+        </div>
+      </main>
+    </div>
 
-        <!-- 數字區 -->
-        <section class="numpad region">
-          <div class="key numlock">NumLk</div>
-          <div class="key numpaddivide">/</div>
-          <div class="key numpadmultiply">&times;</div>
-          <div class="key numpadsubtract">&minus;</div>
-          <div class="key numpad7">7</div>
-          <div class="key numpad8">8</div>
-          <div class="key numpad9">9</div>
-          <div class="key numpadadd">&plus;</div>
-          <div class="key numpad4">4</div>
-          <div class="key numpad5">5</div>
-          <div class="key numpad6">6</div>
-          <div class="key numpad1">1</div>
-          <div class="key numpad2">2</div>
-          <div class="key numpad3">3</div>
-          <div class="key numpadenter">Enter</div>
-          <div class="key numpad0">0</div>
-          <div class="key numpaddecimal">&middot;</div>
-        </section>
+
+    <!-- 滑鼠模式 -->
+    <div id="mouse-mode" style="display: none;">
+
+      <div class="content">
+        <div class="container" id="main">
+          <div id="mouse-container">
+            <svg id="mouse" style="enable-background:new 0 0 3000 3000;" version="1.1" viewbox="0 0 3000 3000" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
+              <g id="background-mouse">
+                <!-- G304 模型圖片 -->
+                <image style="overflow:visible;" width="1000" height="650" xlink:href="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAoAAD/7gAOQWRvYmUA
+                  ZMAAAAAB/9sAhAAMCAgICQgMCQkMEQsKCxEVDwwMDxUYExMVExMYFxIUFBQUEhcXGxweHBsXJCQn
+                  JyQkNTMzMzU7Ozs7Ozs7Ozs7AQ0LCw0ODRAODhAUDg8OFBQQEREQFB0UFBUUFB0lGhcXFxcaJSAj
+                  Hh4eIyAoKCUlKCgyMjAyMjs7Ozs7Ozs7Ozv/wAARCAKKA+gDASIAAhEBAxEB/8QAhwABAQADAQEB
+                  AAAAAAAAAAAAAAECAwUEBgcBAQEAAAAAAAAAAAAAAAAAAAABEAACAgEBBQQGCAQEBQIFBQAAAQID
+                  BBEhMUESBVFhIhNxgZEyQgahscHRUmIjFOFyM0PwgpIkorLCUxXxg9JjNEQ1s5QlFgcRAQAAAAAA
+                  AAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AP1UhSAUEAFBABQCAUEAFBABQQAUEAFBABQQAUEAFBAB
+                  QQAUEAFBABQQAUEAFBABQQAUEAFBABQQAUEAFBABQQAUEAFBABQQAUEAFBABQQAUEAAGuzIoqWtt
+                  kYfzNI8dvWsCvZ5nmPsgvvA6AOJb8xwX9GlvscmeWzr+fPXkUYJ9i1A+lMZTUVrJqKW9t6Hydmf1
+                  Gz3rpL+V8v1GmXPPbOTk+1vUD6qfUcKHvXw9Cab/AOHU0z650+G6bn/Kn9p81yal5GB3ZfMeMn4K
+                  5y9iNUvmKb9yj/UzkckRyIDoy+YMt+7CEfa/tNUuudQk/ejH0RPJyociA3vqvUn/AHmvQl9xg8/P
+                  lvvn6m19xhyocqAv7vLe++z/AFy+8xd97e22b73Jl5e4cvcBi5Wva5y9o1s/E/aZco5QMNbfxy9r
+                  L5l63WSXobRlyscoEV2Qt1s0+1Sa+0zWXmr+/Z/rl95jyovKgM11DqC3Xz9b1+8zXV+pL+9r6Uvu
+                  NHKiaID2x671Fb+R+lfxNsfmHJXv1Rl6NUc3lHKwOxD5ijp+pS13poys+ZcGqKlZC1R4yjHmS9Oj
+                  1+g4brZeVoDu4/zP0HI/p51SfZN8n/PodCrJx7o81NsLV2wkpL6D4TN6Ri5ernHy7XunDRP1ricX
+                  J6Ln4cuelStgt1lWuq9Md4H63wJqfmGFf83V6eRddCHDzZar/jbPoMDrXX6tP3ttNq4pQfN7UwPs
+                  Acar5jqey6mUO+LUl9h7Keq4F2yF8U38MvC/+LQD3AxUoyWsWmu1bS6gUE1AFBABQQAUAgFBABQQ
+                  AUAAAAAAAAAAAAAAAAAAACAAAAAAAAACkAAAAAABSAAAABSAAAAAAAApAAAAAAAAAAAAAAAAAAAA
+                  AAAAAAAAAAAUgAFBAAAAAAAATVHmv6jh4/8AVtSf4Vtf0AeobDiX/MUVsx6nL809F9CZ4LurZ9+q
+                  dnJF8I7PqA+ltyaKlrbZGC72eG7r2BXsg5Wv8q0XtZ86+ab5ptyb3tvUqjoB07vmHIlsprjBcG9r
+                  +w8dvUeoXe/bJJ8I7F9Bq0HKBhpJvWTbfay8iNiiVRA18peXuNnKVRKNfKxym1RLygalEvKbOUqi
+                  Bq5S8pt5Ryga+UcpsUS8oGvkY5DZyjlA18o5TbyjlA1co5TbyjlA18o5TZyjlA1co5Dbyk5QNfKT
+                  lNvKOUDUovQOEltRt07DndS6ZkZLcqb2m/7UnpH1MDPIzsPH/qXRT/DHxP6NTxT69jqaUK5yhxls
+                  T9SOZfiX48uW6t1vv3e1GrlIPpaMvDyV+jYm+MXsl7GbuV9p8ny/+pvrzs2lJV3SS7HtX06gfSOP
+                  eRxOLX1vMj78YT9K0f0G5fMEl72OvVL70B0XEjgc7/8AsEeGO/8AV/A1WfMN2mldEYvtbbA69WRZ
+                  j6zqtlVGK1bTaSSOXR8+dYx7pKahlUcz5edcsuXhticvKzsvKXLbPwfgjsieSVa4bwPvcD//AELo
+                  9+kcuFmJN8WueHtjt+g+ixOoYObDnxL67ovjCSZ+POvXgSDtomrKbJVTXxQbT+hgftWqRT4L5Y+Z
+                  Osuu39xZ+5qr5Ywdi268VzLuPqcbr+HdpG3Wif5tsf8AUvtA6gMYWQsipVyUovc09UZAAAAAAAAA
+                  CggFAIBQQoAAAAAAAAAAACFIAAAAAAAAAAAAAAAAAAAAAoEAAApAAAAAAAAAAAAAAAAAAKQAAAAA
+                  AAAAUgAAAAAAAAAAAxnZCuPNOSjFcW9AMibDl5PXsWnWNWt012bF7TlZPWc6/Vc3lR/DDZ9IH0WR
+                  nYuOtbrFHu4+w5eR8xx2rGq5vzy3ew4u2T1k22+L/iZKKA3X9Rz8j37Gk/hjsR59Hx2mxR0LoBhy
+                  mSiZKJkolGHKVRNiiVRAwUSqJnyl0Aw5S8pnyl5QMVHYVRMki6AY8peUug0AnKhoZaACaIaAoE0G
+                  hQBNBoUATQaFAE0GhQBNAUATQFAEIUATQaFAGLipLlmlKPY1qjw39FwbnqouqXbDd7GdDaTRgcG3
+                  5eyI7arI2dz8LPJb03Nq9+mS71t+o+p9ZNNSD46Vbi/EmvSjFxifZSjGXvJP0rX6zRPBxZ+9TB+r
+                  QD5Nx2GLifUy6T0+X9lL0N/eYPovTv8Aty/1MD5hwMXA+o/8R01f22/TJmcenYMdsaY+ta/XqB8k
+                  qZTekIuTfBHtxugZV+krv0K+/bJ+hfefTRhCC0gkl3LQNP0AeWnGqx6Y0UR5YR9rb3tmbjsNzSMd
+                  NQJTdkY8uamyUH2J7PYdTF+Y5LSGXXzL/uQ+2L+w5XJ2mLi+AH1+Pl4+THmpsjPuT2+w3+g+Ii5w
+                  mpwk4TW6UW0/oOpifMWRU1DKj50N3PHZNfYwPowebEz8XLWtFib4x3SXqPSAAAAoAAAAACAUAAAA
+                  AAAAAACFAEBQBACgQAAAUAQAAAUgFIUAQFAEBQBAUgAAoEAKBAUgAAAAUAQFAEAKBAUAQFAEBQBA
+                  CgQAoEAPJl9QxMRfrTXNwgtsgPWaMjMx8aPNdYo93H2HCyvmDJu1hjLyYPZzPbL+BzZOc5OdknOT
+                  3tttgdjK+Y5PWGJDThzz+xHKuyMrIlzXWSlrw12ewxUdDJLUDFQMlEyUTJRKMVEqiZKJkogY8pUj
+                  JRMkgMeUuhloXQCJFSLoVATQaF0KBNACgAAAAAAAAAAAAAAAAAAAAAAAACAoAAgAFIAAAAhQBCMp
+                  AIQyZGgMWiNGWhNAMdCaGWg0Aw0I0ZtGOgGDRi0bdDFoDW4mDibtDFoDVFzhJSg3GS2qUXo1p6Dq
+                  4XX7q9K8xebBf3I7JL0ric1owcXwIPssfIoyYeZTNTj3cPSbvQfE03X481ZVNwkuw7uB8wVWtVZX
+                  6dm5TXuv7gOyUxjJSSaeqe5mQAAAQoAAAAAAAAAAAAAABCggApAAAAAAAAABSAAAAAKQAUgAAAAA
+                  UgApAAAKBAAAAAFIAAAAAAAACgQAAANTz5WdjYkea+ai3ujxfqA9B5MzqWJhr9Wa5+EF73sOLmde
+                  ybtYYy8qt/F8X8Dm6Ntyk3KT2tva9oHQy+u5V7caP0a+1e97Tn8sm+aTbb3t7TNRRkogYqBloZcp
+                  kkUYqJUjJIqQE0KkZJFSAiiVIuhkkBEhoXQugE0KCgAAAAAAE54c3LzLme6Ou0oAcQRt8AKQnNJb
+                  9zKBi1otU2jKO2KbGie8oAAAAAAAAAAAAAAAAAEKAIUgAAAAAA4AACAACAACNEMiAYjQoAx0JoZB
+                  gYaE0M2iAYNGLRmyNAYNGDRsaIwNTRi4m1owaA9OD1bKwZKOvm0cYS4ejsPpMLqGNmV81MvF8UH7
+                  yPkGmK7LaJq2mThNbmiD7nYDjdM67Xfy05TVd25S3Rk/sZ2EwMgAAAAAAAAAAAAAAACAoAhSAUgA
+                  FAIBQQoEKQAUAACFAAhQAIAAKCAUEKAIUgFIUgAoAAgKABABSAoAEZJSUU3J6JbW3uApquyKaK3Z
+                  dNQiuLOVn/MWLS3VjSVlm7m18K+84luVblz57rPMfZrsQHVzfmCcta8Ncq/7kvsOTLntk52Sc5Pe
+                  3tLGJmoAYKBmomSiZKJRiomSiZJF0AxSLoXQugDQpdCpATQuhUi6AQoKBCgAADVfl4+NHW6xQ7E9
+                  /qS2gbQ2ktW9Et7Zy31bIyJOHT8eVnDzJ7Ir/HpC6TlZLUuoZDkt/lQ3fd9BBtyOs4lT5K277Nyj
+                  DatfT9xq/wD5nN3aYdT/ANen1/UdDHwsXGWlNai/xb37XtNwHAycCvGysWqqcp5Nk1KVje1JPfod
+                  05eL/uusX5G+GOvLh6d33nUAMiKCicur1e5cCgAAAAAAAAAAAAAAAAAARFAgKQAAAAAAAAAQpAAA
+                  AgYAABgCApAICsgEZNChgYmJmzEDFmLRmzFgYtGDRmyMDW0YtGxmDQGEo6nT6X1yzHcaMtudO5T4
+                  x/gc1oxa1IPua7YWQU4SUoS2qS2oz0SPj+ndUvwprTx0P3q39aPqsXKpy6lbTJSg/au5gbwABCgg
+                  FAAAAAAABCggAAoAgKAAIAKQAUAgFIABQABCkAApAAAAFBABSAAUhSAAAAAAFBCgQGFttdUHOySh
+                  FbW2cLO6/OzWrC8MeNr3v+UDp53U8bDXjlzWcK47/X2HAzuqZWdF1S8FT+COzd2tM8rUpS5pNuT3
+                  t7zKMdQNP7Ol8NPQzCeDNbamn3PY/aexRM1Eo5kb76Jcs9f5ZHsoyqbXpryz7H9hvsprtjyzjzL6
+                  jnZPT7afHTrZBbWviX3gdNIuhy8XqM6/DZ44bvzI6ddldseaElKIGQ0KAGhRoZaATQoRQCKQAXfv
+                  GiNd2Vj48ea6yMOK13v0LecyzrVlsnDAola93PJaR/x6WB123Fat7FvOfk9cw6PDB+bZwUNv07jx
+                  ywc3KfN1DIajv8mv/Gn0Hpox8XG/oVKL/G9svayDT53V833F+0qfF+9p9f1GyjpWLW+e7XIse1ym
+                  9mv8v3m5zk97JqwPVGailGKSS3JbEXzX2P1bTzxi2bVHQDbG3Xjr3GGXlxoxbbtzjF8vpexfSYyj
+                  r6TjdfynGurFb0c5c0n3LYvpYHT6NQ6sGMpe9a3N+vd9B7jndHzfPq8iXvVJcvfHgdEoAAANoAAA
+                  AAAAAAAhQAAAAgAAFIAAAAAAAAAAIBSAACAMACACghQABAKQMgAhSMCEZkQDBkZkyAYmLMmjFgYt
+                  GLM2YMDFmLRkyMDBm7Bzr8G9WVPWL9+D3NGp7TBxZB9rg5uPm0K2l90ovfF9jPSfDYebfgXq+l90
+                  4PdJd59hg51GbQrqX/NF74vsYHqAAAAAAAAAAEAAAAoEKQoEBQAIAAAAFIUgFIUgFAAEBQBACgQo
+                  AAEKAAIBQCAUgMLLIVQc7GoxjtbYGZ4OodWx8NcuvmXcILT6ew53UOu2WN04fhjxs4v0dhyknrzS
+                  blJ722Bty8zJzLOa2Xh+GC3I1KJmoNmahpvAwUTNRMlEySKIol0MtABNC6AAeTL6dVfrOH6dv4lu
+                  fpRzebJw7dJa1z4PfF/ed0xtprug67YqUXwYHmxOoVXaQn4LOzg/Qe3Q4mX027G1nXrbSv8AVH09
+                  pswequCULnz18J72gOxoXQkJRnFTi9YvamjG6+miHPdNQj38fQBs0G5anMl1id0nXgUSul+OS0iv
+                  8d+hF0zOy3zZ+Q4wf9qvd931kG/J6vhUvlUvOnwjXt+nced2dZzV4IrEpfxS97T6/oPdj4OHiL9K
+                  tKX43tl7WWy3Zv0X1geGvpGNCXPdJ5FnxSm9ns+83uUYLkrSjFdi0JOxy2bl2GAF1IDOMNQIotmy
+                  NZsjWkXQCJJApAB8b8y5LtzZST8MX5a9Ed/0n1uXesfGsufwRbXp4fSfBdSt1nCGurj4pPvkB2vl
+                  jLlZnVw12tST9Gh9fwPivkXGnZm3ZLX6dEdE/wA0+HsPtQAAKAAAAEAoIAKQAAUgApAAAAAAAAGA
+                  AAAAEAAAACAACBkAoIAKCACggApAQCkBAKyAgEZCsgEZizJmLAxZizJmLAxZiZMjAwZGVkAwkjfg
+                  512BeranrF7LIcJI1bzBpkH3OJl05dEb6XrGW9cU+xm8+K6T1Kzp9+uutE9FZH/qXefZVW13Vxsr
+                  kpQmtYtdgGwAAAAAAAEKABAUAQFAEBQBAUAQFAEBSAAUAQAoEBQBAUAQFAEBQBAAAGpH7Dj9S65G
+                  vWnEanZuc+C9HaB7c7qOPhx/Uetj3VrefO5edk5s9bHy1r3a1sRpbnZNztblN7W3tZmoNgYRibFE
+                  qiZqJRFEyUSpGWgESLoUAQAgAAoAoKAObndIU27sRKNm+Ve5S9HYzp6FA+ews+3Fm4tPlT0nVLY0
+                  z2Z+NZnurLxXG2EFp5U92up6Oo9Nry15kGq8iPuz4PukcjEy7sPIcZpxlF6W1vs7SDoVdXWNpTmY
+                  zxtNicV4fUvu1PfXmY10eamyM/Q9vrRz+odTq5PKglOU1sg1r633Hy+TlRhfpjt+anrKcXpGPdED
+                  7Wy3t9n3nnlJt7Tn9K/8g6ufMnqpe5GS8fpbPeAAM4QAQhqb4rQkVoZAXYGyAAAYTsUdi2sDkfM+
+                  ZGjEjVrtm3Jruj/E+IjDIzciNVUXZbbLSMVxbO512WT1HqTxsaLttbVcIrb7u2XsZ9H8vfL1HSa/
+                  Ns0tzbFpOzeoL8MPtYHr6P02vpnT68SGjkvHdP8AFZL3n9i7j2oLcAABCgUgApAAADADUAgFBABQ
+                  QAUEAAAAAAAA1AAEAAAgF1IyMAACagANQAAGoADUAATVgC6kBNQBNQABARsCMxZWQCEZWYgYsjKz
+                  ECMxZkYsDFkZWQDCSOv8vdWdFqw75fo2P9Nv4ZdnrORLeYy7VvXEg/Q9UU4/y/1T95j+Ta9cinY+
+                  2UeEjscAKAAAAAhSFAgKQCkAAApABSAAUgApCgCAoAEAAAAAAABSFAEKQCbjXfkVY9btukoQXF/Y
+                  efP6nRhR8T5rH7sFv9Z87k5V+ZZz3PZ8MVuQHo6h1e7Lbqp1rp9jl6TxxrS9JYwNigBiomxRKkZJ
+                  FEUTJIqRQICkAEBAKQFAhloNCoBoUIoEKDTkZNdEHKctNANllkK4uVj0S2+w+Z6tmRzMqMqeWKpW
+                  lt0tiUeCbMOpdVllKU3N1YqfvrfLThDtOK5X58401Qca9f06o8X2vt9JBuys2eVN1Y+rUnpKzTxT
+                  e5JHX6T0WGOo3ZCTt3xhvUfT2s3dM6TXhxU56Sva38I90fvOiACWpYx1NsYAYwgbVHQqWgAoBhdd
+                  XRW7bZKMI72wMinLq+YMSUmrYyqjr4Zvamu/Q9ay6b460TU4cZReoGyy3TZHf2nntlKNNlq/txcm
+                  3u7jfTRK16vZBb2aetPSmnCp2Svmlp3Lt9egGPy/hxx8N3aa3ZDcpWP3nHXYvRxOoY1wjXXGuPuw
+                  SivQthQKQDUoAhdQAIAKCAAAAAIAKCACggAAAAAAHAE1AFBABSagmoFICAUgAAg1AAAgFGpCAZAx
+                  AFBAABAABA2A1I2NSagGQamLYBmLKzFgRkZWRgRmDMmYagCMEbAxZjIyZiwNmFm2YeVDJh8L8Ue2
+                  PFH3dF9d9ULa3zQsSlF9zPz2Xh2H0fypn6wng2PbDWdWvY96+0g+lAAAhSACkAAAAACgCAAAAAAA
+                  FIUgFICgQoIBQQoEAAFBDGyyFcHOclGMdrbArZyOpdbjU3RitTt3Oe9R+88vUetTubpxdY1bpT3O
+                  X3I50K+wCNTsm7LJOU3vb2m2MTJRM1EoxUTNRKkXQCJGWgAAAMARsMxYAAACoaGSQBIqQKAGuwPY
+                  c7qPVKsWPKnzTexRW16kG3O6jRiVtzklI+azs/zdbsxuNT/p07pT9K4I052Y65ebk/qXy21067I9
+                  8jy4eFl9SyHKb1e+U3uiv8cAMa68vqeRFcv8kFsjGPefT9P6dThV6R8VrXjs+xdiNmHh04dXl1L+
+                  aT3t95vAFjFssYam2MNAEIaGaAAAHnzc2nDq57HrJ+5Bb2wM8nJpxanbdLSK3Li32I+dzc2WU/Py
+                  5+TjR/pw7fvZpz+oKU/3GbLWX9rHXYcLKzb8y5a6znJ6V1x26diSQG/qHVZXPy6/06Ye7Fb36Tsd
+                  B6F1DIr/AHeRb+1hJa0pe/LvejWkTXifIudZXC7IyK6LG1J0uLk0t+ja2an0U+mZW+E4S9bX16gF
+                  kdYwklbUsqpfFDfp6l9hhjWPqHU1lcko00Q0jzfi/wANl8nqNW6M9nGDUgs7Kr2TbWn446AdXUHO
+                  h1SXxQT74s3x6jjvfzQfetSj0g1wvpn7k4v1mYFBAAAAAakGoFBABQQAUEAFIAAAAAAgFIAAAIBQ
+                  QAACAUakDADUgAAgAaggApNQAGoINQAGpGwGpNSABqGRsjYDUmobMWwK2YsakbANmLYZGwI2QEbA
+                  amLYbMdQDMWVmLYGM95sw8ueHmVZMf7cvF3p7/oNTZhJ6kH6VXOM4RnB6xmlKL7mDk/K+Z+46VXB
+                  vWeP+nL0L3foAHZAAEAAFIAAKQAAUgFIABSAAUhSACkAFBABSAoEAPH1DqNGFXrLxWP3K1vYG3Ky
+                  6cWp2XS5Y8O1+g+czs+/Olpq4Ur3a/vNV+Rfl2+Ze9fwx4JdwjDTaBjGBtUTJRMlEoiRloVIAAUA
+                  QAACNhsgEbAAAySIkZJAEihFAm8raS27COSjFtvQ4nUurSlL9vi+Kb3vgl2sDZ1Tq6r/AEaPHZLY
+                  kj53LzfIk9quy5cd8Ya9hhlZipcqseXmZEtlt3Z3R7Db0jos8jS6/VU9vGfo7u8g1dM6VfnWu21v
+                  l18dr+qJ9RRRVj1KqqPLBf41ZlCuFcFCCUYxWiitxlpqA3mcYFhA3JaASMUjIhQICng6l1SGIvKq
+                  /UyJbo9newM+odRqwobfHdL3K1v9L7j5fqHUJwm7bn5mVL3YcILhr9xqzOpOuyb183Jl71jeyJ4O
+                  n9Pzur5Tpx1rt1tul7sU+LYGquGZ1DKVOPGV+RY9y3/wR9z0L5bx+kQV02rs9rxWfDDuhr9Z6+kd
+                  Fw+kUeTQua6X9W9+9J/TpHuPdry7XvAMEBQDeu/b6SADXPFxp+9XF96WjNEumUP3JTh69V7GesgH
+                  Pn0y9ba5xn3PWL+1GtwzaPhnFfl8S+jU6g1A5kOo3R2S0l3NaM3w6lB+/Bx71tX2HqnXXZsnFSXe
+                  tTRPp+LL3U4Pti/sA2Qy8efuzXoexm3Y1sevoOfPpdi212KfdNcr9q1NbpzKdvLJd8HzIDqA5kOo
+                  Xxekmpd0loz0Q6jW/fg4962oD1g1QyKJ+7Na9j2G3v4AAAAAIBSFIBSAAAAAAIAGoAEBWQCkDAAh
+                  SACFIAAIAAAAgABsmoZGwGpATUCk1JqTUCtmIbI2AbIyNkbAupi2GyNgNTFgjYBsxbDZNQI2TUNk
+                  1ANmLDZiAkzWzJsxA7/yZdyZV+O378VOK747/rBzug3ujq+PLhOXlv8AzbPrBB+gAACFBABQQACg
+                  CAoAAACAoAgKAICgAQFAg1IcfqnWVDXHw3rZulYt0fR3gbup9XhiLyq9J3vhwj6Tgy8y6x22yc5y
+                  3tkUHOXM23J7295ujDlAkYaGxRKkZaFESKCgQoAAAgAjYZABAABUgZJAEXQACownZCtOUnokS+6F
+                  MHOb0SPnc/qVmXKUKpeXTD37XuWn2kGzqPVLcicsfGekV703uS7WcHKzNksfEex/1b3vkzHIynf/
+                  ALbFTjSno38U33nY6T0SNKjdkx1nvhW9y75d4GjpHQk1G7JWkN8a3vl3y7u476SS0WxLcihLUBpq
+                  bIQEIG5LQCJaGRAABTjdU6xpzY+JJJr+pdwiuOj+0Db1Pq3kt4+L4r3slLhD+J8rndQUeaFU+act
+                  fNu7+KT+005fUW1KumWlb2Sl8U/4Hs+Xvlq3qslk5WtWCns02Ss7o93eB5+i9Byus282rpxK3pZc
+                  1v7o9sj77BwcTCx442LDy6o+tt/ik9mrNlNVVFUKaYKuqtaQhFaJJGT2gAQFDUAgFIAABABQQAUE
+                  AFBABJwrmtJxUl3rU0T6djS2xUq3+V7PY9T0FA58+m2rbXOM+6S5X9qNfLm0beWcUuMdqOoAObX1
+                  K5bJJT+hnoh1CmXvJx+lG+dNVmyyEZelbfaeefTaH7jlX3a6r/iA9ELa7Pcmpd2pmc2fT8iO2DjP
+                  /hZj52Xj7Jc8V+ZaoDqA8NfUtffin3xZ6IZePPdLlfZLYBtA37VuAAAACAANSFIBSAAACAAAAIwN
+                  QBAABAGAZGNTHUCtkBi2BWzHUak1ApjqGzHUCtk1I5GLYFbI2RsjYF1I2RsxctoGWpi2TUjYBsjZ
+                  NTFsCtkbDIBCNhkYEZGUAWpzV9bhsmpJxfensBljPly6Zfhsg/ZJAg/SgQAACgQFIBSAAAUgApAA
+                  KCAAUAQFAGK2iT0WvZvJOcYRcpNKKWrb3JHz3U+rTyW6cd8tHxS4y/gBn1PrDs1xsN6R3TtXHuic
+                  6uvYZV1pG5RAkY6GaQSLoUCgAAAAAIAI2VsxYDUgAAoSKkASMgAKar8iuiDnN6JEyMmFEHJvbwR8
+                  71W27Jrl4nFvclwAxzuoTy3KUp+Viw96zdr3ROHfmPMmqKf08eG6O7X0nky78tS5LpuUVsSfu7Ox
+                  bjzwsalzQfK/oIPteldJqxYRtnpO5rY1tjFd33nTPhsTrGXiy0jKUO5bY/6Wd7C+ZIWJLIh/nh9s
+                  WB20tTbCBrxcjGyI81Nin2pb16VvPSkAS0AAANpLV7Et7JOcYRc5tRjFatvcj5zq3WPPjKMZOvFj
+                  sb+Kb7P4AbuqdY8xSpx5clEf6t3b3I+Xzc5Wrkr8NK3LjJ9sjXl5s7ny7ofBWvrfaz6b5b+VVBxz
+                  uqQ5rPeqxpbl2SmvsA8vy58rSy3HO6nFqjfVQ9jn3y7In2aUYJRikktkUlokluSLKXNuMdwAEBRS
+                  AACAAAAAAAAAAAAAAAFIUgFAAAhSAUEAGqzDxbNsq0n+KPhf0Hnn0x/2rNe6a+1HuIBy3DMx3qlJ
+                  LtjtXsNlXUp7ppT03tbGdA1249Fv9SCb/Ful7QMK8yizZzcr7JbDd38DxWdN021Wf5Z7fpNP+7xd
+                  rUoR7V4ofRqB0weKrqKa/Ujs/FE9Vd1di8ElJ9nH2AZgMAQAAAABCcSkAEKQAQpGA1I2CagNSAxY
+                  BsjYZi2BdTFsNmLYFbMWw2YtgGyakbMXIDLUjkYtmOoFbJqRsxb2gZak1MdSagZakJqTaBSaklOM
+                  fekl6WjDzq9dE+Z/lTYGwjMPMm/drk/T4frJ+q97jD/iYGzQx5+bZWuZre/hXrMGq37zdndLYvYW
+                  UnJafDwS3AZY+3JpWvN+pFyfbtQM+nx5+oY0fxXVr/iQIP0shSAAAAAAAAAAAAAAAAAAAAMLbIVQ
+                  dk5KMI7XJ7kY3XVVVu2ySjCO9s+cz+o3Z1nKtY46fhj297Ay6j1KzOn5VescdP1y72eeupItdeiR
+                  tjEAkZJBAoFAAAAAAQARspjqAbIAAAMkgCKCgDTlZVdEdXtk9yMcvLhRHTfN7kcey2Vk3Ob1bAtt
+                  07Zuc3t4LgjRatY6Gb2bez7D5rrXXOdyxsSXg3TsXxdy7iDz9YzqpSdNOktPemt2q4I5kbO01gD2
+                  U5DhsaU4/hf+Nh2OnZGDY0pPy5dkt3qZ82m1uNsLnHeB9r+2rek6pOEvhlFnoq6l1LG2T0ya12+9
+                  7T4/G6nkUv8ATscV2cDp0fME9NLq1LvjsYH1uN1rCv8ADKXkz/DPYv8AVuPZbfVTU7bJKNaWvMfI
+                  x6n02/ZZrB9sl9sTHIycSmpaXO2O+FKeq17WB6+q9X89c1jcMZPwVr3pvvPnMnJtyLYpJyk3y11x
+                  WumvBLtJZbkZuRGEIuy6bUYVxWvdpFH23y58tV9LisjJ0sznx3qvXhF/i7/YBp+XPliOBy5mclPM
+                  e2Fb2qvvfbL6j6Fyf3hsmoAmo1IUUcCAAAAAAAAAAAAAAAAAAUhQICkAuwAAQAAAAAADAAACFBAN
+                  NuHj2PXl5JP4o7H9x5bMG+D1rfmJdmyR0ABzq862D5LPFpvjPZJHsqyabdkZaS/DLYzK2mu1aWRU
+                  ktz4+pnjt6fJbaXzfllsfqYHufeDnV5d9MuSxPZ8E9/qZ7Ksmq3Ynyy/C9/q7QNpCkAEAAgBNQDI
+                  GYgCNgjYBsx1DZNQKzHUNmLYFbMWyORi5AGzFsxlIxcgMnIxcjFyMXLi9gGTkTUwU+b+mnZ/Lu9r
+                  0Q5bPilGC7F4n9iAyNcrqovRyXN2La/Yg4VfFzWfzPZ7NhVPlWkEoLuWn1ATnsl7lUvTLwr6SNXf
+                  FKEPRrJkcpN7WQC6L4rJN9ySI1Vxi5fzNsE1AqlGPuwjH0JF8yb2a7DDUAVtveyAAUDgAPb0KrzO
+                  r4seyal/p8X2A9nylT5nVVPhVCUvW9gIPuCFIAAAAAAAAAAAAAAAAANWRkVUVO22XLBf40QyMirG
+                  qdtr5Yx/xofM5uZdn28z8NUfch9oFzc23Os12xpj7kPtfeYwr0LXVojbFJARIoKUAAAAAAhSAANT
+                  HUA2QAANAjJIAti002lWmm7YY2TjVCVk3pGK1keaHUHZW+SCTfu6S2rXi12kHtS4a+k8ks+qSl5W
+                  rSeinp4Xw7zyR82tNPWal7zWyT17RHk1/TfK+z3WBLYQsl4tHLjrqtfQzVPHSlotkezejdKTWyS5
+                  lw4P6TTZlU1SjHnac9y03cNuoHmz+mLLolSrHVGW/k2p9zPn5/J2RGDkr4Sa3JJ6e0+myL7anFV1
+                  c8m9rT2aalyZZLrUsaKctdre8D4TJ6J1HGf6lL5V8S0a+g8Li09HsP0i7z7Kv0VHn4qf2Hgzei4u
+                  TVqsdedxWvL6dN4HwuhTv53yrfTB2Y7c0lq62vEvZvOHZTZVJxnFxa4NAazKM2tzJoVR1A2wumkb
+                  sarLzL40Y8HZbY9IxjvGFhZWfkwxsWDstm9i4Lvb4I/SOh9CxejY+kf1Mma/Wv03/lj2R+sDT0D5
+                  do6RVzzatzZrx2rdHX4YffxOs3oNSN6gAQFAAAAAAAAAAAAAAAAAAAAUAAAAAAEBQBAAAAAAAANA
+                  ABAAAAIBSFZAMbK4Wx5bIqS7+B4rsGyHipfPH8D971Pie8Ac+jNnDw2ayitj12SR7YzhZHmg9V/j
+                  eYZGNXftfhmt01v/AInh1vxLNHsb2KS92QHSIa6b43LVbJr3ofau4z1AEbDZi2BdTFsNmLYBsjYb
+                  MWwDZGw2YuQBsxctCSka5SAspmDZjKSS1b0S3t7Dx2dSr15MeLvnu2bI+37iD2OXYea/NxqXpZYu
+                  b8EfE/oNaxOoZX9ezyq38ENh68bpOPVuhzPtYHkhlXZEtKYckX8Utr9h7J0V1Qg5LzLJbW5bV6ke
+                  iePXXF2JJSitdmw0ZFnNNdiivpAwlZJ7NdnBGDYI2UGyNggAAgAhSAAAAAAAo4hgfT/JdGzJyO3S
+                  C+sHT+WcbyOkVNrSVutj9e76ECDrkKAICkAAAAAUCAAACkAmiZryMirHqlba+WEeP2DIyKseqVtr
+                  5YR3v7D5rLzbs63nn4aY/wBOH2vvAZmbdnXavw1R9yH2slVaRYQ0RsUdAIkUFKAIUAAABCkAAGLY
+                  FbMQRsC7wtCLdsJZZXRVK616Rj9Le5EGbcUnJ7FFatvYloaLcpTof7Z62T2Rk00o+k13W/usfy9H
+                  Cuejlt1ezv7Dz8mRUvA1bHsexgPOcEo3RaS3S3rUvJVYuaL1fbHYyRya34Z+CXZIxccedrhXLlsW
+                  /lYGT86HZbHv2SNTyI2X+Uqnp8Unwe8tWPer3ZZZzcElsWhsVtUpNJ6SWzSWx7ANNmLLzo2OcuWK
+                  8Mewyn5PN41pJfG1qjKcLIycq5aa7XGW1GDu02Ww5e9bUBsaml4GnHs3ow5ofEnBrc+HtRjOVNaU
+                  1YoJvTVPj6DTmZVtMElyucnsl3b93eB6nqlq9Jx7f4mM7IQg5ylpGK1akc3IzI21eXGLi3o5tPRP
+                  TetDTK+6VXlOf6a4bOG3aB1vPrdLuT8CWvatholPDyaHbOCcUnzKSTa0OTOySjpzPTs1PDfc9eWL
+                  ejA9dvQen51UsrFm6o7dU9unLv12nLq+X8+6+qrFSt81vlknsSW9y13HuwMbMyr1iYurlP3uEUuM
+                  pdx9t0vplfS8dU1vnnLbba98n3dke4DV0bouL0bG8urx3yX617Wjk+xdkT3t6kb1JuApACgAAAAA
+                  AAAAAAAAAAAAUCF0AAAAAAAAAAEAAAAAAAAAAAACAAAQpAAAAEDNV19dMOax6fWBm3pt1PBnZ9Sh
+                  KmCVjlsb4I8eX1Oy7WMXyV9nFnmxYzyLNKo8yjx4asg91cpR5ZJ6TXE6FN6ujrumvej9qNFeClD9
+                  STcnxWz2Gh+ZjX6a98Jdq7GUdBsjZjGanFTjuf8AjQjYFbMdQ2YtgXUxbGpG9AI2YSloS26EIuU5
+                  KMVvb2I588+26XJh1873eZLZH1LiQeyyyMI802oxW9vYeKedKx8mJW7X+N7I/wATbV0qdslZmTdk
+                  uEeC9SOjViwrSUVyrsA5cOl33tSzLHL8i2L2HRowqqklCKil7T0qCW4krIx3vaURVxXeHKMdrZpn
+                  kSeyOw0uTb1b1A2ZF0ZVyiuJ4XLV6/42G2+WlenF7DQgMmyaggAAgFICAAAA1GpCkAEAFNlFMsjI
+                  roh71klFetmo7fynh+f1Lz5Lw48dU/zPYgPs6a41UwqhsjXFRj6IrQGzQAUAAAQAACgQAAAABN5r
+                  yL66KpW2S5YR3syttrqrlZY+WEVq2z5rOzrc23ZqqIvwR+1gY5ubbn3avw0x9yHp4sV1olVew2pN
+                  AEgAUUhQBCgAQoIAAI2AZiCAV7SBPYY22wppldPdBbvTuILbZGmiV0lqo6e17jxzm8qKjPR1fgjt
+                  Wva9TOV37qKTUXD8C2rXv1PPLDSfNjzdb7N69gD9rOD5sexx7YvaifuJ1vS+HL+eO4jvyKf60OZf
+                  jiXGzVk2ShGH6a+N9qAV5NGVZKpR5lH4tNhnTi00SbgtG+L2vbtM41QrbUUoa9h55Ty6tedebHtW
+                  8DKWTOD/AF4cv5o7UGqL1rsn3reSGVTZs10fGMjGzGpclyvyrJbnF6agPKur/oz5or4JmjJz50yh
+                  GVWje2Wu5ruPPl5GRXeoq7m8tb49uvE807LLJOdknKT3t/YgNmVdC+acYckY7u16+g0+kja4mDm/
+                  4AZtriYTtSRhKSS1PHfe29EBldktvSJng4ORn3xoojzTltb4RXGUu4xwcG/Nvjj48eayfsSW+Uux
+                  H3PTOm0dMxvJp8U5aO2175P7uwB03p2P03H8mlazltttfvSl93YenXUORHtKAAAAaAAAAAAAAAAA
+                  AAAAAFAAAAAAAAAAAAQoAEKQAAAAAAAAAAQAARgUgGoAmpjZbCuLlN8qRx83qs7NYVPkhxfFgezL
+                  6lXTrGvx2fQjh5ebJtztlzPh/A1qy6+3ycaLsse/sWvFvgdfp/Rasdq/IfnX7037sf5UQeLC6TkZ
+                  jVuTrVRvUN0pensR3KaKceCrqioxW5I2a9m4x1ArZoyqlbXpuktsX2NG1y0NU5lHmw7nq4S2N7Gu
+                  ySPU2eC5OF6mtis3/wAy3M9kZKUFLtAy1MdQ2keC/qUFLy8defZu2e6vS/uIPZOyMYuUmlFb29x4
+                  LOoSsl5eHDzZbud7Ir7yw6fkZTVmZPVb1WtkV6jpUYkK4pQjyr6QObV0qy6SszZuyXCPBehHSqxo
+                  Vx0hFRXYb1CMTGdkIb2UFFLcSVkIb2aZ5DexbEaW+LA2zyJPYtiNLlxbI2a5WRXpAzbZjKcVvNUr
+                  W9i2Gva3ot7Atk3OS7FuIR6N7NyKAAAAhSACFIAAIQUgABgMANyPuPlbB/a9LjZJaWZD8x+j4fvP
+                  kOmYcs7PqxlulLWTX4VtZ+jwhGEVCK0jFJJLsQGYAAEKAIUgApAAAAAGM5xjFyk1GMdrb3CUoxWs
+                  noltbZ871TqMsybpoelEXtf4muPoAx6h1GedZ5desceL2L8T7Waq4JJbBVWkjYloBdNAAUAAAAAA
+                  AAACMA2QNkAEBeIBuKi5t8sUm5PuR45WLKS02VcY79e9md90bIuurVpvlnLg0t6R4p4co+LHm4Ps
+                  3ogs8OOvNRN1vs11RPPyKf68OeK+OOr+on7u6p6ZMP8A3I7V9BlDPqnfGmCc9VtlwXpAY+er7nXC
+                  OsFvn3/xPTyxi9EtO5bN5FCEXsSWu16bNTySWZQ24/rQ/Dx+kCtZlG2L86HY95a86qT5ZN1z/DL+
+                  JK8+qT5ZPy5/hls+syveLPSNzh4vd1f1cQJesSxxja4qcvdeuj9qOTlOCvflzc4xWik+7gmTJVKu
+                  l5Lcoaaavbu7Ga9dgDZoYuXYSUtTEASUkkSUkkeO+9t6IBffzPRGWDhXZt8aKI805exJb5N8EZYG
+                  BfnZEMehazlvfCMeMn2I+16d03G6bS6qfFKX9Sx75NAZdO6dj9Oo8urbOWjts4ya+xHq4k2gAAgU
+                  AAAAAAAAAAAAAAAACkKAAAAAABwAAAAAAABCkApCkAAAAAAAAAE1BAKQMjaS1b0QFPNl51WOtG+a
+                  fCKPLmdU01hR6HP7ji3Xyc1CKdts90VtbbIPRl507W52y0it0eCNeJg5XUWpbacb8fGS/KezB6Jq
+                  1fnaTlvVO+K9Om86+ui0W4DVjYmPiVqumCiuL4t9rfE2tk1I2UVswlMxlM1SnqBlOZrlIxcjBsDG
+                  7xQaW9bV6UeanrVHI41wsnLhHTTb6T1DCeKpzrnBc8Xv9JB5o42bnPXIl5dW/wAuOxevtOli4NVM
+                  Uq4pfmPVCurRPXfuRnpFLegMY1xj3vtZJ2RjvZqsyNNVH2nnlNva3qyjbZkN+7sXaeeUmyORrnbG
+                  PpAzbNcrIxNU7JPZuNc5whFzskoxW+UnovpA2TslIw5kk5N6Jb29iPJ+9tvfLg1O3/5svDBfeVdO
+                  VjUs613tbVXHZBeogjz65z8rFi8mzd4dkV6ZHqjGcI+Np2y97l3JdiLHlhHkriq4LhFaDQAACgAQ
+                  AAAIwCakAAAAAAJu2hvabsXFszMmvGrWsrJaehcWB9N8nYHLVZ1Ca22eCr0L3n7dh9OaceivGx68
+                  etaQrior1G4CgACApAAKAIAABOZbddiW8pwesdU8yTw8Z91s1/yoDX1XqcsmTxsd/orZOa+Jnlqq
+                  UUKKlFG5AFsABQAAAAAAAAAIA1IGQAAAHxGNtiqjzPRyfux4sy7uJysjIulkTupXmU+6lx8PYQYf
+                  t76W5US7XyS2b9uxljmqL5b4OuXaZV5lM3yt8kux7jZNQlDxpOHFvbEDGzLx48qlLXn2LTb7UZRo
+                  phJyhBRct+iNEcHHVqtjvW5a6ot2VOiek4N1abJrtfboBLbMymcm4+bVrs03pfwMqs6mzwqXLL8M
+                  jOvJqtXgkm+x7GYXY9F3vx8Xatj+gDK6ui1JXKOj2Jv7GcjLrqrvcK5OaitHrt0euui9HEyzaHTO
+                  EPMc1t0g98V26nm+gC6pLuMHJtiUm2Y8ABJSSEpJeo8V9zb0QC+7V6R9plg4V+bfGiiPNOXHglxk
+                  3wSJiYd+ZfGiiPNZPd2Lvk+CPtemdNo6fR5NXinL+rbxk/uAz6d0+jp+P5NPictttr3ya+zuPVq0
+                  RF11AIApQ4gAAAAAAAAAAAAAAAFAAAAAAUCAAAAAAAAAhQBAAAAAAAAANQBBqQCsgbPHl9QroXLH
+                  x2dnZ6QN92RXRDmsei4LicbN6hO/Va8lfZ9558rLcm7LpavsLh9MvzWrb9asfeo7pS+5EGimvIzb
+                  HXjLYtk7X7sf4ncwem4+FHVeO1+9ZL3n9yPRVVVRWqqoqMI7EluMmA1JqGzCUiiuSNUpklM1OQGT
+                  kYORoysyjGinZLxP3YLbJ+hHjjTn9Sf6mtGM/gT2tfmZBnd1aiE+StO5r3nHcvWemq6NsFOO5709
+                  6ZI/L2NGP6DdUlve9P1GNEXB20y05oNatbnrxA2s83u5r/NFP2G/U89uzKqfamvYB1qZfpRM9Was
+                  d/pmUpKK1ZRpsekmjVKyMd5hfe3J8u888pb5SeiW1t7gNk7pS2LYjVOcIRc5yUYrfKT0R5/3Vl8n
+                  DCh5rW+2Wytev4jOGBXzeZlTeTatqjuhH0Ig1rKvyXy4VXNHjfZsh6lxModOpclZlTeTatyeyC9E
+                  Uepy1Wm5LclsRNAK5NrRbIrdFbEYlIUUhQBAAAIUjAEAAhCggg1AADUAA1rtPq/k/pulc+oWrbPw
+                  U+he9L7D53puFZnZteLD4nrJ9kVvZ+jUUV0VQprWkK0oxXcgNhSFAAAAQoAgKQARspzeq9TWJDyq
+                  9t814V2J8QNPWOqeVri47/VkvHJfCvvOTTXotu8lUHzOc3zSk9W32no5dFqASKAUAAAAAAAAAGQA
+                  QEAagBIC6AB6JOT3La33IDydQynj11pbpyalpv0PNXbTNfptL8u5mdrhlWq+L1Sjyxituie1nmsx
+                  a5auPgk/iiQbbaK7NlkVr27meW7BtlFVwtflt+KMuwydmZRFprzY8P8A0LhWXSg5XvTmba14IDar
+                  qseEIT1UdyfYkbVJTWsXzru+4k4RlHSa5o9+1HkniOL5qJuuXY9sQM7cKm16x1hP8UNj9h5Mr97R
+                  VyympVarWS2SNk83Jog/Pq5mlskt2vpR478m3IUVY01HcktN4GuUpSblJ6t8X3GEnrsLJ6IwAElJ
+                  JbRKWiPHfdt0QEyL+Z6IYuLfl3Roojz2T3Lu7WY0UWZNsaaouds3pFLvPsuk9Kq6fRyR0nfNfrWr
+                  i/wx14fWBs6Z02nAo8uHjtl/Vt/E+7uPaloEtC7wBQEUCkKAAAAAAAAAAAAAAUAAAAAAKAICgRAA
+                  AAAABABQAIAAAAAAAAQBsAzGUoxi3J6JcTXkZNdEOab9C4nGy8+y9vV8sFuj94HpzOpuWtdGxcZ/
+                  ccqy6UpqupOy6W6K2stNeRm2eXjrSK2Ttfur7zt4XT6MOGkFzTl71kt7IPJgdHUJK/Mast3qG+Mf
+                  vZ1OGwMxbKLqYt6EcjXKYGUpmqUySlqeTLzqcZaTblY/drjtk/uIPRKainKT0S2ts51mfdky8nAj
+                  zPc7pLwr+VcRXh5nUJKeU/Lp3qmO719p18bErqio1xUUuIHgw+jwrl5t7dt0t8pbWdWFKS28OBnG
+                  KW7eSdsYLbv7CivRRfBHD10z7V+KP1HRsulP0dhzbNmf6YsDa2ee+SV9OvebtTndZhkOqu2j365b
+                  fQyDvUySr9ZoyL+z1HGw+uZKh5V2NOcnulW1t9TPTKjJynz5UvIpe6iD1k1+aWwDGzLTs8qiLyLu
+                  MY+6v5pcAsKU2p50/Ma2qiGyC9PaeiEYVQ8umCrguCLvYDm8PLFKMFuitiIAUAUgAAAGQAAAQAAy
+                  AGRlIyAQAACFAa9o4ke86/y70l5+Yp2L/b0NSs7G+EQO/wDK3Sf2eI8q2Ol+Qk12qHBeved7gSKS
+                  Wi2JbkUCgAAAAABAAB58zLqxKJXWPYty7X2AaupZ8MKnne2yWyuPefOrzb7JXWvmnLeWyy7Nvd92
+                  3X3V2I3QXAAlojIhSgAAAAAAAAARsAQEAupAABkkQqAbkeXqM7I0yVK1ssXKu5PY2zblZEMemVk3
+                  pp9LOHDNyr5Suhu15eV9iIMv29lenlzcWuD3GSy5w2ZEP86+9GUcuqzZYvLl9BslBOLexx7d6A1P
+                  Npd0aoeLm+LdobJwU4uL3M0xpoUnZCK1fxISyb6pPmj5lXB9nsAnJlUPWmfmR/C94hn1OXJanVP/
+                  ABwZsryKLvdlo/wy+8W0xktLIpr833gebJz6+Wdde2W5S+Hv39hzty04IysjWrJqrZDXZr3bGYSf
+                  ACN6sxb0W0N6L7DzX28EBjkXa7Eaa653TjXXFysm9IxW9ssIStmoxTlKWxJbW2z67o/Ro4MPMs0l
+                  lTXi7IL8Me/tYF6N0iHT6tZaTybP6k1uS/BH7TqLYNNDLYwIUFKCBCgCkAF4ghQAAAAAAAABQAAA
+                  AAAACkAoBAAAAAAAAAIAABSAAAAGwgbJKSitW9EuIFZ48vPhTrGHis+hHny+pOWsKXpHc5cfUcqy
+                  +XMq607LZbIxW16gbMnJbbstlqy4nTb81qy/WvH4R3Sl9yPVg9IUJK/M0nbvjDfGP3s6mzctxBjV
+                  VXTBV1RUYx3JbisakbKGpjKRJTNMpgZSmaZzSTlJ6RW1t7jTl5tOMvG9Zv3a47ZM81eHl9Rkp5T8
+                  ujXWNK3f5u1kEnnX5U/JwI7Nzva2L+VcT14XSKqX5lmtt0tspS2s9mPiV1QUa48qXE9MYpbgMI1p
+                  b/YZvRLV7jGy2EN+/sPNZdKe/Yuwo2W5HCHtNEpNvbvMWzVZbGK7wM5TSWvA8Kk55Tn3MysslPfu
+                  7CVLwuf4vDH0cWBmmHo9/sIALGSh7sYx70tpG29rBAAAAAgAAAAQAAAABATUAAQgEKyACFIAAAGy
+                  ii2+6FFS5p2NKK9J+h9K6dV07Dhjw0bW2cu2T3s4/wAqdG8iv/yGRH9WxaVJ/DF8fSz6VAUAAAAA
+                  AAAhTFySTb2Jb2BjbbCqErJvSMVq2fL52Zb1C/m3Ux9yP2m/que82z9vS/0Ye818TNFUUlygZQgo
+                  oyCBQKCAUEAFAAAEDAakAYEG8AAUFAEsshVBzk9FHeWUowi5SeiW1s42dmSub02Vx3Lt7wPH1LOs
+                  yLlJbIp+GJ66bMW6KUFySXD6zl11PKyY1apJbW+7+J0LsXTetq+JbyDO2hNaSSa7zzXY9nI4VzcU
+                  98X2GULcmnZF+ZDse81yzp2ZCrjDkgveWm0DbVKvHrjG3bFbNVwZvXJNc1b19H3GDqk4ayS0fDfs
+                  PLLGcHzUydT7N8fYBttxa7W21pJfFHYzx5UL61Hns569dIrjqej99fStMivnilslH+B47cieS05a
+                  aLXRLvA19xi3/EsnsPPbbotEBLrNTz7W0ktW3ol26hvXaz6boXRPJSy8qP6721Vv4E/ievxP6ANv
+                  Q+jLDgsi9a5U14Y/9tP/AKjrpaDTQy02AQugBQKAAAAFAAAAAAAAAAAFAAAAAAABSAUhQBAAAAAA
+                  AAAQAAAAAAAgZ5crOhQuWPin2dgG26+uiPNN6di4nIy82y9vV8ta3R+805GS5N2Wy9ZMXByM5qc9
+                  asbenulL0dxBqrjfl2OrGW7ZOx+6js4XT6MOOsfFZL37Jb39yN1NNVFarqioRW5IzbANkbI2Yylo
+                  UVs1ymYymefJyqseHPbLRbkuLfYkBtnPi9y4nNt6hZfPycBc8tzta1ivR2iNOZ1N/qa042vuLfL+
+                  Zo6uLh1UQUKoqKXEg8eF0mFUvNvbtvltlKW1nUhXpv8AYZRgl6e0k7IwW3f2FGWxLaaLcjhD2mq2
+                  6U32LsNbYFcm9rMJSS3mFl0YrvPNOyU39gGyzIb2R9p5rbq6o89stFw13t9iXE1SyJTm6sWKtmtk
+                  pfBH0vibKcWFc/NsfnX/APcluXdBcCDCEMi9qVidGPwh8c/T+FHp114aJbElu0Qer2t6k2gCkBQA
+                  AAAgAAgAAAAAAIBqAINQAICEAAACAANzOx8u9HfUcpW2r/bUvWf5nwic/p+Bd1DKhj0rVyfil+Fc
+                  Wz9DwcKnBxoY1K0hBb+LfFsDfGKilGK0S2JIzAAAAAAAAAAxb4HE611Fr/aY72v+pJfUerrHUf2t
+                  PJW/1rNi7l2nBprbfNLa3tbAzpq5Vt3m5ESKUAAwAAAAMAAAwGpNQyAAAAKQugFSK3FLV7EuI1SW
+                  pxeodR82bopesI/1J8CDPNzPOlyVf019J4Ln4N556Oo4t1jrU/EnoubYnpxR5eu57xKUoJuyeyL0
+                  2LvAzos8zJlCOqlXHmlNfDt0SZ0IZ11cVG2PmQ7VvRxvl7qka6J12Q1Tk3Oem1t9rO1BY975qZLb
+                  taA3K7GuTlGaTW9PYaI212aut8y10107DVdi668y29q2MwoSx14F5jW3R8QNjeRVNypnse11v7DZ
+                  DPrb5b4uqb3vg/sLXlYuRsb5Jfhl2ltx9Y7UpR79qAttlFcVJzWkt2nH1HJcm221o3t2d7N2VRGp
+                  KS1i29OV9m96HknboBLrdNiZ5ZSb2iUtXqz6L5f6Gmo9QzY+D3qKpfE/xy7uwDLoXQvLUc3Mj4np
+                  Kip8PzyX1I7yMpNyerIAABQKQugAAACkKAAADiAAAAAAACgAAGEAAAAFIAAAAAAACFADgCAUhSAA
+                  AAI2ktXuRhbdCqHNN6I5WVmzuenuw7PvA35fUddYU7tzl9xyrbuV6LWc5bora22FK2+zycaPPPi+
+                  EV2tnVwenVYq8yT8y977H9S7CDy4XSZSkr83bLfGngv5u06q2bNyBGyg2TUjehhKYFlI1SmYXXwr
+                  g7LJKEI7XJ7Ec13ZfUZ+XjJ1Y796x7JSX2Ig3ZXUVGfkYy8697Gl7sf5mXE6VKVn7nMk7bnuT3Lu
+                  S4I9eF06nFio1x8XGR7owS72BhCpJaNaLgjZokuwSlGC1bPLbe5bFsRRttyFHZDa+08spNvV7WRs
+                  1ztjFd4GcpJLaee3I4R9pqnbKb7uw80r5Sm6saPm2r3n8EP5mQbLr4VR8y2Wi3Ltb7EuLNSqvyVr
+                  drRQ/wC2vfkvzPgjZTiwrl5tj86/8b3LuiuBuer2gSMYVwVdcVCC+FAAoAAAAQCgBgQE1AAAAAAA
+                  IAAIAAJqAQTUDYABAABtxsW7KvjRRFzsm9El9bMsXEyM2+NGNBznL2Jdr7j7rovRKOl07NJ5E/6l
+                  mn0LuAvRukU9MxlBaSuntts7X2LuOkABQAAAAAhQAAAHxvU8l39UtWuyqTh/p2Hohp5ew5eVzV9T
+                  y4y3+dN+py2HRx581aA2gAoAAAAAAAANk1BAAIABQUBvMtEkEthy+qdR8lft6PFdPZs4AYdT6lJz
+                  eJjPxP8AqTW5I+U6p1COjw8d/pr+pP8AEzZ1LO8pSxaJc1sv61i36v4UebI6F1OqmNsqXKMlq+Xx
+                  OP8ANHeQc/mOhi9TujDyrUr6XvhPb7Gc9Qae031QA6mPj4c03hy8qT2ypn9jMnCyqXiTqn2rceWq
+                  vt9p7q7MiMdNVZH8MwMb8zNlV5afMm/fW89eIlZFc8lGWi8Le1nmnKrgnTLgpbU/WYRkrFpuktzW
+                  mvpQHvuxO1c3ZwftNdc8mh/py5o8YS+rUwrysmrY/wBWHFPebnm4k4OU9YOK2p7wOdmZd1kn52qe
+                  uvJwWp4nLm3mzKvjdbKcU1F7En3bDo9A6G+o2efenHCqe3tsa+CP2sD0/L3Q3fJZ2ZH/AG0XrXB/
+                  3Jdr/KvpPp5Scnq/UuCD00UYpRjFaRitiSXBEQAaFBQAAAAAAAAKQoAAAAAAAKBCgAAAAAAAAAAA
+                  AAAAAgFAIAAAAAd4A8+Tl10LT3pvdE05XUFHWFO17nLgcq69R1lN6t+1gbcjJlY3OyX3GmjHvz5f
+                  p610L3rHx7o9puxOm25LV2V4at8atzf83YdaMYwioxSSWxJbCDDGxqcWvy6o6Le3xb7WzYw2YtlF
+                  1MHJCUthplMDKczRddGuuVkvditXpvLKR4eqWyrw5WR2qEoyku5PaQWnp9+bYsjM2Vp6wq4L72de
+                  miMIqMVyxR4+ndVqvUYvY0tz7j3vL7EijYo6bNyNdt0YbFtZhPJbWh5pMDKdjk9pg2YymorVs81l
+                  7lsjsQGy29R2R2nltujCLsskoxW9s12X8svLhF2XPdWvrk+CLXjeJW5DVty3RXuR9CINcYX5K1et
+                  GO/VZNf9KPRCMK4KuqKhBbkjJtt6sgFIAUAAAAAAAmoDUAgAAAAAAJqGQCkDIQUgDAMjAAABJt6J
+                  atgTU93S+k5fU7lCmPLUvfte5fxOj0b5WvyuXIzdaaN6r+KX3I+vx8anHqjTRBV1x2KKA8/S+lYv
+                  TaFVRHWT9+x75M924ACgAAAAAAAAAAAAPi/mOj9v1d2JeHIipeteFjCs2aHU+bsTzMKGVFeLHlt/
+                  lls+s4WHZ4kB1QIvVagoAAAAQAAQATUagAUFQBF0CPJ1HqFeFVzN+N+6vtA19V6nHEhyQ8Vs9kUt
+                  6/ifK9Qz5Y6lBS5su3+pL8CfBd5ln58qNbrHzZdu2uL+CL+J95q6F0mefc8rJ1dEZavX45dno7SD
+                  1fLvRtXHPyV30Qf/ADv7D6QiSS0WxLcjJAePM6RgZuruqSm/7kfDL28fWcXJ+WMyjWeJNXwXwPwy
+                  +5n1CRmkB8RCzyp+VkQlTYt6kmj31RTWqeqfFH0uRiY2VDkyK42R4cy2r0Pejj5HyzKtuzp1zrf/
+                  AGp7Y+370BpUItaNao02dOpnti3XLg4vT6CTvy8OShn0Sr4KyO2L+w9UZKcVKL1UlqmB43Tl17JJ
+                  Xx/Etk/4miM8e9uCak47095h1fqmieNQ/F/cn2dxz+j9OyuqZnkUNwrW263hGPa93qQHV6J0WfU8
+                  hvV14tT/AFbf+mP5mfZwhXVXGmqKhVWuWEVwSMMXGow8aGJjR5aq92u9vjKT4tmwAACgAAAHEAAU
+                  AQFAAAAAAAAAAAoAAAAwAAAQAAAAAAAAAAACFIAANd+RXTHWb28FxAznOMIuU3okcvKz5W+CHhh9
+                  LNWTlWXS1k9IrdHgeWHnZVnlY63e9Y9yIJZa3JV1JzslsUUe/B6Wq5K/JandvS3qPo7zfh4NOJHw
+                  +Kx+9N739x6WwBGyNmLkUVs1ymSUzVKQFlM1ykRyMWwDZhOMZxcJJSjJNSXcxqAOFBWYGW6JPwrx
+                  VS7YvcfQUXq2tSW/ic/qmL+4o54L9arxQ7+2J5+j58JPl5t+xx4kHbbMJzemq3dpW+B5su+FUEpP
+                  bLdFbW+5IoxnY5atvYvYedTtyNmO+SpbJZD+qtcSqidvjyfDDfHHT+mb4m/u3JbktwGFVVdMeWta
+                  a+9J7ZSfa2ZghABdSFAAAACAUgAAAgAAAAAAJqNQBAUgAhSEAhSAAZRhOclCEXKUtiS2v6D6DpPy
+                  lbby3dQbqr3qpe8/T2AcbC6dl51vl40HJ8ZfCte1n1/SPlrFwNLbtL8j8TXhj/KjqY2Lj4tSqx4K
+                  uC4L7TeAQKAAAAAAAAAAAAAAAAAPPl48MrFtxp+7bFxfdqt58HVz02ypnsnVJxku9bD9DPjPmbE/
+                  bdTWTFaV5K1f80d4G/HnzQNrPDhW8O09xQIVkAEDZNQLqRkbAFAKAMkiJGGRfXj1Oyx6RX09wGGb
+                  m1YdLsm1s91dp8ln9Qa1zcjxWS/+npfH88l2dht6h1BZDeXkP/bxelVf45dn8qOLVXl9WzlFbZze
+                  18IxXH0Ig29NwL+rZjc2+RPmus7uxd7Ps6qq6ao1VRUYQWkYrsNWDhU4WPGilbI+9LjJ8Wz0AEZJ
+                  ESM0gKkZpESMkgKkAcXrfVpxl/4/CeuRPZZNfAvvA1da6lLKsfTMN6rdkWcFp8K+05PUM+OFUsTH
+                  etiWjfYvvGTfX0ujyqvFkzW19nf9xxaqcjOyY0Up2X2vT2gZYWDk9Ty44uMuaUnrOb3JcZPuP0Tp
+                  vTMbpeHHGxlrptsse+cuMn9nYauidHx+kYiph4rp7b7eMn2L8q/ie9b9oAAFAAAACgQAACgAACAU
+                  EKAAAAAAUAAAAAAAAAAAAAAAAhRqA4E2lIAKHotr2JcTn5Wfvrpei4yA3ZObGnwx8Vn0I5d1zbdl
+                  kvaa7bo1rWT1b3Le2zfi9Onc1dlrSO+NP/xAaMfFuznrtrx/xcZeg7FNNVFarqioxXAzSSSS3LYi
+                  NgXUxbI2YSmBZS0NUpklM1ykBZS1NbkRsxbArZiCNgNSakbABs4md0Wcsl5GK3HmerUdjTe/Q7ZP
+                  QQc7Gj15RVbuior47Iptes9dVEanzuTuvfvXT2v0R7EbW3xMWwDABQIUjAAAAAQCkAAAEAAAAAQC
+                  kYAAAgAhQBNw1bCPb0/pOdnz0orfJxslsivWQeJLXedTpny7nZ7U9PJo42S+xcT6Ppnyxg4ellyW
+                  ReuMl4U+5fedpLQDn9N6Lg9PivJhzW8bZ7ZersOgkUAAABQAAAAAAAAAAAAAAAAABN5yfmPA/d9M
+                  s5VrbR+pX27PeXrR1iNaprtA/P8ADt3PidiElOKaOX1PEfT+qW0paVTfPV2aS4eo9WFdr4WUexmL
+                  LqYsBqQrIAKCpAC6BIraim29EtrfcBjbZCuEpzfLGO1s+W6n1L91Kc5twxKtj0+J/gj3vibuq9Se
+                  VN01y8vGq22Wdi/+J8EfM5uW8ica604017Koeni+9kC62/qGTGMI6t+CqqO5LgkfXdI6XX07H5dk
+                  rp7bZ9/Yu5Hm6B0ZYVf7i9f7mxbE/gi+Hp7TsACpERmkASM0gkZpAEig5/WOrQ6fTyw8eTZsqhv/
+                  AMzA1da6u8WKxsbxZduxJbeRPi+/sOFZZDpmO5zfPlXbdu3V9voMnJYVc8zLfPk26vbvbfD7zgZW
+                  Tbfa7J+Kyfur6gJOd+TeoR1syLnoktrbfA+7+Xug19Hx+eeks61fqz/Cn8EftZ5/lf5eXT6lmZcd
+                  c6xaxi/7cX/1P6Dva9u8AACgAAAAAAFAAAAQoAAACFAQAAAAABQAAAAAAAAQoAAgFBCgB6AAISyy
+                  FcXOb0SMb8iuiOstsuEeJyr8id0uab2LcuCA2ZWZK58sfDX2dp4p2NyVVS57ZbooR87JsdWPw9+b
+                  3I6mJhVYsNILmnL35veyDRhdOjU1df8AqXP2R9B7yEbKDZi2RyNcpgWUjVKRJSMHIA5GDZGyagGy
+                  AxbArZjqCAACAVsjZGyAAAAIUgAAAACAAAAAIAAAAAACAAAAAZNCmVVN181XTBzm90UtWQYLuN+L
+                  h5WZaqqK3ZLjpuXpZ3umfKMpaW58uRb/ACo7/wDMz6bGxcfGrVdFarguEV9faBwumfKVNelue/Nn
+                  v8te6vS1pqfQQqrrgoVxUIRWijFaJewzAAFIAAKBACgAQoAAAAQoAAAAAAAAAAAQFAHB+aunu/BW
+                  VWtbcXxPtcH73s3nzeHfppJM+/nFSTjJaxexruZ8D1PCl0zqM8fTSqXipf5X924DqwmpRTRWeLEv
+                  +FvYewoBFAFKkEXcA3ek4PWOpO6TxMaS001nLgkt8m+w39X6o4r9pj+K6fhen39nafJdQzUk8amX
+                  Mm/1rV8TXBflRBrz8yNiWPRr5EHq3xnL8TOt8udG93PyY99EH/zv7DydA6M8yz9zev8AbVvc/jku
+                  Ho7T65JJaLYkAKCpAVIzSIkZpAVIyQSPPnZ1GDjyvuexbIx4yfYgNfVOpU9Px/Mn4rJbKq+Mn9x8
+                  4pOHP1LqEtbZbUnw7EkZa2ZVsuo57SSWsIPdGPA4vUc+WXY5PVUw2Qj/AI4gas7NnkWO6zdurhwS
+                  PpPlT5e8tR6rnR/Ue3Gql/8AqSX1Hj+Vvl/99YupZsf9pB/pVv8AuSX/AEr6T7bXXuAm0AFAAACk
+                  AAoIBQAAAAAAAAAAAAAFIAKQoAAAAABCgbAABAKCFAhQNy1e7tAHmycyNScYeKf0I15Wdvrpezc5
+                  fcc222Na5pPb9LAzstbbnZLvbZrox7s167a8db5cZeg3YuBZe1blLlr3xq/+I6aSitFsS2aAY001
+                  0VqutKMVwMtwb0MHICuRhKRJSNUpgWUzXKRHIwbArkYNhsxAaghGwDZBqQCkGpABGwQAAAABAABG
+                  BSFAEAAAAACAAAAAAAEBSJN7FvAatljGUpKMU3J7Elt3+g63TflvOzdJzXkUv4pb2vyo+p6d0XB6
+                  ek6Yc1nGyW2X8CD53pvyrlX6WZf6Fe/kfvv1cD6jC6dh4VfJj1qOvvS3yfpZ6UUBoUAAAAAAAAAA
+                  AAAAAAAAAAAAAAAAAAAAAEKAIcf5k6X++wXOtf7jH1nX2tfFH1nYI1qB+cYt7ex7GuHoOxj2qcdH
+                  vR5PmXpsundQ/c1LTGyW2tN0ZfFH7Tz4uTtWj3AdlFPNHNxoqKtthXKW5Sklr7T1L2lBbubic/qv
+                  Uo4sHXXtulsSW1rXh6Tb1HPrw6nNvxteFdnefJdQz50tzk9cqxaxX/bi+P8AM/oINPUc10qVUZa5
+                  Fmy6a+FP+3F/WaOkdLs6jkcu2NMNts+xdi72aMLDvz8mNNS1lLbKT3JcZM+3wsOnCx40Urwx3vjJ
+                  8WwNtVVdNcaqoqMILSMVwRmAARmkYpGyKAsUZpESFttdNcrbZKEILWUnwQGGTk04tEr7pcsIb+19
+                  yPmJ2XdUyf3eT4aIf0anuS7X9plk5N3WcnnknDCqf6cPxPtZzurdRT1xMd+FbLJLds+FdyA09V6i
+                  smTpremNXtb/ABNcfuMvl/odnWMjzbk4YFL8cuMn+CPe+PYaOkdJv6zlqivwY9fivt02KP3vgfoe
+                  Nj0YuPDGxo8lFS0ivtfeBnGEYQjCEVCEFpGK2JJcCgFAAAAAAKQAUAAQoAAAAAAAAAAAAAAAKAAA
+                  AAAgAAAACgAkEjG6+uiOs9/CPEDKcowjzTeiXE5mVmSt8MfDDs4swvyJ3S1k9FwjwPLzWW2eTjrm
+                  nxlwj3sBZbo1CCc7JbIxW89mH07kkr8nSdu9LhH0d5tw8GvGWvv2y96b3/wR6QIRvYGzCUgK5GuU
+                  ySkapSAspmtsNmDYByMWxqQATUakbANkBAAIxqAIwyAAABCggAAAACMC6kAAAD/DAAEAAAAAAG0b
+                  9568Lp2bmz5aK21xk9kV6WfT9N+VsTH0sytL7Vt0+Be3eQfOdO6Hn57TrhyVcbZ7F/E+p6d8uYGF
+                  pOS865fHNbF6EdWMVFKMUkluS2IyAIoAAAAAAAAAAAAAAABCgAAAAAAAAAAAAAAAAAAAAAAAAeLq
+                  nT6upYVmNbs5lrCX4ZLcz87nC/DyZ4965bK3yv1H6gz5z5u6NHKxnnUrS/HWtmnxQW/2AfJ9Pxae
+                  qdTyP3CcqqoKK0bWktn8T2z6X1Tp6c+m5Hm1r+xb9muz6jV8pwaxr8h77rNPVFffJncumklru7AP
+                  i8/qWTG2U82mUb1trrktIuX4nrwXA40Y35eQoxTsutl622foORTVkxcL4Rsi/hktUeTD6Pg4V876
+                  INTktFq9VFfl17QJ0npdfTsfkWkrp7bZ9r7F3I9wAEKkEZxQFijZFEijNbAJKUYRcpNKMVq29ySP
+                  mOoZ1nV8jyam44NT2vdzvt+42dV6jPqNzwcSWmNB/rWr4tOC7vrPHm5dfT6FVSl5rXgXZ+Zga+p5
+                  6xq/2mNsta0lp8K7PScfCwsjqOXHCxVzOfvye5LjJvsRhGGRk3xx6U7Mm56ab3qz7/ofRaekYnlR
+                  0nfZo8i3tf4V+VAejpvT8fpmJHFx9qW2djWjnLjJnpWjC2hbAAAKAAAFIUCAACkKQCgAAAAAAAAA
+                  AAABSFAAEAoIAABQIAXQAVIJHkys5R1rq2y3OQGzJy4ULlXin2HMsslOTnN6vtMbLFFOc5elkx8W
+                  zLfPPWGPwW5y/gBhXC3Mny1PlrWyVv2I6lGPVjw5K1ouL4vvZnCEK4qEEoxWxJFbAGLkHI1ymBZS
+                  NcpGMpGtsCuRi2RyMGwK5GLYbIAI2RsjYBsAgAE1I2A11IUgAAAACAAAAIUgAFAEBSAAABNCgAAZ
+                  1VW3TVdUXOb3JLVn0HTflOctLc+XJHf5Ud/remwg4WNh5OVZ5dEHOT7D6TpvylXDS3Olzy3qqO5e
+                  l8Tu42Jj4tarorVcVwX2s36bNgGFVNdMFXVFQgt0YrRGwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                  AAAAAAAAAAAQpAKAABzPmPIWP0TMs4ut1r02fp/9R0z5v53tk8DHw4Px5V6Wnaor72gOZ0zE/a9N
+                  x4peGcef1zfN9p6LIuUE1vR0HTDylVp4YpKPq3HilF1zcJbgPKwbpQUlqt5paaejAABIDKKNkUSK
+                  M0gKkcHrXVJ5Fr6bhS37L7VuS4xX2nT6rHPliShgaebLY23pJL8vDU+Yqvh06Mq8mmdVu98y2yYG
+                  622jpmLqlq37q4yl2vuPnr7rbrfNlrO+x7Fx7FovqM8zMsvt8633XsjHgkuB9P8AKvy86VHqmbH9
+                  ea1x65fCvxvv7APX8t9Aj0ynz8ha5tq8X/y4v4V39p2tyDY3gAAUAAAAAAAoEKQoEALxAhQAAAAA
+                  AAAAAAAAoAgAAAAAAVAEi6qK5pPRLeSc4VR5pvRHNycqdz092C3IDZlZrn4KtkeL4s8Nlsa1q9re
+                  xLizGy1qSrguayXuxR7MTB8t+df47nu7I+gDVi4ErZK7KWxbYVcF3yOhsWxbEUxbArZhKRJSNcpA
+                  WUzVKRJSMWwDZi2RsxbANk1DZGwDZi2GRgACACBkANgEAAAACAAAAAA0AAAAAABCjQA0NWhozqdO
+                  +Xs3M0nNeTS/ilva7kQcuKlNqKTbexJd52+m/K+Ve1ZlPyKuz4n6j6Hp/RcHASdUOazjZLbL1dh0
+                  QPJg9Ow8GHLjVqL4ze2T9LPXoAAKAAAIBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQFA
+                  AAAD5T5gl+5+ZsDF3xxoO2Xc23L/AKUfVnx+NL938zdSyt8adKI+rwbP9AHVNV9Ksjs95bjaAOYl
+                  yvT2iUVLeerJo18cVt+JHm11A0Sra9BiehmEoJga1OSNkb+1ewwdb9Jjo0BvV0H2o8+VVTlRcL4R
+                  sr4RktStxinKTSS2tvYjj5vzJi1TVOIv3NrfKmvc1ffx9QFs+UceT/d49io5HzRhb4oarve5enU9
+                  3SOqX5d1uLk8s7Klqra/dkk9H3cTxrDz8+Sl1K5wqXu49e5afR9Z18XHxcSHLRXGC4tb36XvYHp0
+                  KRSRSiaDQoAg9BRoBACgQAoEAAAFIAKQoEKAAAAAAAAAAAAAAABoUqW0AkYXXwojrLfwiY5GVGlc
+                  sds+zsObZZKbcpvVgW6+dsuaT9C4I8/NZbZ5NC5p8ZcIrtZYRty58lXhrWydn2I6WPj1Y9fJWtO1
+                  8W+1ga8XDrx1r71kvem9/wD6G8NmLkBWzCUiSkapSAspGuUg2YagVswbDZi2AbMQTUCmLGpAGoIA
+                  BARgACAAAAIAA2AAAAAAAAAAAtg1ZdNT04XTczOs5MetySe2b2RWvayDyqK4nv6f0XOzmnVDlq42
+                  y2L+J9F035YxcfSzJ/XtW3l+FP7TtRiopJLRLYkt2gHL6d8vYOGlOcfOuW3mmtUn3I6yQAAoAAAA
+                  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABrvtjTTZdP3a4ucvRFanyHyzCT
+                  w7cme2eRbKTfbp/HU7vzTk/t+hZUk9tkVUv87UX9DZz+k0+R03Hr3NQUmu+Xif1gesAADx5NHK/M
+                  hu4o9hN+xgczXt2MG7JpVWs91e9t8DhZ3zFi0N14ieVduSj7q/zcfUB1m1FOUnoltbe44nUvmfEx
+                  24Y3+4sXFbIL/Nx9RyMnKz8+X+7scYcKI7EvV95zMnkVnLBaJbANmd1XNzpfr2eDXZXHZBer7zxu
+                  UqL4WLfXJSX1kZbPFWpcY+F+jgB9tj5sbYRsg9YzSkn6T1QyO8+U+Xc3WMsOb2x1lV6OK+070ZMD
+                  qxvRsjcjlxnJcTbG6S3lHTVhlzI58LzbG4D2aop5laZqxAbhoYKxFUwLoNBzF1AgKAMSl0GgGJRo
+                  NAAAAAbQAAAAAAAAAAMtElq9iQBI82TmKGsKnq9zka8nM5tYVPSO5vtPFZZGEeaT0QFnNJOUnpxb
+                  ZhTRZmPmlrCj2OX8DZj4c72rclNQ3xq+2R0NiWiAkIQrioQSjFLYkVsjZi2AbMJSJKRrlICyka3I
+                  NmLYBsxbI2RsCNkGpADZGGyMAQAARsakAagEAAAACAAAUCFAAAABvGgRlXTbdNV1Qc5PcktSDD0G
+                  7FxcnKsVdNcrJPgjvdN+VJy0szpci3+VHf63wPo8fFoxq1XRBVx7t79PaBwunfKkIaWZ755f9uPu
+                  +tn0FVVdMFXVFQgt0YrRGYAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAACACgAAAAAAAAAAAAAAAAAAA
+                  AAAAAAAAAPmfnax2VYOBHfk36v0R8P8A1nrSSSS2JbjndYl+6+bMenfDEp55L8z1f2xOiAAbSWr2
+                  Jb2cvK6/jws/b4UJZmTLZGFe1a+la6+oDqNpJtvRLe2crK6/RGz9vgwlm5MtkYVpta+la6+o2UfL
+                  vWOqNWdYv/bY72rFq05vXvS9ep9DgdLwOnV+Xh0xr196W+Uv5pPawPnKvlzq3VNJ9Zu8jHe39rVv
+                  0796X0nN6z8s/wDiJ+bixcsOXxb5RfZJn35ruqrurlVZFThNaSi9qaYH5e6qrFpKOvfxOdldIk25
+                  0y1b+GW/2n1fXfl+3p03fjazxJP0uDfB9xyE0/eA+Xvx7qXpZFxfeY1vRtPdLYz6uUITWlkVJdj2
+                  nlt6Nh27Ypwf5Xs9gHzKlZj3K2D5bIPWL9B2sDr+TZ4bqOeK3zhsfsewt/y7ZOSlXbGUVonqtHod
+                  Ovp1FdSqqS0iuO9+kDPH6lh26JT5JfhmuVnvjtWq2o5NnTdmvLqYwqyMd602Sh3b17AO1yriNGtz
+                  ObX1XIhosipTX44eF+x7D109Qw7dkbOWX4Z+FgehTmjJXk02a8O0mhRujd3mauPNyLhsJpJbmB7V
+                  aZK08PPJFVrA96tKrDxK4quA9vOXnR41aVWgevnQ5kebzR5oHp1RdTzeaXzAN+o5jR5g8wDfqTU1
+                  eYPMA3ajU0+YXzANyKlqaVabI3IDOTjBc0nokc/JypWvlWyHZ2+kuVkO2Wi91bkeOy2XMqqlz2Pc
+                  uC9IC21Q0S1lOWyMVvZ6MXBakrsjSVm+MOEf4mWLiRp8c3z3S3y7O5HpcgKzFsjkYOQFlI1ykRyM
+                  HICykYNhsxbANmLZGzFsgrZjqNSFAjKzHUAAQAQACABsAQAAAAAAAAAAC6BJt6LaBNrLGDlJRinK
+                  T2JLb9R1OnfLubm6TmvIpfxyW1ruR9RgdGwcFJ1Q5rONktsv4EHz3TvljKv5bMp+RU9vL8b9XA+m
+                  wunYeHDlx61F8Zb5P1nq0ADQoAAAAAAABCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                  AAAAAAAAAAAIBQAB8b0+ayeudUzn7qn5UZfli9PqgjPL6/jV2eRiRlmZMtkYVbVr6Vrr6jc/kqyW
+                  RbB5soYFk3Z5MFpNt8G92zt+g7vT+k9P6bXyYlMa2/envnL0ye0D56j5e6z1Vqzq937XHe1YtXvN
+                  d+9L16n0XT+lYHTq+TDpjXr7098pfzSe1nrAAAACFAGuyEJQcJxUoS2NPatD4/rvy3LFcsrDTnjv
+                  bKG9w+9H2aI0mtGtU96A/MEZpn0nXflnmby+nx0e+yhbvTH7j5rSUW4yTUlsae8DNMyMEzJFGSbW
+                  56Dn/ElJexggFddE9nuvsZps6epLVJSXatps0Cbi9U2gPIqMjHetNk62ux7PYbYdSza9lsIWrtXh
+                  l9GqPV50t00prvI40T3px+lEEr6tiy2WKdL/ADLVe2J6q76LVrXZGfcmtfYeOWFCXutP/Heeazp2
+                  m3l0YHYafEaHGis6n+ldOK7G9V/xGyPU8+GyyFdq9Di/+EDqcqJyI8MetV/3aZw74tSX2G6HVcGe
+                  +zkfZJNAejlfaNJdpIZGPZ7lsJeiS+3Q2cre5a+jaUYeMvNLsMmiATnkOdl0GgDzGPMY0GgF80ea
+                  TRE0QGXml8ww0Q5QNisRXZsehq5UNANGTbKHLCOyU9mvYb6FCmOkN796b3tnkzk067OEXt9ZshZq
+                  tSD2K0yVh5FM2KZRucjBsx5yNgVsxbI2YtgXUxbDbMWwGpNSMAQMamIBsAgAhWQAQBgNSAAAAAAK
+                  BCjQugGO3gXY9568Hp2Zmy5aK21xm9kV6z6Tp/yziY+lmT+vauD9xeriQfP9P6NnZzTrhyV8bJbE
+                  fT9O6Bg4WknHzrV8c1sXoR1FGKXKloluS3F2IBokCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                  ABCgAAAAAAAAAAAAAAAAAAAAAAAAAAAICgAAAIUAAAAAAAAAAAAIcTrXy9TnJ30JVZXbwl6TtgD8
+                  1yMa7FulTfBwnHgzHXQ/QOodLxeoVcl8fEvdsXvL1nx3VOjZfTZ6yXPS/dtju/zdgHiRka0zNMoa
+                  Ao0AgKAIZKycdzfoMSgZ+ansnBPvWwjjjy4OL9pgADxKpe7JP6DVPp/5dTcE5Lc2vQQeKfTo8YmH
+                  7OcPclKP8smjpK6xfFr6dpfN7YxfqA5yn1Gv3MixLsb1+syWb1WP9yMv5oRf3Hv563vh7H95NMd8
+                  GgPGuq9QXvV1z9TX1My/81lL3seL9En9up6fJx38X0E/bUvdJAaV1uXxY0vVJfajJdcp+KmxejR/
+                  cZvBi92hH0/uQD/zeJxhav8AKvvL/wCawePOvTEwfTn+ExfT3+H6AN66x09/3JL/ACsy/wDLdOf9
+                  72xf3HkfT/y/QYvAXYB7v/KdP/78fpRkuo9Pf/3EPac7/wAeuwf+PXYB6s7PwI0Sk7Y27NFCD1k2
+                  zy9Kzf3VL5lyzg9HHu4Mj6fHsJDGePZ5kVot0vQB702ZKZhF6pNcePpBRuUzLmNKZkmBm2RsGLYD
+                  UjDIAICNgGQMAQAgBshSAAABAXQugE0CKAIXQzrqtumq6YOc3ujFas7/AE75Vk9LM6XKv+1Ha/Wy
+                  DhY2Hk5Virx63ZLu3L0n0fTvlWqGlmc/Ml/2o+762dyjFoxq1Xj1xrguEVv9PabuAGFVVdUFCqCh
+                  BboxWiNgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                  AAAAAAAAAAAAAAAAAAAAAAAAQxsrhZBwsipQlslFrVNMzAHy/VflXVyvwdnF0v8A6WfOzhZVNwnF
+                  wnHZKMk0016T9J01PF1DpWHnw0uhpP4bFskgPgk2ZradHqXy9nYes6159P4orWSXejmoC6DQyIUY
+                  6DQy0GgGILoAIC6EAgKAICgCFGgAaAAC80u1hTn+J+0m0AZeZYviZfOt/EzAAbPOs7R50+72GAAz
+                  86fYn6g7m1tjF+owADSPwxUV2LcAALsKmYlAy1DImABCkAhNQABAABCkAEKAIUaAAg2ypPXRbWzq
+                  9O+Xc3L0suXkVPbrL3n6EQcqMG5KME5N7Elqzt9O+V8m/SzMfk17+T439x9DgdJw8GK8qCc+Nkts
+                  v4HtA8uH0/EwocmPWo9suL9LPSi6gCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACFAAAAAAABAKAAAAAAACNanNzuhYGZrJw8q1/HD
+                  Re1cTpAD5DK+W8+jWVOl8Py7Jez7jm2Uzg+WyLg1waaP0E034uPkLS6uM+9rb7QPgXFk0R9Xk/LG
+                  JbtqlKqXtRzL/lrOq1dfLdH8r0fsYHG2lPRdiZVLatqlHTtRo5WBjoNDLQhRNAXQAYgyIBAUaATQ
+                  F0GgE0BdBoBAUAQFAE0G0oAhdgAEKAARSACmLMjF7wIQoAgAAApAGmg1ZUj14XSs3NlpTX4eM5bI
+                  r1kHjS1e06GB0POzWpRj5dXGyexertPoen/LuHi6TtXn3dsvdXoR10klpuSA53T+h4OGlJR823/u
+                  S2+xcDpaAAUAAAAAAAAAAACAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQoAAAAAAAAAAAAAA
+                  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBQAAIUAQFAGMoxktJRUl2Nanjv6T067Xno
+                  im+Mdj+g9qAHDu+V8Se2q2Vb70pL7DxXfK2bDbVOFi9jfqez6T6kAfEW9H6nVrzUSaW9x2r6NTyz
+                  psh78HH0rQ/QTCdVc/fipela/WB+fOLXcPEfcW9J6db72PBd8Vo/oPJb8sdPnryudfoaa/4kwPkd
+                  BofR2/Ki31ZHqlHT6dWeWz5Y6jH3HCz0PT/m0A42iGw6FnROpQ30Sl/LtPNPDya/fpmtO5gaAZuE
+                  lsafoMdCiAo0AgLoTQABoABCjQCFGgAEKAIGXQAYArRNAAKbKcbIyJ8lMHOT7NpBq15t5vxMDKy7
+                  FDHrcu18F6Wd7p/yvFaWZ0tXv8qP2s79NNVMFXVBQgtyS0A4vTvliinSzMfnWfgXur7zuQhCEVGC
+                  UYrclsRkABQAAAAAAAAAAAAAAAAAAAAAAAQoAAEAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                  AAAAAAAAAAAAAAAAAAAAIAAKAQCghQAIUAAAAAAAAAAAAAAAgAoAAAAAAAAIUAAAAAAAAAAQCmLS
+                  exrUyAGmeNRNaTrjJd8UeezpHTrN+PFfy+H/AJT2gDk2fLfS5+7GUP5Za/8ANqaZ/KuI/wCndOP8
+                  yT+rlO4APm5/Kln9u9P+ZafVqaJ/K/UF7soS9D0+vQ+rAHxs/l/qUP7Wv8r1NE+l58Pex57O7X7z
+                  7gAfAyxcqD8VU4+mLX1o1uMlsZ+gT9XrPJk+7/8Ab/8AuAfE6dxdD6K7j/8AjfWc+3j/APS/+3vA
+                  5vKOQ93/AO3NlW7/AO3/APc3f5QOdydxkq5N6JNvsR3qNy//AB3D0nWxfc/sf+3uA+Sr6Xl2/wBO
+                  mT17n9uh66fljPs0c+Wtd7PrVu+4oHCxflXFho8icrX+FbEdfHxcfHgoUVquPcjeAAAAAhQAAAAA
+                  AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                  AAAAD//Z" transform="matrix(2.9621 0 0 2.9621 13.4138 542.5517)">
+                </image>
+
+              </g>
+              <!-- 按下左鍵的效果 -->
+              <g id="button-left">
+                <g class="non-active" id="button-1">
+                  <g>
+                    <path class="st1" d="M2194.13,1306.76c-2.84,9.87-5.97,19.65-9.39,29.33l0.02,0.2c-197.46,144.78-392.09,293.11-583.9,444.99 c-178.52,141.36-354.6,285.81-528.24,433.35c-4.39,14.4,2.14,29.76,9.92,42.64c0.71,1.18,2.29,4.37,3.33,3.47 c-3.64,3.65-9.4,7.64-14.55,7.6c-44.86-0.31-105.06-1.82-176.06-6.78c-55.92-3.9-123.89-8.65-198.21-21.17 c-70.54-11.89-168.05-34.37-282.07-80.47l-0.55,0.26c-10.91-13.18-19.59-28.2-25.57-44.24c-0.92-2.47-1.78-5.24-0.8-7.7 c0.68-1.71,2.15-2.96,3.6-4.11c8.96-7.14,18.94-13.02,29.53-17.42c2.32-0.96,4.82-1.97,6.22-4.06c1.36-2.03,1.36-4.76,0.47-7.04 c-0.9-2.28-2.58-4.16-4.43-5.77c-2.51-2.2-5.37-3.98-8.44-5.25c147.19-181.84,315.59-373.62,507.35-569.19 c161.02-164.2,319.42-311.61,471.39-443.44c29.59,3.59,74.51,9.72,128.82,19.9c58.5,10.96,85.45,18.68,273.96,69.05 c114.79,30.66,138.8,36.89,181.69,53.36c60.92,23.4,105.68,46.64,129.6,59.72C2142.64,1273.02,2171.62,1291.45,2194.13,1306.76z"></path>
+                  </g>
+                  <g>
+                    <path class="st2" d="M414.98,2159.92c114.02,46.1,211.53,68.58,282.07,80.47c74.32,12.52,142.29,17.27,198.21,21.17 c71,4.96,131.2,6.47,176.06,6.78c5.15,0.04,10.91-3.95,14.55-7.6c-1.04,0.9-2.62-2.29-3.33-3.47 c-7.78-12.88-14.31-28.24-9.92-42.64c173.64-147.54,349.72-291.99,528.24-433.35c191.81-151.88,386.44-300.21,583.9-444.99"></path>
+                    <path class="st2" d="M2184.74,1336.09c3.42-9.68,6.55-19.46,9.39-29.33"></path>
+                    <path class="st2" d="M1393.75,1051.96c29.59,3.59,74.51,9.72,128.82,19.9c58.5,10.96,85.45,18.68,273.96,69.05 c114.79,30.66,138.8,36.89,181.69,53.36c60.92,23.4,105.68,46.64,129.6,59.72c34.82,19.03,63.8,37.46,86.31,52.77"></path>
+                    <path class="st2" d="M1393.75,1051.96c-151.97,131.83-310.37,279.24-471.39,443.44c-191.76,195.57-360.16,387.35-507.35,569.19 c-0.01,0.01-0.02,0.02-0.03,0.03"></path>
+                    <path class="st2" d="M414.74,2064.47c0.09,0.04,0.18,0.07,0.27,0.12c3.07,1.27,5.93,3.05,8.44,5.25 c1.85,1.61,3.53,3.49,4.43,5.77c0.89,2.28,0.89,5.01-0.47,7.04c-1.4,2.09-3.9,3.1-6.22,4.06c-10.59,4.4-20.57,10.28-29.53,17.42 c-1.45,1.15-2.92,2.4-3.6,4.11c-0.98,2.46-0.12,5.23,0.8,7.7c5.98,16.04,14.66,31.06,25.57,44.24"></path>
+                  </g>
+                </g>
+              </g>
+              <!-- 按下右鍵的效果 -->
+              <g id="button-right">
+                <g class="non-active" id="button-2">
+                  <g>
+                    <path class="st1" d="M1188.76,979.54L953.6,1190.46l26.79,19.9l-53.59,47.95c-12.58-4.29-25.82-6.23-38.99-8.07 c-4.32-0.61-8.72-1.2-13.02-0.43c-4.29,0.77-8.53,3.16-10.41,7.09c-0.81,1.68-1.2,3.64-2.55,4.93c-2.28,2.19-5.93,1.41-9.1,1.37 c-3.48-0.05-7.27,1.25-8.97,4.29c-0.85,1.51-1.12,3.33-2.18,4.69c-2.38,3.07-7.05,2.36-10.91,2.06c-2.49-0.19-5-0.07-7.46,0.34 c-3.34,0.56-6.92,1.97-8.34,5.03c-0.52,1.12-0.71,2.38-1.34,3.44c-1.46,2.44-4.68,3.01-7.5,3.34c-2.95,0.35-5.94,0.31-8.8,1.11 c-2.35,0.65-4.5,1.99-6.11,3.82c-2.45,2.77-3.79,6.7-7.07,8.43c-4.06,2.15-9.39-0.05-13.5,2.03c-4.93,2.5-5.6,9.78-10.3,12.69 c-3.57,2.21-8.22,1.16-12.29,2.19c-2.59,0.66-4.95,2.2-6.59,4.31c-0.96,1.23-1.68,2.85-1.21,4.33c0.9,2.83-1.63,5.73-4.43,6.74 c-2.79,1.01-5.88,0.84-8.77,1.53c-4.72,1.14-8.79,4.74-10.48,9.3c-1,2.7-1.26,5.76-3,8.06c-3.88,5.1-12.59,3.59-17.01,8.24 c-4.07,4.3-2.66,11.95-6.86,16.12c-2.84,2.82-7.28,3.07-10.95,4.67c-4.73,2.05-8.27,6.63-9.05,11.73 c-0.31,1.98-0.23,4.03-0.88,5.92c-2.78,8.05-15.56,7.43-20.13,14.61c-3.83,6.02-0.67,15.75-6.56,19.78 c-3.99,2.73-10.91,1.58-12.61,6.11c-0.42,1.11-0.37,2.34-0.31,3.53c0.12,2.4,1.19,5.69,0.52,8c-1.94,6.62-6.33,12.5-12.13,16.24 c-1.94,1.25-4.08,2.33-5.48,4.17c-3.44,4.55-0.78,11.36-3.04,16.6c-3.04,7.02-14.05,9.47-14.33,17.12 c-0.06,1.7,0.48,3.35,0.64,5.04c0.63,6.78-4.77,12.56-10.26,16.58c-1.17,0.86-2.4,1.72-3.19,2.95c-0.89,1.38-1.11,3.09-1.14,4.73 c-0.09,5.78,1.81,12.31-1.74,16.88c-2.68,3.45-7.83,4.62-9.79,8.53c-2.24,4.48,0.93,9.81,0.46,14.8 c-0.57,6.01-6.1,10.11-10.99,13.65c-1.38,1-2.89,2.25-2.96,3.96c-0.04,1.02,0.45,1.97,0.9,2.89c3.34,6.69,5.2,15.34,0.6,21.24 c-3.24,4.16-9.38,6.6-9.93,11.84c-0.2,2,0.52,3.97,1.23,5.85c1.26,3.32,2.03,8.03,3.29,11.35l-30.22,32.05l-28.51-14.12 l-0.69,0.03L212.53,1977.8l-46.02-14.68l-10.17,46.59c-23.03-30.29-47.9-67.4-71.29-111.53 c-27.54-51.97-46.03-100.48-58.66-141.46c-3.4-8.23-7.56-21.09-8.26-37.27c-0.58-13.29,1.37-24.38,3.39-32.19 c105.68-140.55,243.42-301.81,419.29-465.04C618.32,1057.49,791,931.29,940.15,835.96c2.77-1.77,6.6-1.78,9.8-2.54h-0.06 c5.85-0.6,14.42-1.05,24.59,0.11c24.69,2.81,41.77,13.13,59.27,24.03c55.19,34.39,63.59,42.76,108,73.7 c6.08,4.24,18.89,13.11,32.19,28.38C1180.77,967.47,1185.64,974.6,1188.76,979.54z"></path>
+                  </g>
+                  <g>
+                    <path class="st2" d="M492.36,1662.02L212.53,1977.8l-46.02-14.68l-10.17,46.59c-23.03-30.29-47.9-67.4-71.29-111.53 c-27.54-51.97-46.03-100.48-58.66-141.46c-3.4-8.23-7.56-21.09-8.26-37.27c-0.58-13.29,1.37-24.38,3.39-32.19 c105.68-140.55,243.42-301.81,419.29-465.04C618.32,1057.49,791,931.29,940.15,835.96c2.77-1.77,6.6-1.78,9.8-2.54h-0.06 c5.85-0.6,14.42-1.05,24.59,0.11c24.69,2.81,41.77,13.13,59.27,24.03c55.19,34.39,63.59,42.76,108,73.7 c6.08,4.24,18.89,13.11,32.19,28.38c6.83,7.83,11.7,14.96,14.82,19.9L953.6,1190.46l26.79,19.9l-53.59,47.95 c-12.58-4.29-25.82-6.23-38.99-8.07c-4.32-0.61-8.72-1.2-13.02-0.43c-4.29,0.77-8.53,3.16-10.41,7.09 c-0.81,1.68-1.2,3.64-2.55,4.93c-2.28,2.19-5.93,1.41-9.1,1.37c-3.48-0.05-7.27,1.25-8.97,4.29c-0.85,1.51-1.12,3.33-2.18,4.69 c-2.38,3.07-7.05,2.36-10.91,2.06c-2.49-0.19-5-0.07-7.46,0.34c-3.34,0.56-6.92,1.97-8.34,5.03c-0.52,1.12-0.71,2.38-1.34,3.44 c-1.46,2.44-4.68,3.01-7.5,3.34c-2.95,0.35-5.94,0.31-8.8,1.11c-2.35,0.65-4.5,1.99-6.11,3.82c-2.45,2.77-3.79,6.7-7.07,8.43 c-4.06,2.15-9.39-0.05-13.5,2.03c-4.93,2.5-5.6,9.78-10.3,12.69c-3.57,2.21-8.22,1.16-12.29,2.19c-2.59,0.66-4.95,2.2-6.59,4.31 c-0.96,1.23-1.68,2.85-1.21,4.33c0.9,2.83-1.63,5.73-4.43,6.74c-2.79,1.01-5.88,0.84-8.77,1.53c-4.72,1.14-8.79,4.74-10.48,9.3 c-1,2.7-1.26,5.76-3,8.06c-3.88,5.1-12.59,3.59-17.01,8.24c-4.07,4.3-2.66,11.95-6.86,16.12c-2.84,2.82-7.28,3.07-10.95,4.67 c-4.73,2.05-8.27,6.63-9.05,11.73c-0.31,1.98-0.23,4.03-0.88,5.92c-2.78,8.05-15.56,7.43-20.13,14.61 c-3.83,6.02-0.67,15.75-6.56,19.78c-3.99,2.73-10.91,1.58-12.61,6.11c-0.42,1.11-0.37,2.34-0.31,3.53c0.12,2.4,1.19,5.69,0.52,8 c-1.94,6.62-6.33,12.5-12.13,16.24c-1.94,1.25-4.08,2.33-5.48,4.17c-3.44,4.55-0.78,11.36-3.04,16.6 c-3.04,7.02-14.05,9.47-14.33,17.12c-0.06,1.7,0.48,3.35,0.64,5.04c0.63,6.78-4.77,12.56-10.26,16.58 c-1.17,0.86-2.4,1.72-3.19,2.95c-0.89,1.38-1.11,3.09-1.14,4.73c-0.09,5.78,1.81,12.31-1.74,16.88 c-2.68,3.45-7.83,4.62-9.79,8.53c-2.24,4.48,0.93,9.81,0.46,14.8c-0.57,6.01-6.1,10.11-10.99,13.65c-1.38,1-2.89,2.25-2.96,3.96 c-0.04,1.02,0.45,1.97,0.9,2.89c3.34,6.69,5.2,15.34,0.6,21.24c-3.24,4.16-9.38,6.6-9.93,11.84c-0.2,2,0.52,3.97,1.23,5.85 c1.26,3.32,2.03,8.03,3.29,11.35l-30.22,32.05l-28.51-14.12"></path>
+                  </g>
+                </g>
+              </g>
+              <!-- 滾輪的效果 -->
+              <g>
+                <g class="non-active" id="scroll-up">
+                  <g>
+                    <polygon class="st1" points="603.4,1776.2 358.22,2049.52 422.6,2077.19 118.51,2229.09 171.24,1969.33 237.09,1996.86 470.46,1717.75"></polygon>
+                  </g>
+                  <g>
+                    <polygon class="st2" points="470.46,1717.75 603.4,1776.2 358.22,2049.52 422.6,2077.19 118.51,2229.09 171.24,1969.33 237.09,1996.86"></polygon>
+                  </g>
+                </g>
+              </g>
+              <g class="st0" id="scroll">
+                <g class="non-active" id="button-4">
+                  <g>
+                    <path class="st1" d="M931.69,1260.07l167.78,60.24c-73.74,70.67-148.73,145.24-224.5,223.84 c-67.72,70.24-132.23,139.72-193.64,208.11l-139.29-66.7l0.52-0.62c-0.36-7.04-0.72-14.08-1.07-21.13 c-0.06-1.08-0.1-2.24,0.44-3.18c0.46-0.81,1.27-1.35,2.03-1.88c2.32-1.61,4.48-3.53,5.93-5.96c3.55-5.96,0.89-14.03-1.4-20.1 c-0.71-1.87-1.43-3.83-1.23-5.83c0.55-5.24,6.69-7.68,9.93-11.84c4.6-5.9,2.74-14.55-0.6-21.24c-0.45-0.92-0.94-1.87-0.9-2.89 c0.07-1.71,1.58-2.96,2.96-3.96c4.89-3.54,10.42-7.64,10.99-13.65c0.47-4.99-2.7-10.32-0.46-14.8c1.96-3.91,7.11-5.08,9.79-8.53 c3.55-4.57,1.65-11.1,1.74-16.88c0.03-1.64,0.25-3.35,1.14-4.73c0.79-1.23,2.02-2.09,3.19-2.95c5.49-4.02,10.89-9.8,10.26-16.58 c-0.16-1.69-0.7-3.34-0.64-5.04c0.28-7.65,11.29-10.1,14.33-17.12c2.26-5.24-0.4-12.05,3.04-16.6c1.4-1.84,3.54-2.92,5.48-4.17 c5.8-3.74,10.19-9.62,12.13-16.24c0.67-2.31-0.4-5.6-0.52-8c-0.06-1.19-0.11-2.42,0.31-3.53c1.7-4.53,8.62-3.38,12.61-6.11 c5.89-4.03,2.73-13.76,6.56-19.78c4.57-7.18,17.35-6.56,20.13-14.61c0.65-1.89,0.57-3.94,0.88-5.92 c0.78-5.1,4.32-9.68,9.05-11.73c3.67-1.6,8.11-1.85,10.95-4.67c4.2-4.17,2.79-11.82,6.86-16.12c4.42-4.65,13.13-3.14,17.01-8.24 c1.74-2.3,2-5.36,3-8.06c1.69-4.56,5.76-8.16,10.48-9.3c2.89-0.69,5.98-0.52,8.77-1.53c2.8-1.01,5.33-3.91,4.43-6.74 c-0.47-1.48,0.25-3.1,1.21-4.33c1.64-2.11,4-3.65,6.59-4.31c4.07-1.03,8.72,0.02,12.29-2.19c4.7-2.91,5.37-10.19,10.3-12.69 c4.11-2.08,9.44,0.12,13.5-2.03c3.28-1.73,4.62-5.66,7.07-8.43c1.61-1.83,3.76-3.17,6.11-3.82c2.86-0.8,5.85-0.76,8.8-1.11 c2.82-0.33,6.04-0.9,7.5-3.34c0.63-1.06,0.82-2.32,1.34-3.44c1.42-3.06,5-4.47,8.34-5.03c2.46-0.41,4.97-0.53,7.46-0.34 c3.86,0.3,8.53,1.01,10.91-2.06c1.06-1.36,1.33-3.18,2.18-4.69c1.7-3.04,5.49-4.34,8.97-4.29c3.17,0.04,6.82,0.82,9.1-1.37 c1.35-1.29,1.74-3.25,2.55-4.93c1.88-3.93,6.12-6.32,10.41-7.09c4.3-0.77,8.7-0.18,13.02,0.43c7.9,1.11,15.8,2.23,23.6,3.9 C916.11,1255.15,927.17,1261.02,931.69,1260.07z"></path>
+                  </g>
+                  <g>
+                    <path class="st2" d="M931.69,1260.07c0.09-0.02,0.18-0.04,0.26-0.07"></path>
+                    <path class="st2" d="M931.69,1260.07l167.78,60.24c-73.74,70.67-148.73,145.24-224.5,223.84 c-67.72,70.24-132.23,139.72-193.64,208.11l-139.29-66.7l0.52-0.62c-0.36-7.04-0.72-14.08-1.07-21.13 c-0.06-1.08-0.1-2.24,0.44-3.18c0.46-0.81,1.27-1.35,2.03-1.88c2.32-1.61,4.48-3.53,5.93-5.96c3.55-5.96,0.89-14.03-1.4-20.1 c-0.71-1.87-1.43-3.83-1.23-5.83c0.55-5.24,6.69-7.68,9.93-11.84c4.6-5.9,2.74-14.55-0.6-21.24c-0.45-0.92-0.94-1.87-0.9-2.89 c0.07-1.71,1.58-2.96,2.96-3.96c4.89-3.54,10.42-7.64,10.99-13.65c0.47-4.99-2.7-10.32-0.46-14.8c1.96-3.91,7.11-5.08,9.79-8.53 c3.55-4.57,1.65-11.1,1.74-16.88c0.03-1.64,0.25-3.35,1.14-4.73c0.79-1.23,2.02-2.09,3.19-2.95c5.49-4.02,10.89-9.8,10.26-16.58 c-0.16-1.69-0.7-3.34-0.64-5.04c0.28-7.65,11.29-10.1,14.33-17.12c2.26-5.24-0.4-12.05,3.04-16.6c1.4-1.84,3.54-2.92,5.48-4.17 c5.8-3.74,10.19-9.62,12.13-16.24c0.67-2.31-0.4-5.6-0.52-8c-0.06-1.19-0.11-2.42,0.31-3.53c1.7-4.53,8.62-3.38,12.61-6.11 c5.89-4.03,2.73-13.76,6.56-19.78c4.57-7.18,17.35-6.56,20.13-14.61c0.65-1.89,0.57-3.94,0.88-5.92 c0.78-5.1,4.32-9.68,9.05-11.73c3.67-1.6,8.11-1.85,10.95-4.67c4.2-4.17,2.79-11.82,6.86-16.12c4.42-4.65,13.13-3.14,17.01-8.24 c1.74-2.3,2-5.36,3-8.06c1.69-4.56,5.76-8.16,10.48-9.3c2.89-0.69,5.98-0.52,8.77-1.53c2.8-1.01,5.33-3.91,4.43-6.74 c-0.47-1.48,0.25-3.1,1.21-4.33c1.64-2.11,4-3.65,6.59-4.31c4.07-1.03,8.72,0.02,12.29-2.19c4.7-2.91,5.37-10.19,10.3-12.69 c4.11-2.08,9.44,0.12,13.5-2.03c3.28-1.73,4.62-5.66,7.07-8.43c1.61-1.83,3.76-3.17,6.11-3.82c2.86-0.8,5.85-0.76,8.8-1.11 c2.82-0.33,6.04-0.9,7.5-3.34c0.63-1.06,0.82-2.32,1.34-3.44c1.42-3.06,5-4.47,8.34-5.03c2.46-0.41,4.97-0.53,7.46-0.34 c3.86,0.3,8.53,1.01,10.91-2.06c1.06-1.36,1.33-3.18,2.18-4.69c1.7-3.04,5.49-4.34,8.97-4.29c3.17,0.04,6.82,0.82,9.1-1.37 c1.35-1.29,1.74-3.25,2.55-4.93c1.88-3.93,6.12-6.32,10.41-7.09c4.3-0.77,8.7-0.18,13.02,0.43c7.9,1.11,15.8,2.23,23.6,3.9 C916.11,1255.15,927.17,1261.02,931.69,1260.07z"></path>
+                    <line class="st2" x1="926.8" x2="931.69" y1="1258.31" y2="1260.07"></line>
+                  </g>
+                </g>
+              </g>
+              <g>
+                <g class="non-active" id="scroll-down">
+                  <g>
+                    <polygon class="st3" points="1545.8,784.58 1464.48,1031.92 1391.07,1004.81 1139.21,1232.39 1003.68,1179.36 1261.75,955.12 1188.76,929.14"></polygon>
+                  </g>
+                  <g>
+                    <polygon class="st2" points="1261.75,955.12 1188.76,929.14 1545.8,784.58 1464.48,1031.92 1391.07,1004.81 1139.21,1232.39 1003.68,1179.36"></polygon>
+                  </g>
+                </g>
+              </g>
+              <!-- 側鍵的效果 -->
+              <g class="st0" id="side-1">
+                <g class="non-active" id="button-16">
+                  <g>
+                    <path class="st1" d="M2214.46,1478.03c13.75,6.42,12.39,12.55,11.74,33.89c-1.48,32.61-1.26,33.08-2.19,60.99l-3.72,6.04 c0,0-6.45,5.61-8.68,7.23l-277.86,193.97c-11.66,5.12-33.96,0.89-42.91-7.9l-33.32-49.13c-0.36-6.34,0.08-12.82,0-19.2 c112.86-77.67,225.74-155.34,338.62-232.99C2202.06,1469.12,2209.66,1476.26,2214.46,1478.03z"></path>
+                  </g>
+                  <g>
+                    <path class="st2" d="M2224.01,1572.91c0.93-27.91,0.71-28.38,2.19-60.99c0.65-21.34,2.01-27.47-11.74-33.89 c-4.8-1.77-12.4-8.91-18.32-7.1c-112.88,77.65-225.76,155.32-338.62,232.99c0.08,6.38-0.36,12.86,0,19.2l33.32,49.13 c8.95,8.79,31.25,13.02,42.91,7.9l277.86-193.97c2.23-1.62,8.68-7.23,8.68-7.23L2224.01,1572.91z"></path>
+                  </g>
+                </g>
+              </g>
+              <g class="st0" id="side-2">
+                <g class="non-active" id="button-8">
+                  <g>
+                    <path class="st1" d="M2592.11,1289.82c0.23,1.47-0.09,3.25-0.13,4.74c-0.11,3.65-0.21,7.31-0.31,10.96 c-0.06,2.02-0.12,4.05-0.18,6.07l-2.11,22.87l-7.42,21.18l-24.14,44.04c-38.83,18.36-78.41,37.78-118.66,58.31 c-44.99,22.95-88.38,46.07-130.16,69.17c-1.58-0.49-21.43-6.76-22.18-7c-0.34-0.11-0.67-0.21-1-0.32 c-0.53-0.16-0.85-0.43-1.28-0.79c-0.55-0.46-1.1-0.92-1.65-1.37c-0.35-0.29-0.76-0.49-0.86-0.92c-0.05-0.26-0.04-0.57-0.06-0.83 c-0.05-0.69-5.47-73.86-5.65-76.36c-0.15-2.01-0.86-11.57-0.91-12.24c0-0.04-0.01-0.08-0.01-0.12l1.13-5.93 c45.05-25.85,93.58-51.91,145.55-77.5c10.44-5.15,20.92-10.22,31.43-15.22c10.29-4.9,20.61-9.73,30.97-14.49 c10.13-4.66,20.29-9.25,30.48-13.78c9.96-4.42,19.95-8.79,29.96-13.09c4.09-1.75,8.19-3.5,12.28-5.23 c2.06-0.87,4.12-1.74,6.18-2.61c1.02-0.43,2.04-0.95,3.08-1.29c2.94-0.96,5.81,0.73,8.49,1.78c3,1.17,11.84,4.64,13.26,5.19 C2589.95,1285.72,2591.82,1287.95,2592.11,1289.82z"></path>
+                  </g>
+                  <g>
+                    <path class="st2" d="M2275.4,1427.21c0,0.04,0.01,0.08,0.01,0.12c0.05,0.67,0.76,10.23,0.91,12.24c0.18,2.5,5.6,75.67,5.65,76.36 c0.02,0.26,0.01,0.57,0.06,0.83c0.1,0.43,0.51,0.63,0.86,0.92c0.55,0.45,1.1,0.91,1.65,1.37c0.43,0.36,0.75,0.63,1.28,0.79 c0.33,0.11,0.66,0.21,1,0.32c0.75,0.24,20.6,6.51,22.18,7c41.78-23.1,85.17-46.22,130.16-69.17 c40.25-20.53,79.83-39.95,118.66-58.31l24.14-44.04l7.42-21.18l2.11-22.87c0.06-2.02,0.12-4.05,0.18-6.07 c0.1-3.65,0.2-7.31,0.31-10.96c0.04-1.49,0.36-3.27,0.13-4.74c-0.29-1.87-2.16-4.1-3.9-4.78c-1.42-0.55-10.26-4.02-13.26-5.19 c-2.68-1.05-5.55-2.74-8.49-1.78c-1.04,0.34-2.06,0.86-3.08,1.29c-2.06,0.87-4.12,1.74-6.18,2.61 c-4.09,1.73-8.19,3.48-12.28,5.23c-10.01,4.3-20,8.67-29.96,13.09c-10.19,4.53-20.35,9.12-30.48,13.78 c-10.36,4.76-20.68,9.59-30.97,14.49c-10.51,5-20.99,10.07-31.43,15.22c-51.97,25.59-100.5,51.65-145.55,77.5L2275.4,1427.21z"></path>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
       </div>
-    </main>
+
+    </div>
+
+
     <footer class="footer">
       <p class="footer-text">
         Copyright &copy; 2025 | 聯絡我們:
