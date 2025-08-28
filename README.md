@@ -1,4 +1,4 @@
-**專案頁面：** [線上鍵盤測試器](https://zz22558822.github.io/KeyboardTester/)
+**專案頁面：** [線上鍵盤滑鼠測試器](https://zz22558822.github.io/KeyboardTester/)
 
 ---
 
