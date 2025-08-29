@@ -188,79 +188,165 @@ const handleBlur = () => {
 let down = 0;
 let up = 0;
 
-const handleMouseDown = (e) => {
+// 統計相關元素
+const threshold = document.getElementById("threshold");
+const thresholdValueElement = document.getElementById("thresholdValue");
+const scrollUpElement = document.getElementById("scrollUp");
+const scrollDownElement = document.getElementById("scrollDown");
+const pollingRateElement = document.getElementById("pollingRate");
+
+// 初始化雙擊閾值
+let thresholdValue = 200; // 預設值，確保程式碼能正常運作
+if (threshold) {
+  thresholdValue = threshold.value;
+}
+
+
+// 儲存按鍵狀態的陣列
+const buttons = ["left", "middle", "right", "backward", "forward"].map(
+  (button) => ({
+    name: button.charAt(0).toUpperCase() + button.slice(1),
+    elements: {
+      totalDown: document.querySelector(`td.${button}:nth-child(2)`),
+      totalDoubleDown: document.querySelector(`td.${button}:nth-child(3)`),
+      minDownDownDelta: document.querySelector(`td.${button}:nth-child(4)`),
+    },
+    totalDown: 0,
+    totalDoubleDown: 0,
+    minDownDownDelta: Infinity,
+    lastDownTimeStamp: 0,
+    first: true,
+  })
+);
+
+// 合併後的滑鼠按下事件處理
+const handleCombinedMouseDown = (e) => {
     // 當處於鍵盤模式時，不處理滑鼠事件
     if (!isMouseModeActive) return;
 
-    // 利用 e.buttons 屬性和 down 變數的差值，來判斷是哪個按鈕被按下
+    // 檢查點擊的目標是否為滑桿，若是則不處理
+    if (e.target.id === "threshold") return;
+
+    // 處理滑鼠計數邏輯
+    const button = buttons[e.button];
+    if (!button) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!button.first) {
+        const delta = e.timeStamp - button.lastDownTimeStamp;
+        if (delta < thresholdValue) {
+            button.elements.totalDoubleDown.textContent = ++button.totalDoubleDown;
+            if (button.totalDoubleDown === 1) {
+                button.elements.totalDoubleDown.classList.add("warning");
+            }
+        }
+        if (delta < button.minDownDownDelta) {
+            button.elements.minDownDownDelta.textContent = delta.toFixed(1);
+            button.minDownDownDelta = delta;
+        }
+    }
+    button.first = false;
+    button.elements.totalDown.textContent = ++button.totalDown;
+    button.lastDownTimeStamp = e.timeStamp;
+
+    // 處理滑鼠視覺效果邏輯
     let activeButtons = e.buttons;
     let currentButton = activeButtons - down;
     let buttonElement = document.getElementById('button-' + currentButton);
     if (buttonElement) {
-        // 移除所有類別，並為對應的按鈕元素新增 'active' 類別，呈現「按下」的視覺效果
         buttonElement.classList.remove('active', 'visited', 'non-active');
         buttonElement.classList.add('active');
     }
     down = activeButtons;
 };
 
-const handleMouseUp = (e) => {
+// 合併後的滑鼠放開事件處理
+const handleCombinedMouseUp = (e) => {
     // 當處於鍵盤模式時，不處理滑鼠事件
     if (!isMouseModeActive) return;
 
-    // 利用 down 和 up 變數的差值，來判斷是哪個按鈕被釋放
+    // 檢查點擊的目標是否為滑桿，若是則不處理
+    if (e.target.id === "threshold") return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    // 處理滑鼠視覺效果邏輯
     up = e.buttons;
     let disabledButton = down - up;
     let buttonElement = document.getElementById('button-' + disabledButton);
     if (buttonElement) {
-        // 移除所有類別，並為對應的按鈕元素新增 'visited' 類別，呈現「點擊過」的視覺效果
         buttonElement.classList.remove('active', 'visited', 'non-active');
         buttonElement.classList.add('visited');
     }
     down = up;
 };
 
-// 阻止事件預設行為的核心函式 (例如：右鍵選單)
-const preventDefault = (e) => {
-  if (!isMouseModeActive) return;
-  e.preventDefault();
-};
 
 let scrollingUp, scrollingDown;
-const handleWheel = (e) => {
+// 合併後的滑鼠滾輪事件處理
+let totalScrollUp = 0;
+let totalScrollDown = 0;
+const handleCombinedWheel = (e) => {
     // 當處於鍵盤模式時，不處理滑鼠滾輪事件
     if (!isMouseModeActive) return;
 
-    const scrollUpElement = document.getElementById('scroll-up');
-    const scrollDownElement = document.getElementById('scroll-down');
+    // 檢查點擊的目標是否為滑桿，若是則不處理
+    if (e.target.id === "threshold") return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    // 處理滾動計數邏輯
+    if (e.deltaY < 0) {
+      if (scrollUpElement) {
+        scrollUpElement.textContent = ++totalScrollUp;
+      }
+    } else if (e.deltaY > 0) {
+      if (scrollDownElement) {
+        scrollDownElement.textContent = ++totalScrollDown;
+      }
+    }
+
+    // 處理滾動視覺效果邏輯
+    const scrollUpButton = document.getElementById('scroll-up');
+    const scrollDownButton = document.getElementById('scroll-down');
 
     // 判斷滾動方向 (e.deltaY < 0 為向上滾動，e.deltaY > 0 為向下滾動)
     if (e.deltaY < 0) {
-        if (scrollUpElement) {
-            scrollUpElement.classList.remove('active', 'visited', 'non-active');
-            scrollUpElement.classList.add('active');
+        if (scrollUpButton) {
+            scrollUpButton.classList.remove('active', 'visited', 'non-active');
+            scrollUpButton.classList.add('active');
         }
         window.clearTimeout(scrollingUp);
         // 設定計時器，在短時間後將狀態恢復為「點擊過」
         scrollingUp = window.setTimeout(() => {
-            if (scrollUpElement) {
-                scrollUpElement.classList.remove('active', 'visited', 'non-active');
-                scrollUpElement.classList.add('visited');
+            if (scrollUpButton) {
+                scrollUpButton.classList.remove('active', 'visited', 'non-active');
+                scrollUpButton.classList.add('visited');
             }
         }, 200);
     } else if (e.deltaY > 0) {
-        if (scrollDownElement) {
-            scrollDownElement.classList.remove('active', 'visited', 'non-active');
-            scrollDownElement.classList.add('active');
+        if (scrollDownButton) {
+            scrollDownButton.classList.remove('active', 'visited', 'non-active');
+            scrollDownButton.classList.add('active');
         }
         window.clearTimeout(scrollingDown);
         scrollingDown = window.setTimeout(() => {
-            if (scrollDownElement) {
-                scrollDownElement.classList.remove('active', 'visited', 'non-active');
-                scrollDownElement.classList.add('visited');
+            if (scrollDownButton) {
+                scrollDownButton.classList.remove('active', 'visited', 'non-active');
+                scrollDownButton.classList.add('visited');
             }
         }, 200);
     }
+};
+
+// 阻止事件預設行為的核心函式 (例如：右鍵選單)
+const preventDefault = (e) => {
+  if (!isMouseModeActive) return;
+  e.preventDefault();
 };
 
 // 滾動事件的選項，passive: false 確保能阻止預設滾動行為
@@ -283,6 +369,31 @@ function enableScroll() {
   window.removeEventListener('touchmove', preventDefault, wheelOpt);
 }
 
+// 輪詢率計算
+let counts = 0;
+let lastRefresh = performance.now();
+const UPDATE_INTERVAL = 200;
+
+function handlePointermove(ev) {
+  if (!isMouseModeActive) return;
+
+  counts += ev.getCoalescedEvents().length;
+  const delta = ev.timeStamp - lastRefresh;
+
+  if (delta >= UPDATE_INTERVAL) {
+    pollingRateElement.textContent = Math.round((counts * 1000) / delta);
+    counts = 0;
+    lastRefresh = ev.timeStamp;
+  }
+}
+
+// 阻止右鍵選單
+const handleContextMenu = (ev) => {
+  if (!isMouseModeActive) return;
+  if (ev.target.id === "threshold") return;
+  ev.preventDefault();
+  ev.stopPropagation();
+};
 
 // --------------------- 鍵盤區塊 ---------------------
 const keys = document.querySelectorAll('.key');
@@ -593,6 +704,29 @@ function clearAllDisplays() {
       el.classList.remove('active', 'visited');
       el.classList.add('non-active');
     });
+
+    // 清除滑鼠計數
+    buttons.forEach(button => {
+        button.totalDown = 0;
+        button.totalDoubleDown = 0;
+        button.minDownDownDelta = Infinity;
+        button.lastDownTimeStamp = 0;
+        button.first = true;
+        if (button.elements.totalDown) button.elements.totalDown.textContent = '0';
+        if (button.elements.totalDoubleDown) {
+          button.elements.totalDoubleDown.textContent = '0';
+          button.elements.totalDoubleDown.classList.remove("warning");
+        }
+        if (button.elements.minDownDownDelta) button.elements.minDownDownDelta.textContent = '-';
+    });
+    totalScrollUp = 0;
+    totalScrollDown = 0;
+    if (scrollUpElement) scrollUpElement.textContent = '0';
+    if (scrollDownElement) scrollDownElement.textContent = '0';
+
+    counts = 0;
+    lastRefresh = performance.now();
+    if (pollingRateElement) pollingRateElement.textContent = '0';
   }
 }
 
@@ -611,40 +745,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('blur', handleBlur);
 
 
-    // // 滑鼠事件監聽器
-    // document.addEventListener('mousedown', handleMouseDown);
-    // document.addEventListener('mouseup', handleMouseUp);
-    // document.addEventListener('contextmenu', preventDefault, { passive: false });
-    // document.addEventListener('mousedown', preventDefault, { passive: false });
-    // document.addEventListener('mouseup', preventDefault, { passive: false });
-
-    // const mouseContainer = document.getElementById('mouse-container');
-    // if (mouseContainer) {
-    //   mouseContainer.addEventListener('wheel', handleWheel, { passive: false });
-    //   mouseContainer.addEventListener('mouseover', disableScroll);
-    //   mouseContainer.addEventListener('mouseout', enableScroll);
-    // }
-
-    // // 滑鼠事件監聽器 (限定區塊) 上下頁會被觸發
-    // const mouseContainer = document.getElementById('mouse-container');
-    // if (mouseContainer) {
-    //   // 將所有滑鼠事件監聽器綁定到 #mouse-container
-    //   mouseContainer.addEventListener('mousedown', handleMouseDown);
-    //   mouseContainer.addEventListener('mouseup', handleMouseUp);
-    //   mouseContainer.addEventListener('contextmenu', preventDefault, { passive: false });
-      
-    //   mouseContainer.addEventListener('wheel', handleWheel, { passive: false });
-    //   mouseContainer.addEventListener('mouseover', disableScroll);
-    //   mouseContainer.addEventListener('mouseout', enableScroll);
-    // }
-
     // 滑鼠事件監聽器 (不限制觸發區塊) 整個版面都可觸發
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('contextmenu', preventDefault, { passive: false });
-    document.addEventListener('mousedown', preventDefault, { passive: false });
-    document.addEventListener('mouseup', preventDefault, { passive: false });
-    document.addEventListener('wheel', handleWheel, { passive: false });
+    document.addEventListener('mousedown', handleCombinedMouseDown);
+    document.addEventListener('mouseup', handleCombinedMouseUp);
+    document.addEventListener('wheel', handleCombinedWheel, { passive: false });
+    document.addEventListener('pointermove', handlePointermove);
+    document.addEventListener('contextmenu', handleContextMenu, { passive: false });
 
     const mouseContainer = document.getElementById('mouse-container');
     if (mouseContainer) {
@@ -663,6 +769,14 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('clearOnSwitch', clearOnSwitchCheckbox.checked);
     });
 
+    // 雙擊閾值調整
+    if (threshold) {
+      threshold.addEventListener("input", () => {
+        thresholdValue = threshold.value;
+        thresholdValueElement.textContent = thresholdValue;
+      });
+    }
+
     // 頁面載入時，預設啟用鍵盤模式
     showKeyboardMode();
 
@@ -670,31 +784,3 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLayout();
     initializeTheme();
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

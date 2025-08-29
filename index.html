@@ -396,8 +396,48 @@
 
     <!-- 滑鼠模式 -->
     <div id="mouse-mode" style="display: none;">
-
       <div class="content">
+        <!-- 滑鼠測試工具 -->
+        <div class="mouse-test-info-container">
+            <h2>滑鼠測試</h2>
+            <hr>
+            <div class="input-group">
+          <div class="thresholdBox">
+            <label for="threshold">雙擊閾值 (ms): <span id="thresholdValue">70</span></label>
+            <input type="range" id="threshold" min="0" max="1000" value="70">
+          </div>
+                <p class="pollingTitle">輪詢率<strong id="pollingRate">0</strong> Hz</p>
+            </div>
+            <hr>
+            <h3>按鍵統計</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>按鍵</th>
+                        <th>按下次數</th>
+                        <th>雙擊次數</th>
+                        <th>最快間隔 (ms)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>左鍵</td><td class="left">0</td><td class="left">0</td><td class="left">-</td></tr>
+                    <tr><td>中鍵</td><td class="middle">0</td><td class="middle">0</td><td class="middle">-</td></tr>
+                    <tr><td>右鍵</td><td class="right">0</td><td class="right">0</td><td class="right">-</td></tr>
+                    <tr><td>側鍵1</td><td class="backward">0</td><td class="backward">0</td><td class="backward">-</td></tr>
+                    <tr><td>側鍵2</td><td class="forward">0</td><td class="forward">0</td><td class="forward">-</td></tr>
+                </tbody>
+            </table>
+            <h3>滾輪</h3>
+            <div class="flex-row">
+                <div class="flex-item">
+                    <p>滾輪向上: <strong id="scrollUp">0</strong></p>
+                </div>
+                <div class="flex-item">
+                    <p>滾輪向下: <strong id="scrollDown">0</strong></p>
+                </div>
+            </div>
+        </div>
+        <!-- 滑鼠UI -->
         <div class="container" id="main">
           <div id="mouse-container">
             <svg id="mouse" style="enable-background:new 0 0 3000 3000;" version="1.1" viewbox="0 0 3000 3000" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px">
