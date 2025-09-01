@@ -804,7 +804,22 @@ input[type='range']::-webkit-slider-thumb:hover {
 }
 @media (max-width:1367px){
   #mouse {
-    max-width:350px;
+    min-width:350px;
+  }
+}
+@media (max-width:960px){
+  #mouse {
+    min-width:250px;
+  }
+}
+@media (max-width:768px){
+  #mouse {
+    min-width:220px;
+  }
+}
+@media (max-width:500px){
+  #mouse {
+    min-width:350px;
   }
 }
 
@@ -940,8 +955,25 @@ th {
     margin: 10px;
   }
 
+  /* 標題字體縮小 */
+  h2 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.2em;
+  }
+
   .input-group {
     flex-direction: column;
+  }
+
+  /* 表格字體和內邊距調整 */
+  table {
+    font-size: 0.8em;
+  }
+  th, td {
+    padding: 4px 3px;
+    font-size: 12px;
   }
 
   .thresholdBox,
@@ -952,6 +984,12 @@ th {
   /* 將表格包在一個可滾動的div中 */
   .table-responsive {
     overflow-x: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .mouse-test-info-container {
+    display: none;  /* 在手機螢幕上隱藏 */
   }
 }
 

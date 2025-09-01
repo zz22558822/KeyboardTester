@@ -97,10 +97,10 @@ function clearKeyboardDisplay() {
 }
 
 const handleKeyPress = function (e) {
+  e.preventDefault();
+
   // 當處於滑鼠模式時，不處理鍵盤事件
   if (isMouseModeActive) return;
-
-  e.preventDefault();
 
   // 偵測 AltGr 按鍵被按下 (同時按下 Alt + Control)
   const isAltGr = e.key === 'AltGraph';
